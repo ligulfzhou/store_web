@@ -5,7 +5,6 @@ import {ListReponse} from "@/types/common";
 import Cate from '@/types/item'
 
 export default function useCates() {
-
     const key = `${host}/api/cates`
     const { data, error } = useSWR<ListReponse<Cate>>(
         key,
