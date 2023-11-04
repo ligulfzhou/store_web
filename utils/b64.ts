@@ -5,4 +5,3 @@ export const b64Encode = (str: string)=> {
 export const b64Decode = (str: string)=> {
     return  Buffer.from(str, 'base64').toString('utf8')
 }
-

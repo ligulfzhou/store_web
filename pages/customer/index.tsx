@@ -6,10 +6,8 @@ import {Customer} from "@/types/customer";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import useParameters from "@/hooks/useParameters";
 import {defaultPageSize} from "@/utils/const";
-import AddCustomer from "@/components/customer/AddCustomer";
 import {useState} from "react";
 import {useSWRConfig} from "swr"
-import {tr} from "date-fns/locale";
 import EditCustomerModal from "@/components/customer/EditCustomer";
 
 

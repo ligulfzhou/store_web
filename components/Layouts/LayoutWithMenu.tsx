@@ -1,4 +1,4 @@
-import React, {FC, ReactNode, useEffect, useState} from 'react';
+import React, {FC, ReactNode} from 'react';
 import {DollarCircleOutlined, LaptopOutlined, LineChartOutlined, UserOutlined} from '@ant-design/icons';
 import {Avatar, Dropdown, Layout, Menu, MenuProps, message} from 'antd';
 import {useRouter} from "next/router";
@@ -126,6 +126,8 @@ const LayoutWithMenu: FC<Props> = (
             return 'home'
         } else if (pathname == '/customer') {
             return 'customer'
+        } else if (pathname == '/items') {
+            return 'items'
         } else {
             return ''
         }
@@ -186,9 +188,7 @@ const LayoutWithMenu: FC<Props> = (
                         }}
                         mode="inline"
                         defaultSelectedKeys={[pathname]}
-                        // selectedKeys={[pathname]}
                         defaultOpenKeys={[openedKeyFromPathname(pathname)]}
-                        // openKeys={[openedKey]}
                         style={{height: '100%', borderRight: 0}}
                         items={menuItems}
                     />
