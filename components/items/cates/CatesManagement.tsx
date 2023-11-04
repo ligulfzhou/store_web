@@ -1,6 +1,7 @@
 import useCates from "@/hooks/useCates";
 import {FC, useState} from "react";
-import {cx} from "class-variance-authority";
+import cx from "classnames";
+import {Input} from "antd";
 
 interface Props {
     callback: (cate1: string, cate2: string) => void
@@ -11,10 +12,10 @@ export const CatesManagement: FC<Props> = () => {
     const [cate1, setCate1] = useState<string>('')
     const [cate2, setCate2] = useState<string>('')
 
-    const cate2s = ()=> {
+    const cate2s = () => {
         let res: string[] = []
-        let cate = cates.filter(item=> item.name==cate1);
-        if (cate.length==0) {
+        let cate = cates.filter(item => item.name == cate1);
+        if (cate.length == 0) {
             return res
         }
         return cate[0].sub_cates
@@ -37,13 +38,15 @@ export const CatesManagement: FC<Props> = () => {
                             className={cx(
                                 cate1 == cate.name ? "bg-blue-200" : "hover:bg-blue-100",
                                 'w-full'
-                            )}
-                            onClick={() => {
-                                setCate1(cate.name)
-                            }}>
-                            <div className='p-1'>
-                                {cate.name}
-                            </div>
+                            )}>
+                            <Input
+                                onClick={()=> {
+                                    setCate1(cate.name)
+                                }}
+                                className='cursor-pointer'
+                                defaultValue={cate.name}
+                                bordered={false}
+                            />
                         </div>
                     ))}
                 </div>
@@ -57,6 +60,7 @@ export const CatesManagement: FC<Props> = () => {
                     </>
                 </div>
 
+
                 {/* 小类列表 */}
                 <div className='overflow-auto'>
                     {cate2s().map(cate_name => (
@@ -64,13 +68,18 @@ export const CatesManagement: FC<Props> = () => {
                             className={cx(
                                 cate2 == cate_name ? "bg-blue-200" : "hover:bg-blue-100",
                                 'w-full'
-                            )}
-                            onClick={() => {
-                                setCate2(cate_name)
-                            }}>
-                            <div className='p-1'>
-                                {cate_name}
-                            </div>
+                            )}>
+                            <Input
+                                onClick={
+                                    () => {
+                                        console.log(cate_name)
+                                        setCate2(cate_name)
+                                    }
+                                }
+                                className='cursor-pointer'
+                                defaultValue={cate_name}
+                                bordered={false}
+                            />
                         </div>
                     ))}
                 </div>
