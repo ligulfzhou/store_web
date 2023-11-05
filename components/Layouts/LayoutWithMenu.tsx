@@ -11,25 +11,6 @@ import {logout} from "@/requests/account";
 const {Header, Content, Sider} = Layout;
 
 const menuItems: MenuProps["items"] = [
-    // {
-    //     key: "home",
-    //     icon: React.createElement(LineChartOutlined),
-    //     label: "统计",
-    //     children: [
-    //         {
-    //             key: "/",
-    //             label: "统计"
-    //         },
-    //         {
-    //             key: "/stats/returnOrder/goods",
-    //             label: "复购(款式)"
-    //         },
-    //         {
-    //             key: "/stats/returnOrder/items",
-    //             label: "复购(款式+颜色)"
-    //         },
-    //     ]
-    // },
     {
         key: "items",
         icon: React.createElement(LineChartOutlined),
@@ -37,7 +18,7 @@ const menuItems: MenuProps["items"] = [
         children: [
             {
                 key: "/items",
-                label: "所有产品"
+                label: "产品"
             },
             {
                 key: "/items/cates",

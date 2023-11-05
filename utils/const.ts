@@ -6,6 +6,20 @@ export const host = 'http://127.0.0.1:9101'
 export const defaultPageSize = 50
 
 
+
+export const units = [
+    '个', '包', '袋', '盒', '台', '串', '克'
+]
+export const unitsOptions = units.map(unit=> (
+    {
+        label: unit,
+        value: unit
+    }
+))
+
+console.log(unitsOptions)
+
+
 interface Option {
     index: number,
     name: string,
