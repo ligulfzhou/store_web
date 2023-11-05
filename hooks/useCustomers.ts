@@ -5,11 +5,20 @@ import {ListReponse} from "@/types/common";
 import useParameters from "@/hooks/useParameters";
 import {Customer} from "@/types/customer";
 
-export default function useCustomers () {
-    const {page, pageSize} = useParameters()
+export default function useCustomers() {
+    const {
+        page,
+        pageSize,
+        ty_pe,
+        customer_no,
+        phone,
+        name,
+        create_time_st,
+        create_time_ed
+    } = useParameters()
 
-    const key = `${host}/api/customers?page=${page}&pageSize=${pageSize}`
-    const { data, error } = useSWR<ListReponse<Customer>>(
+    const key = `${host}/api/customers?ty_pe=${ty_pe}&phone=${phone}&name=${name}&customer_no=${customer_no}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}&page=${page}&pageSize=${pageSize}`
+    const {data, error} = useSWR<ListReponse<Customer>>(
         key,
         fetcher
     )

@@ -1,8 +1,6 @@
 import React, {FC, useEffect, useState} from "react";
 import {Modal, Form, Input, message} from "antd";
 import {Customer} from "@/types";
-import {UpdateOrderParam} from "@/requests/order";
-import moment from "moment/moment";
 import {updateCustomer, UpdateCustomerParam} from "@/requests";
 import useSWRMutation from "swr/mutation";
 
@@ -55,14 +53,14 @@ const EditCustomerModal: FC<Props> = (
     const {
         trigger: callUpdateCustomerAPI,
         isMutating: callingUpdateCustomerAPI
-    } = useSWRMutation("/api/customer/update", updateCustomer)
+    } = useSWRMutation("/api/customer/edit", updateCustomer)
 
     return (
         <div>
             <Modal
                 open={open}
                 centered={true}
-                title='修改客户'
+                title={`${customer? "修改": "添加"}客户`}
                 onCancel={(e) => {
                     e.preventDefault()
                     form.resetFields()
@@ -83,12 +81,65 @@ const EditCustomerModal: FC<Props> = (
                     onFinish={onFinish}
                 >
                     <Form.Item
+                        label="客户名称"
+                        name="name"
+                        rules={[{required: true, message: '请输入客户名称!'}]}
+                    >
+                        <Input/>
+                    </Form.Item>
+
+                    <Form.Item
                         label="客户编号"
                         name="customer_no"
                         rules={[{required: true, message: '请输入客户编号!'}]}
                     >
                         <Input/>
                     </Form.Item>
+
+                    <Form.Item
+                        label="客户编号"
+                        name="customer_no"
+                        rules={[{required: true, message: '请输入客户编号!'}]}
+                    >
+                        <Input/>
+                    </Form.Item>
+
+                    <Form.Item
+                        label="客户编号"
+                        name="customer_no"
+                        rules={[{required: true, message: '请输入客户编号!'}]}
+                    >
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item
+                        label="客户编号"
+                        name="customer_no"
+                        rules={[{required: true, message: '请输入客户编号!'}]}
+                    >
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item
+                        label="客户编号"
+                        name="customer_no"
+                        rules={[{required: true, message: '请输入客户编号!'}]}
+                    >
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item
+                        label="客户编号"
+                        name="customer_no"
+                        rules={[{required: true, message: '请输入客户编号!'}]}
+                    >
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item
+                        label="客户编号"
+                        name="customer_no"
+                        rules={[{required: true, message: '请输入客户编号!'}]}
+                    >
+                        <Input/>
+                    </Form.Item>
+
 
                     <Form.Item
                         label="备注"

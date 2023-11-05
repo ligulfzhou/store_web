@@ -31,10 +31,26 @@ export default function useParameters() {
         is_urgent,
         is_special,
 
-        customer_no,
         // 返单搜索
         ro_search,
+
+        // customers
+        phone,
+        name,
+        customer_no,
+        ty_pe,
+        create_time_st,
+        create_time_ed,
+
     } = router.query
+
+    // customers
+    phone = parseQueryParam(phone)
+    name = parseQueryParam(name)
+    customer_no = parseQueryParam(customer_no)
+    let ty_peN = parseQueryParamToNumber(ty_pe)
+    create_time_st = parseQueryParam(create_time_st)
+    create_time_ed = parseQueryParam(create_time_ed)
 
     let idN = parseQueryParamToNumber(id)
     let pageN = parseQueryParamToNumber(page)
@@ -71,11 +87,10 @@ export default function useParameters() {
     }
 
     ro_search = parseQueryParam(ro_search)
-    if(!ro_search){
+    if (!ro_search) {
         ro_search = 'goods'
     }
 
-    customer_no = parseQueryParam(customer_no)
 
     return {
         id: idN,
@@ -84,6 +99,14 @@ export default function useParameters() {
 
         mpage: mpageN,
         mpageSize: mpageSizeN,
+
+        // customers
+        phone,
+        name,
+        customer_no,
+        ty_pe: ty_peN,
+        create_time_st,
+        create_time_ed,
 
         order_id: order_idN,
         order_no,
@@ -99,6 +122,5 @@ export default function useParameters() {
         is_special: is_specialB,
 
         ro_search,
-        customer_no,
     }
 }

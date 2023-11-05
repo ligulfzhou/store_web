@@ -19,7 +19,7 @@ const AddCustomerModal: FC<Props> = (
     const {
         trigger: callAddCustomerAPI,
         isMutating: callingAddCustomerAPI
-    } = useSWRMutation('/api/customers', addCustomer)
+    } = useSWRMutation('/api/customer/edit', addCustomer)
 
     const [form] = Form.useForm();
 
