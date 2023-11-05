@@ -119,11 +119,8 @@ export default function Order() {
                         刷新
                     </Button>
 
-                    {/*<AddCustomerButton/>*/}
-
                     <Button
                         className='mb-4'
-                        loading={refresh}
                         type="primary"
                         onClick={() => {
                             setCustomer(undefined)
