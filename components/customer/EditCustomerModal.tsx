@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from "react";
-import {Modal, Form, Input, message} from "antd";
+import {Modal, Form, Input, message, DatePicker, Select} from "antd";
 import {Customer} from "@/types";
 import {updateCustomer, UpdateCustomerParam} from "@/requests";
 import useSWRMutation from "swr/mutation";
@@ -18,18 +18,20 @@ const EditCustomerModal: FC<Props> = (
         customer
     }
 ) => {
-    const [savePRError, setSavePRError] = useState<string>('')
     const [form] = Form.useForm();
 
     const onFinish = (values: UpdateCustomerParam) => {
-        if (!customer?.id){
-            return
+        let id = 0
+        if (customer) {
+            id= customer.id
         }
 
-        values['id'] = customer?.id
+        values['id'] = id
+        console.log(values)
+
         callUpdateCustomerAPI(values).then((res)=> {
             if (res.code==0) {
-                message.success("修改成功")
+                message.success(`${customer?"修改": "添加"}成功`)
                 closeFn(true)
                 form.resetFields()
             } else {
@@ -42,9 +44,17 @@ const EditCustomerModal: FC<Props> = (
 
     useEffect(() => {
         let _formValues: UpdateCustomerParam = {
-            id: 0,
-            customer_no: customer?.customer_no || '',
-            notes: customer?.notes || ''
+            address: customer?.address||'',
+            birthday: customer?.birthday||null,
+            customer_no: customer?.customer_no||'',
+            email: customer?.email||'',
+            head: customer?.head||'',
+            name: customer?.name||'',
+            notes: customer?.notes||'',
+            phone: customer?.phone||'',
+            qq: customer?.qq||'',
+            ty_pe: customer?.ty_pe||'',
+            id: customer?.id||0
         }
         setFormValues(_formValues)
         form.setFieldsValue(_formValues)
@@ -58,13 +68,13 @@ const EditCustomerModal: FC<Props> = (
     return (
         <div>
             <Modal
+                width={700}
                 open={open}
                 centered={true}
                 title={`${customer? "修改": "添加"}客户`}
                 onCancel={(e) => {
                     e.preventDefault()
                     form.resetFields()
-                    setSavePRError('')
                     closeFn(false)
                 }}
                 onOk={() => form.submit()}
@@ -76,78 +86,103 @@ const EditCustomerModal: FC<Props> = (
                     name="basic"
                     labelCol={{span: 8}}
                     wrapperCol={{span: 16}}
-                    style={{maxWidth: 600}}
                     initialValues={{formValues}}
                     onFinish={onFinish}
                 >
-                    <Form.Item
-                        label="客户名称"
-                        name="name"
-                        rules={[{required: true, message: '请输入客户名称!'}]}
-                    >
-                        <Input/>
-                    </Form.Item>
+                    <div className='grid grid-cols-2'>
+                        <Form.Item
+                            label="客户名称"
+                            name="name"
+                            rules={[{required: true, message: '请输入客户名称!'}]}
+                        >
+                            <Input/>
+                        </Form.Item>
 
-                    <Form.Item
-                        label="客户编号"
-                        name="customer_no"
-                        rules={[{required: true, message: '请输入客户编号!'}]}
-                    >
-                        <Input/>
-                    </Form.Item>
+                        <Form.Item
+                            label="负责人"
+                            name="head"
+                        >
+                            <Input/>
+                        </Form.Item>
 
-                    <Form.Item
-                        label="客户编号"
-                        name="customer_no"
-                        rules={[{required: true, message: '请输入客户编号!'}]}
-                    >
-                        <Input/>
-                    </Form.Item>
+                        <Form.Item
+                            label="手机号"
+                            name="phone"
+                        >
+                            <Input/>
+                        </Form.Item>
 
-                    <Form.Item
-                        label="客户编号"
-                        name="customer_no"
-                        rules={[{required: true, message: '请输入客户编号!'}]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item
-                        label="客户编号"
-                        name="customer_no"
-                        rules={[{required: true, message: '请输入客户编号!'}]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item
-                        label="客户编号"
-                        name="customer_no"
-                        rules={[{required: true, message: '请输入客户编号!'}]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item
-                        label="客户编号"
-                        name="customer_no"
-                        rules={[{required: true, message: '请输入客户编号!'}]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item
-                        label="客户编号"
-                        name="customer_no"
-                        rules={[{required: true, message: '请输入客户编号!'}]}
-                    >
-                        <Input/>
-                    </Form.Item>
+                        <Form.Item
+                            label="生日"
+                            name="birthday"
+                        >
+                            <DatePicker style={{width: 200}} />
+                        </Form.Item>
 
 
-                    <Form.Item
-                        label="备注"
-                        name="notes"
-                        rules={[{required: false, message: '请输入备注!'}]}
-                    >
-                        <Input/>
-                    </Form.Item>
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                        >
+                            <Input/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="QQ"
+                            name="qq"
+                        >
+                            <Input/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="客户类型"
+                            name="ty_pe"
+                            rules={[{required: true, message: '请选择客户类型!'}]}
+                        >
+                            <Select
+                                style={{ width: 200 }}
+                                loading
+                                options={
+                                [
+                                    {
+                                        label: '请选择',
+                                        value: '',
+                                    },
+                                    {
+                                        label: '普通客户',
+                                        value: 1,
+                                    },
+                                    {
+                                        label: 'VIP客户',
+                                        value: 2,
+                                    }
+                                ]}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="地址"
+                            name="address"
+                        >
+                            <Input/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="客户编号"
+                            name="customer_no"
+                            rules={[{required: true, message: '请输入客户编号!'}]}
+                        >
+                            <Input/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="备注"
+                            name="notes"
+                            rules={[{required: false, message: '请输入备注!'}]}
+                        >
+                            <Input/>
+                        </Form.Item>
+                    </div>
                 </Form>
             </Modal>
         </div>

@@ -1,4 +1,4 @@
-import {Table, Space, Button} from 'antd';
+import {Table, Button} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {ColumnsType} from "antd/es/table";
 import useCustomers from "@/hooks/useCustomers";
@@ -9,7 +9,6 @@ import {defaultPageSize} from "@/utils/const";
 import {useState} from "react";
 import {useSWRConfig} from "swr"
 import EditCustomerModal from "@/components/customer/EditCustomerModal";
-import AddCustomerButton from "@/components/customer/AddCustomerButton";
 
 
 export default function Order() {
