@@ -17,7 +17,7 @@ export default function useItems() {
         goods_no
     } = useParameters()
 
-    const key = `${host}/api/items?brand=${brand}&name=${name}&cates2=${cates1}&cates2=${cates2}&goods_no=${goods_no}&page=${page}&pageSize=${pageSize}`
+    const key = `${host}/api/items?brand=${brand}&name=${name}&cates1=${cates1}&cates2=${cates2}&goods_no=${goods_no}&page=${page}&pageSize=${pageSize}`
     const {data, error} = useSWR<ListReponse<Item>>(
         key,
         fetcher

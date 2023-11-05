@@ -34,10 +34,10 @@ export function makeUpdateCustomerParamNotNull(param: UpdateCustomerParam) {
     return notNullParam
 }
 
-export async function addCustomer(url: string, {arg}: { arg: UpdateCustomerParam }) {
-    return commonDataPost<Customer>(url, makeUpdateCustomerParamNotNull(arg))
-}
-
+// export async function addCustomer(url: string, {arg}: { arg: UpdateCustomerParam }) {
+//     return commonDataPost<Customer>(url, makeUpdateCustomerParamNotNull(arg))
+// }
+//
 export async function updateCustomer(url: string, {arg}: { arg: UpdateCustomerParam }) {
     return commonDataPost<Customer>(url, makeUpdateCustomerParamNotNull(arg))
 }

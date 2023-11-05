@@ -1,7 +1,6 @@
 import {Table, Button} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {ColumnsType} from "antd/es/table";
-import useCustomers from "@/hooks/useCustomers";
 import {Customer} from "@/types/customer";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import useParameters from "@/hooks/useParameters";
@@ -11,16 +10,18 @@ import {useSWRConfig} from "swr"
 import EditCustomerModal from "@/components/customer/EditCustomerModal";
 import CustomerSearchForm from "@/components/customer/CustomerSearchForm";
 import {formatDateTime} from "@/utils/utils";
+import useItems from "@/hooks/useItems";
+import Item from "@/types/item";
 
 
 export default function Index() {
     const {page, pageSize} = useParameters()
-    const {customers, total, isLoading, isError, key} = useCustomers()
-    const [isEditCustomerModalOpen, setIsEditCustomerModalOpen] = useState<boolean>(false)
+    const {items, total, isLoading, key} = useItems();
+    const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false)
     const {reloadPage} = useRouterUtils()
     const {mutate} = useSWRConfig()
 
-    const columns: ColumnsType<Customer> = [
+    const columns: ColumnsType<Item> = [
         {
             title: 'ID',
             dataIndex: 'id',
@@ -60,8 +61,8 @@ export default function Index() {
             render: (_, record) => (
                 <a href='#' onClick={(event) => {
                     event.preventDefault()
-                    setCustomer(record)
-                    setIsEditCustomerModalOpen(true)
+                    // setCustomer(record)
+                    setIsEditModalOpen(true)
                 }}>
                     查看
                 </a>
@@ -71,13 +72,14 @@ export default function Index() {
 
     const [refresh, setRefresh] = useState<boolean>(false)
     const [customer, setCustomer] = useState<Customer | undefined>()
+    const [editItem, setEditItem] = useState<Item|undefined>()
 
     return (
         <LayoutWithMenu>
             <EditCustomerModal
-                open={isEditCustomerModalOpen}
+                open={isEditModalOpen}
                 closeFn={(success) => {
-                    setIsEditCustomerModalOpen(false)
+                    setIsEditModalOpen(false)
                     if (success) {
                         setRefresh(true)
                         mutate(key).finally(() => setRefresh(false))
@@ -109,8 +111,8 @@ export default function Index() {
                         className='mb-4'
                         type="primary"
                         onClick={() => {
-                            setCustomer(undefined)
-                            setIsEditCustomerModalOpen(true)
+                            setEditItem(undefined)
+                            setIsEditModalOpen(true)
                         }}
                     >
                         添加
@@ -135,7 +137,7 @@ export default function Index() {
                             })
                         }
                     }}
-                    dataSource={customers}
+                    dataSource={items}
                 />
             </div>
         </LayoutWithMenu>
