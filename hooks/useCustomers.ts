@@ -12,12 +12,13 @@ export default function useCustomers() {
         ty_pe,
         customer_no,
         phone,
+        head,
         name,
         create_time_st,
         create_time_ed
     } = useParameters()
 
-    const key = `${host}/api/customers?ty_pe=${ty_pe}&phone=${phone}&name=${name}&customer_no=${customer_no}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}&page=${page}&pageSize=${pageSize}`
+    const key = `${host}/api/customers?ty_pe=${ty_pe}&phone=${phone}&name=${name}&head=${head}&customer_no=${customer_no}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}&page=${page}&pageSize=${pageSize}`
     const {data, error} = useSWR<ListReponse<Customer>>(
         key,
         fetcher

@@ -6,9 +6,12 @@ import {Customer} from "@/types/customer";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import useParameters from "@/hooks/useParameters";
 import {defaultPageSize} from "@/utils/const";
-import {useState} from "react";
+import React, {useState} from "react";
 import {useSWRConfig} from "swr"
 import EditCustomerModal from "@/components/customer/EditCustomerModal";
+import OrderSearchForm from "@/components/order/OrderSearchForm";
+import CustomerSearchForm from "@/components/customer/CustomerSearchForm";
+import {formatDateTime} from "@/utils/utils";
 
 
 export default function Order() {
@@ -17,14 +20,49 @@ export default function Order() {
     const [isEditCustomerModalOpen, setIsEditCustomerModalOpen] = useState<boolean>(false)
     const {reloadPage} = useRouterUtils()
     const {mutate} = useSWRConfig()
+    /*
+        id: number,
+    customer_no: string,
+    ty_pe: number | string,
+    name: string,
+    head: string,
+    address: string,
+    email: string,
+    birthday: string | null,
+    qq: string,
+    phone: string,
+    notes: string,
+
+    * */
     const columns: ColumnsType<Customer> = [
         {
             title: 'ID',
             dataIndex: 'id',
         },
         {
+            title: '客户名称',
+            dataIndex: 'name',
+        },
+        {
+            title: '负责人',
+            dataIndex: 'head',
+        },
+        {
+            title: '手机号',
+            dataIndex: 'phone',
+        },
+        {
             title: '客户编号',
             dataIndex: "customer_no",
+        },
+        {
+            title: '创建时间',
+            key: 'create_time',
+            render: (_, record)=> (
+                <div>
+                    {formatDateTime(new Date(record.create_time))}
+                </div>
+            )
         },
         {
             title: '备注',
@@ -61,6 +99,11 @@ export default function Order() {
                 }}
                 customer={customer}
             />
+
+            {/*filters*/}
+            <div className='bg-white p-5 m-2 rounded'>
+                <CustomerSearchForm />
+            </div>
 
             <div className='p-5 m-2 bg-white rounded'>
                 <div className='mb-2 gap-4 flex flex-row justify-start'>
