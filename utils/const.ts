@@ -6,11 +6,10 @@ export const host = 'http://127.0.0.1:9101'
 export const defaultPageSize = 50
 
 
-
 export const units = [
     '个', '包', '袋', '盒', '台', '串', '克'
 ]
-export const unitsOptions = units.map(unit=> (
+export const unitsOptions = units.map(unit => (
     {
         label: unit,
         value: unit
@@ -75,17 +74,17 @@ export const progresses: StepProgress[] = [
         options: [
             {
                 index: 3,
-                name:"已发车间",
+                name: "已发车间",
                 color: "#7030A1"
             },
             {
                 index: 4,
-                name:"已发品检",
+                name: "已发品检",
                 color: "#02B151",
             },
             {
                 index: 5,
-                name:"已发滴油",
+                name: "已发滴油",
                 color: "#FFC100",
             },
             {
@@ -165,23 +164,23 @@ export const progresses: StepProgress[] = [
         ]
     },
     {
-        step:5,
+        step: 5,
         name: "碰焊",
         department: "碰焊部",
         options: [
             {
                 index: 3,
-                name:"外发",
+                name: "外发",
                 color: "#7030A1"
             },
             {
                 index: 4,
-                name:"碰焊人员1",
+                name: "碰焊人员1",
                 color: "#02B151",
             },
             {
                 index: 5,
-                name:"碰焊人员2",
+                name: "碰焊人员2",
                 color: "#FFC100",
             },
             {
