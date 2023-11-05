@@ -26,25 +26,30 @@ export default function Index() {
             dataIndex: 'id',
         },
         {
-            title: '客户名称',
+            title: '产品名',
             dataIndex: 'name',
         },
         {
-            title: '负责人',
+            title: "货号",
+            dataIndex: "goods_no"
+        },
+        {
+            title: '类别',
             dataIndex: 'head',
+            render: (_, record) => (
+                <div>
+                    {record.cates1}, {record.cates2}
+                </div>
+            )
         },
         {
-            title: '手机号',
-            dataIndex: 'phone',
-        },
-        {
-            title: '客户编号',
-            dataIndex: "customer_no",
+            title: "售价",
+            dataIndex: "sell_price"
         },
         {
             title: '创建时间',
             key: 'create_time',
-            render: (_, record)=> (
+            render: (_, record) => (
                 <div>
                     {formatDateTime(new Date(record.create_time))}
                 </div>
@@ -60,7 +65,7 @@ export default function Index() {
             render: (_, record) => (
                 <a href='#' onClick={(event) => {
                     event.preventDefault()
-                    // setCustomer(record)
+                    setEditItem(record)
                     setIsEditModalOpen(true)
                 }}>
                     查看
@@ -70,7 +75,7 @@ export default function Index() {
     ];
 
     const [refresh, setRefresh] = useState<boolean>(false)
-    const [editItem, setEditItem] = useState<Item|undefined>()
+    const [editItem, setEditItem] = useState<Item | undefined>()
 
     return (
         <LayoutWithMenu>
@@ -88,7 +93,7 @@ export default function Index() {
 
             {/*filters*/}
             <div className='bg-white p-5 m-2 rounded'>
-                <CustomerSearchForm />
+                <CustomerSearchForm/>
             </div>
 
             <div className='p-5 m-2 bg-white rounded'>
