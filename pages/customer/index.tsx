@@ -20,20 +20,7 @@ export default function Order() {
     const [isEditCustomerModalOpen, setIsEditCustomerModalOpen] = useState<boolean>(false)
     const {reloadPage} = useRouterUtils()
     const {mutate} = useSWRConfig()
-    /*
-        id: number,
-    customer_no: string,
-    ty_pe: number | string,
-    name: string,
-    head: string,
-    address: string,
-    email: string,
-    birthday: string | null,
-    qq: string,
-    phone: string,
-    notes: string,
 
-    * */
     const columns: ColumnsType<Customer> = [
         {
             title: 'ID',
