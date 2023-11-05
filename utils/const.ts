@@ -3,8 +3,7 @@ export const maxTableColumnStrLen: number = 25
 export const host = 'http://127.0.0.1:9101'
 // export const host = 'https://erp.ligulfzhou.com'
 
-// export const defaultPageSize = 50
-export const defaultPageSize = 10
+export const defaultPageSize = 50
 
 
 interface Option {
