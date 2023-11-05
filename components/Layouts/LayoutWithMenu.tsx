@@ -107,7 +107,7 @@ const LayoutWithMenu: FC<Props> = (
             return 'home'
         } else if (pathname == '/customer') {
             return 'customer'
-        } else if (pathname.startsWith( '/items') ){
+        } else if (pathname.startsWith('/items')) {
             return 'items'
         } else {
             return ''
@@ -140,7 +140,7 @@ const LayoutWithMenu: FC<Props> = (
             <Header className='flex flex-row justify-between justify-items-center'>
                 <div className="font-bold cursor-pointer">
                     <a href='/' target='_self' className='text-white'>
-                        lien后台管理
+                        门店管理后台
                     </a>
                 </div>
                 <div className=''>

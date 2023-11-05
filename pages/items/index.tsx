@@ -38,7 +38,11 @@ export default function Index() {
             dataIndex: 'head',
             render: (_, record) => (
                 <div>
-                    {record.cates1}, {record.cates2}
+                    {record.cates1 && record.cates2? (
+                        <>
+                            {record.cates1}, {record.cates2}
+                        </>
+                    ): null}
                 </div>
             )
         },
