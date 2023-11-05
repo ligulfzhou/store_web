@@ -1,5 +1,5 @@
 import React, {FC, ReactNode} from 'react';
-import {DollarCircleOutlined, LaptopOutlined, LineChartOutlined, UserOutlined} from '@ant-design/icons';
+import {DollarCircleOutlined, LineChartOutlined, UserOutlined} from '@ant-design/icons';
 import {Avatar, Dropdown, Layout, Menu, MenuProps, message} from 'antd';
 import {useRouter} from "next/router";
 import {useIsMounted} from "@/hooks/useIsMounted";
@@ -10,33 +10,35 @@ import {logout} from "@/requests/account";
 
 const {Header, Content, Sider} = Layout;
 
-let customers = ["L1001", "L1002", "L1003", "L1004", "L1005", "L1006"]
-
 const menuItems: MenuProps["items"] = [
-    {
-        key: "home",
-        icon: React.createElement(LineChartOutlined),
-        label: "统计",
-        children: [
-            {
-                key: "/",
-                label: "统计"
-            },
-            {
-                key: "/stats/returnOrder/goods",
-                label: "复购(款式)"
-            },
-            {
-                key: "/stats/returnOrder/items",
-                label: "复购(款式+颜色)"
-            },
-        ]
-    },
+    // {
+    //     key: "home",
+    //     icon: React.createElement(LineChartOutlined),
+    //     label: "统计",
+    //     children: [
+    //         {
+    //             key: "/",
+    //             label: "统计"
+    //         },
+    //         {
+    //             key: "/stats/returnOrder/goods",
+    //             label: "复购(款式)"
+    //         },
+    //         {
+    //             key: "/stats/returnOrder/items",
+    //             label: "复购(款式+颜色)"
+    //         },
+    //     ]
+    // },
     {
         key: "items",
         icon: React.createElement(LineChartOutlined),
         label: "产品",
         children: [
+            {
+                key: "/items",
+                label: "所有产品"
+            },
             {
                 key: "/items/cates",
                 label: "产品类别"
@@ -46,31 +48,12 @@ const menuItems: MenuProps["items"] = [
     {
         key: 'orders',
         icon: React.createElement(DollarCircleOutlined),
-        label: "订单管理",
+        label: "销售",
         children: [
-            ...customers.map(customer => ({
-                "key": `/order/${customer}`,
-                "label": `${customer}客户`
-            })),
-            // {
-            //     'key': '/order',
-            //     'label': '所有客户'
-            // }
-        ]
-    },
-    {
-        key: 'order-goods',
-        icon: React.createElement(LaptopOutlined),
-        label: "订单商品",
-        children: [
-            ...customers.map(customer => ({
-                "key": `/goods/order/${customer}`,
-                "label": `${customer}客户`
-            })),
-            // {
-            //     'key': '/goods/order',
-            //     'label': '所有客户'
-            // }
+            {
+                'key': '/order',
+                'label': '所有客户'
+            }
         ]
     },
     {
@@ -118,15 +101,13 @@ const LayoutWithMenu: FC<Props> = (
     }
 
     const openedKeyFromPathname = (pathname: string) => {
-        if (pathname.startsWith("/goods/order")) {
-            return "order-goods"
-        } else if (pathname.startsWith("/order")) {
+        if (pathname.startsWith("/order")) {
             return "orders"
         } else if (pathname == '/' || pathname.startsWith("/stats")) {
             return 'home'
         } else if (pathname == '/customer') {
             return 'customer'
-        } else if (pathname == '/items') {
+        } else if (pathname.startsWith( '/items') ){
             return 'items'
         } else {
             return ''
