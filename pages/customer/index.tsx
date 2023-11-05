@@ -14,7 +14,7 @@ import CustomerSearchForm from "@/components/customer/CustomerSearchForm";
 import {formatDateTime} from "@/utils/utils";
 
 
-export default function Order() {
+export default function Index() {
     const {page, pageSize} = useParameters()
     const {customers, total, isLoading, isError, key} = useCustomers()
     const [isEditCustomerModalOpen, setIsEditCustomerModalOpen] = useState<boolean>(false)
