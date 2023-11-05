@@ -1,17 +1,16 @@
 import {Table, Button} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {ColumnsType} from "antd/es/table";
-import {Customer} from "@/types/customer";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import useParameters from "@/hooks/useParameters";
 import {defaultPageSize} from "@/utils/const";
 import React, {useState} from "react";
 import {useSWRConfig} from "swr"
-import EditCustomerModal from "@/components/customer/EditCustomerModal";
+import EditModal from "@/components/items/item/EditModal";
 import CustomerSearchForm from "@/components/customer/CustomerSearchForm";
 import {formatDateTime} from "@/utils/utils";
 import useItems from "@/hooks/useItems";
-import Item from "@/types/item";
+import {Item} from "@/types/item";
 
 
 export default function Index() {
@@ -71,12 +70,11 @@ export default function Index() {
     ];
 
     const [refresh, setRefresh] = useState<boolean>(false)
-    const [customer, setCustomer] = useState<Customer | undefined>()
     const [editItem, setEditItem] = useState<Item|undefined>()
 
     return (
         <LayoutWithMenu>
-            <EditCustomerModal
+            <EditModal
                 open={isEditModalOpen}
                 closeFn={(success) => {
                     setIsEditModalOpen(false)
@@ -85,7 +83,7 @@ export default function Index() {
                         mutate(key).finally(() => setRefresh(false))
                     }
                 }}
-                customer={customer}
+                obj={editItem}
             />
 
             {/*filters*/}

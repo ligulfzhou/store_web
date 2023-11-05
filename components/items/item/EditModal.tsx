@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from "react";
 import {Modal, Form, Input, message, DatePicker, Select} from "antd";
 import useSWRMutation from "swr/mutation";
-import Item from "@/types/item";
+import {Item} from "@/types/item";
 import {updateItem, UpdateItemParam} from "@/requests/item";
 
 
@@ -92,9 +92,9 @@ const EditModal: FC<Props> = (
                 >
                     <div className='grid grid-cols-2'>
                         <Form.Item
-                            label="客户名称"
+                            label="产品名"
                             name="name"
-                            rules={[{required: true, message: '请输入客户名称!'}]}
+                            rules={[{required: true, message: '请输入产品名!'}]}
                         >
                             <Input/>
                         </Form.Item>

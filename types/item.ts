@@ -1,4 +1,4 @@
-export default interface Cate {
+export interface Cate {
     id: number,                // SERIAL
     index: number,             // 顺序
     name: string,           // 类名
@@ -6,7 +6,7 @@ export default interface Cate {
 
 }
 
-export default interface Item {
+export interface Item {
     id: number,
     brand: string,              // 品牌
     cates1: string,             // 产品大类
@@ -21,5 +21,3 @@ export default interface Item {
     buy_price: number,             // 进货价
     create_time: string, // 创建时间
 }
-
-
