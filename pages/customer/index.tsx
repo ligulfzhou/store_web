@@ -9,7 +9,6 @@ import {defaultPageSize} from "@/utils/const";
 import React, {useState} from "react";
 import {useSWRConfig} from "swr"
 import EditCustomerModal from "@/components/customer/EditCustomerModal";
-import OrderSearchForm from "@/components/order/OrderSearchForm";
 import CustomerSearchForm from "@/components/customer/CustomerSearchForm";
 import {formatDateTime} from "@/utils/utils";
 
