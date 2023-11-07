@@ -86,7 +86,7 @@ const LayoutWithMenu: FC<Props> = (
             return "orders"
         } else if (pathname == '/' || pathname.startsWith("/stats")) {
             return 'home'
-        } else if (pathname == '/customer') {
+        } else if (pathname.startsWith('/customer')) {
             return 'customer'
         } else if (pathname.startsWith('/items')) {
             return 'items'

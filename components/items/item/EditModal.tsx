@@ -100,41 +100,43 @@ const EditModal: FC<Props> = (
                         </Form.Item>
 
                         <Form.Item
-                            label="负责人"
-                            name="head"
+                            label="类别"
+                            name="cates"
+                        >
+                            #todo
+                        </Form.Item>
+
+                        <Form.Item
+                            label="货号"
+                            name="goods_no"
+                        >
+                            <Input/>
+                        </Form.Item>
+
+                        {/*<DatePicker style={{width: 200}} />*/}
+                        <Form.Item
+                            label="条码"
+                            name="barcode"
                         >
                             <Input/>
                         </Form.Item>
 
                         <Form.Item
-                            label="手机号"
-                            name="phone"
+                            label="规格"
+                            name="size"
                         >
                             <Input/>
                         </Form.Item>
 
                         <Form.Item
-                            label="生日"
-                            name="birthday"
-                        >
-                            <DatePicker style={{width: 200}} />
-                        </Form.Item>
-
-
-                        <Form.Item
-                            label="Email"
-                            name="email"
+                            label="单位"
+                            name="unit"
                         >
                             <Input/>
                         </Form.Item>
+                    </div>
 
-                        <Form.Item
-                            label="QQ"
-                            name="qq"
-                        >
-                            <Input/>
-                        </Form.Item>
-
+                    <div className='grid grid-cols-2 mt-6'>
                         <Form.Item
                             label="客户类型"
                             name="ty_pe"
