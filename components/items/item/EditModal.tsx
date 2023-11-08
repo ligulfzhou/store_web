@@ -1,9 +1,16 @@
 import React, {FC, useEffect, useState} from "react";
-import {Modal, Form, Input, message, DatePicker, Select, InputNumber} from "antd";
+import {Modal, Form, Input, message, InputNumber, Cascader} from "antd";
 import useSWRMutation from "swr/mutation";
 import {Item} from "@/types/item";
 import {updateItem, UpdateItemParam} from "@/requests/item";
+import useCates from "@/hooks/useCates";
 
+
+interface Option {
+    value: string;
+    label: string;
+    children?: Option[];
+}
 
 interface Props {
     open: boolean,
@@ -18,6 +25,8 @@ const EditModal: FC<Props> = (
         obj
     }
 ) => {
+
+    const {cates, isLoading} = useCates()
     const [form] = Form.useForm();
 
     const onFinish = (values: UpdateItemParam) => {
@@ -43,10 +52,15 @@ const EditModal: FC<Props> = (
     const [formValues, setFormValues] = useState<UpdateItemParam | undefined>(undefined)
 
     useEffect(() => {
+        let cates = null
+        if (obj?.cates1 && obj.cates2) {
+            cates = [obj.cates1, obj.cates2]
+        }
         let _formValues: UpdateItemParam = {
             barcode: obj?.barcode || '',
             brand: obj?.brand || '',
             buy_price: obj?.buy_price || '',
+            cates: cates,
             cates1: obj?.cates1 || '',
             cates2: obj?.cates2 || '',
             color: obj?.color || '',
@@ -55,11 +69,51 @@ const EditModal: FC<Props> = (
             sell_price: obj?.sell_price || '',
             size: obj?.size || '',
             unit: obj?.unit || '',
+            images: obj?.images || [],
+            supplier: obj?.supplier || '',
+            material: obj?.material || '',
+            pcs: obj?.pcs || '',
+            weight: obj?.weight || '',
+            english_name: obj?.english_name || '',
+            description: obj?.description || '',
+            notes: obj?.notes || '',
             id: obj?.id || 0
         }
+        console.log(_formValues)
+
         setFormValues(_formValues)
         form.setFieldsValue(_formValues)
     }, [obj])
+
+    const [options, setOptions] = useState<Option[]>([])
+    useEffect(() => {
+        if (isLoading) {
+            return
+        }
+
+        let ops: Option[] = []
+        for (let cate of cates) {
+            let op: Option = {
+                children: [],
+                label: cate.name,
+                value: cate.name
+            }
+
+            cate.sub_cates.map(sub_cate => {
+                op.children?.push({
+                    children: [],
+                    label: sub_cate,
+                    value: sub_cate
+                })
+            })
+            ops.push(op)
+        }
+
+        if (ops.length > 0) {
+            setOptions(ops)
+        }
+
+    }, [cates, isLoading])
 
     const {
         trigger: callUpdateAPI,
@@ -110,7 +164,8 @@ const EditModal: FC<Props> = (
                             label="类别"
                             name="cates"
                         >
-                            #todo
+                            {/*<CatesCascader/>*/}
+                            <Cascader options={options}/>
                         </Form.Item>
 
                         <Form.Item
@@ -120,7 +175,6 @@ const EditModal: FC<Props> = (
                             <Input/>
                         </Form.Item>
 
-                        {/*<DatePicker style={{width: 200}} />*/}
                         <Form.Item
                             label="条码"
                             name="barcode"

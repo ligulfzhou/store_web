@@ -20,4 +20,13 @@ export interface Item {
     sell_price: number,            // 标准售价
     buy_price: number,             // 进货价
     create_time: string, // 创建时间
+
+    images: string[],
+    supplier: string,
+    material: string,
+    pcs: number,
+    weight: number,
+    english_name: string,
+    description: string,
+    notes: string
 }

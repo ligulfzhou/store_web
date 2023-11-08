@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import {fetcher} from "@/utils/utils";
 import {host} from "@/utils/const";
 import {ListReponse} from "@/types/common";
-import Cate from '@/types/item'
+import {Cate} from '@/types/item'
 
 export default function useCates() {
     const key = `${host}/api/cates`

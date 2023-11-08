@@ -4,10 +4,7 @@ import {Button, message, Upload} from 'antd';
 import React, {FC} from 'react';
 import {host} from "@/utils/const";
 import {EmptyResponse} from "@/types";
-import {Message} from "postcss";
 import {MessageType} from "antd/lib/message";
-import {Simulate} from "react-dom/test-utils";
-import load = Simulate.load;
 
 interface Props {
     callback: () => void
