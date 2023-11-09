@@ -8,16 +8,27 @@ import {MessageType} from "antd/lib/message";
 
 interface Props {
     callback: () => void
+    tp: 'item'|'customer'|'order'
 }
 
 const ExcelImporter: FC<Props> = (
     {
-        callback
+        callback,
+        tp
     }
 ) => {
     const key = 'excel_importer';
     let loadingMessage: MessageType | null = null;
 
+    const tpToName = ()=> {
+        if (tp=='item') {
+            return '产品'
+        } else if (tp=='customer') {
+            return '客户'
+        } else {
+            return '订单'
+        }
+    }
     const props: UploadProps = {
         name: 'file',
         multiple: false,
@@ -53,7 +64,7 @@ const ExcelImporter: FC<Props> = (
     return (
         <>
             <Upload {...props}>
-                <Button icon={<UploadOutlined/>}>导入订单</Button>
+                <Button icon={<UploadOutlined/>}>导入{tpToName()}</Button>
             </Upload>
         </>
     )

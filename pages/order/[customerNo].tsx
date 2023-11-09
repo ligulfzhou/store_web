@@ -219,7 +219,7 @@ export default function Order() {
                     <ExcelImporter callback={() => {
                         setRefresh(true)
                         mutate(key).finally(() => setRefresh(false))
-                    }}/>
+                    }} tp={'customer'}/>
                 </div>
 
                 <Table

@@ -1,4 +1,4 @@
-import {Table, Button} from 'antd';
+import {Table, Button, Image} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {ColumnsType} from "antd/es/table";
 import useRouterUtils from "@/hooks/useRouterUtils";
@@ -11,6 +11,8 @@ import CustomerSearchForm from "@/components/customer/CustomerSearchForm";
 import {formatDateTime} from "@/utils/utils";
 import useItems from "@/hooks/useItems";
 import {Item} from "@/types/item";
+import ExcelImporter from "@/components/uploader/ExcelImporter";
+import {fallbackImage} from "@/utils/b64";
 
 
 export default function Index() {
@@ -20,10 +22,30 @@ export default function Index() {
     const {reloadPage} = useRouterUtils()
     const {mutate} = useSWRConfig()
 
+    // @ts-ignore
     const columns: ColumnsType<Item> = [
         {
             title: 'ID',
             dataIndex: 'id',
+        },
+        {
+            title: "图片",
+            dataIndex: "image",
+            width: "80px",
+            render: (_, record) => (
+                <Image.PreviewGroup>
+                    <div className='flex flex-row gap-1'>
+                        {record.images.map((image_url, index) => (
+                            <Image
+                                key={`image-${index}`}
+                                width={32}
+                                height={32}
+                                src={image_url}
+                                fallback={fallbackImage}/>
+                        ))}
+                    </div>
+                </Image.PreviewGroup>
+            )
         },
         {
             title: '产品名',
@@ -38,11 +60,11 @@ export default function Index() {
             dataIndex: 'head',
             render: (_, record) => (
                 <div>
-                    {record.cates1 && record.cates2? (
+                    {record.cates1 && record.cates2 ? (
                         <>
                             {record.cates1}, {record.cates2}
                         </>
-                    ): null}
+                    ) : null}
                 </div>
             )
         },
@@ -124,6 +146,10 @@ export default function Index() {
                     >
                         添加
                     </Button>
+
+                    <ExcelImporter callback={() => {
+                        console.log('.........')
+                    }} tp='item'/>
                 </div>
 
                 <Table

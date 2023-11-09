@@ -46,14 +46,14 @@ export function makeUpdateCustomerParamNotNull(param: UpdateItemParam) {
         size: param.size || '',               // 规格
         unit: param.unit || '',               // 单位
         barcode: param.barcode || '',            // 条码
-        sell_price: param.sell_price,            // 标准售价
-        buy_price: param.buy_price,             // 进货价
+        sell_price: param.sell_price || 0,            // 标准售价
+        buy_price: param.buy_price || 0,             // 进货价
 
         images: param.images || [],
         supplier: param.supplier || '',
         material: param.material || '',
-        pcs: param.pcs,
-        weight: param.weight,
+        pcs: param.pcs || 0,
+        weight: param.weight || 0,
         english_name: param.english_name || '',
         description: param.description || '',
         notes: param.notes || '',

@@ -93,10 +93,13 @@ export default function Order() {
                     刷新
                 </Button>
 
-                <ExcelImporter callback={()=> {
-                    setRefresh(true)
-                    mutate(key).finally(() => setRefresh(false))
-                }}/>
+                <ExcelImporter
+                    callback={() => {
+                        setRefresh(true)
+                        mutate(key).finally(() => setRefresh(false))
+                    }}
+                    tp={'order'}
+                />
             </div>
 
             <div className='p-5 m-2 bg-white rounded overflow-auto'>

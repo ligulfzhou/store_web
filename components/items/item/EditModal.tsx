@@ -1,10 +1,17 @@
 import React, {FC, useEffect, useState} from "react";
-import {Modal, Form, Input, message, InputNumber, Cascader} from "antd";
+import {Modal, Form, Input, message, InputNumber, Cascader, UploadFile, UploadProps, Upload} from "antd";
 import useSWRMutation from "swr/mutation";
 import {Item} from "@/types/item";
 import {updateItem, UpdateItemParam} from "@/requests/item";
 import useCates from "@/hooks/useCates";
+import MultipleImageUploader from "@/components/uploader/MultipleImageUploader";
+import {DataResponse} from "@/types";
 
+
+type imageReponse = {
+    url: string
+}
+type UploadImageResponse = DataResponse<imageReponse>
 
 interface Option {
     value: string;
@@ -25,7 +32,6 @@ const EditModal: FC<Props> = (
         obj
     }
 ) => {
-
     const {cates, isLoading} = useCates()
     const [form] = Form.useForm();
 
@@ -34,8 +40,17 @@ const EditModal: FC<Props> = (
         if (obj) {
             id = obj.id
         }
-
         values['id'] = id
+
+        console.log(fileList)
+
+        let imageList = fileList.map(file => {
+            let response = file.response as UploadImageResponse
+            return response.data.url
+        })
+        console.log(imageList)
+        values['images'] = imageList
+
         console.log(values)
 
         callUpdateAPI(values).then((res) => {
@@ -49,8 +64,8 @@ const EditModal: FC<Props> = (
         })
     };
 
+    // set form values.
     const [formValues, setFormValues] = useState<UpdateItemParam | undefined>(undefined)
-
     useEffect(() => {
         let cates = null
         if (obj?.cates1 && obj.cates2) {
@@ -85,6 +100,7 @@ const EditModal: FC<Props> = (
         form.setFieldsValue(_formValues)
     }, [obj])
 
+    // set cates options
     const [options, setOptions] = useState<Option[]>([])
     useEffect(() => {
         if (isLoading) {
@@ -120,6 +136,8 @@ const EditModal: FC<Props> = (
         isMutating: callingUpdateAPI
     } = useSWRMutation("/api/item/edit", updateItem)
 
+    const [fileList, setFileList] = useState<UploadFile[]>([])
+
     return (
         <div>
             <Modal
@@ -144,6 +162,16 @@ const EditModal: FC<Props> = (
                     initialValues={{formValues}}
                     onFinish={onFinish}
                 >
+                    <div>
+                        <Form.Item
+                            label={"产品图片"}
+                        >
+                            <MultipleImageUploader fileList={fileList} handleNewFileList={(newFileList)=> {
+                                setFileList(newFileList)
+                            }}/>
+                        </Form.Item>
+                    </div>
+
                     <div className='grid grid-cols-2'>
                         <Form.Item
                             label="产品名"
