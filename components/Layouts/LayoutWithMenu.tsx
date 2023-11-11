@@ -12,6 +12,17 @@ const {Header, Content, Sider} = Layout;
 
 const menuItems: MenuProps["items"] = [
     {
+        key: "home",
+        icon: React.createElement(LineChartOutlined),
+        label: "统计",
+        children: [
+            {
+                key: "/",
+                label: "统计"
+            },
+        ]
+    },
+    {
         key: "items",
         icon: React.createElement(LineChartOutlined),
         label: "产品",
