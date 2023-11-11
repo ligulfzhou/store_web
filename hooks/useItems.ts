@@ -3,7 +3,7 @@ import {fetcher} from "@/utils/utils";
 import {host} from "@/utils/const";
 import {ListReponse} from "@/types/common";
 import useParameters from "@/hooks/useParameters";
-import Item from "@/types/item";
+import {Item} from "@/types/item";
 
 export default function useItems() {
     const {

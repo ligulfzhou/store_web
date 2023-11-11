@@ -2,7 +2,6 @@ import React, {FC} from "react";
 import {message, Modal} from "antd";
 import useSWRMutation from "swr/mutation";
 import {deleteOrder} from "@/requests/order";
-import {Order} from "@/types";
 
 
 interface Props {

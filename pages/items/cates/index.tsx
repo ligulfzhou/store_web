@@ -1,10 +1,5 @@
-import {Table, Button} from 'antd';
+import {Button} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
-import {ColumnsType} from "antd/es/table";
-import useCustomers from "@/hooks/useCustomers";
-import {Customer} from "@/types/customer";
-import useRouterUtils from "@/hooks/useRouterUtils";
-import useParameters from "@/hooks/useParameters";
 import {useState} from "react";
 import {useSWRConfig} from "swr"
 import {CatesManagement} from "@/components/items/cates/CatesManagement";

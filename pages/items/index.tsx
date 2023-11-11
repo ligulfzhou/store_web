@@ -22,7 +22,6 @@ export default function Index() {
     const {reloadPage} = useRouterUtils()
     const {mutate} = useSWRConfig()
 
-    // @ts-ignore
     const columns: ColumnsType<Item> = [
         {
             title: 'ID',
