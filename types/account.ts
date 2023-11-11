@@ -3,7 +3,4 @@ export interface Account {
     name: string,
     account: string,
     // pub password: String,
-    department_id: number,
-    department: string,
-    steps: number[]
 }
