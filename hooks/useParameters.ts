@@ -38,7 +38,6 @@ export default function useParameters() {
         phone,
         head,
         name,
-        customer_no,
         ty_pe,
         create_time_st,
         create_time_ed,
@@ -57,7 +56,6 @@ export default function useParameters() {
     phone = parseQueryParam(phone)
     name = parseQueryParam(name)
     head = parseQueryParam(head)
-    customer_no = parseQueryParam(customer_no)
     let ty_peN = parseQueryParamToNumber(ty_pe)
     create_time_st = parseQueryParam(create_time_st)
     create_time_ed = parseQueryParam(create_time_ed)
@@ -120,7 +118,6 @@ export default function useParameters() {
         phone,
         head,
         name,
-        customer_no,
         ty_pe: ty_peN,
         create_time_st,
         create_time_ed,

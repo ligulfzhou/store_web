@@ -26,12 +26,6 @@ const CustomerSearchForm = () => {
     useEffect(() => {
         // 用户切换tab时，清掉form
         let values = {}
-
-        console.log('------------------')
-        console.log(phone||undefined)
-        console.log(name||undefined)
-        console.log('------------------')
-
         if (phone) {
             // @ts-ignore
             values['phone'] = phone
@@ -39,9 +33,6 @@ const CustomerSearchForm = () => {
             // @ts-ignore
             values['phone'] = undefined
         }
-
-        // @ts-ignore
-        values['customer_no'] = customer_no | undefined
 
         if (name) {
             // @ts-ignore
@@ -69,7 +60,6 @@ const CustomerSearchForm = () => {
             name: string | undefined,
             head: string | undefined,
             ty_pe: number,
-            customer_no: string | undefined,
             phone: string | undefined,
             create_time: moment.Moment[] | undefined
         } = form.getFieldsValue();
@@ -86,7 +76,6 @@ const CustomerSearchForm = () => {
             name: formParams.name,
             phone: formParams.phone,
             ty_pe: formParams.ty_pe,
-            customer_no: formParams.customer_no,
             page: 1,
             pageSize: pageSize
         };
@@ -98,7 +87,6 @@ const CustomerSearchForm = () => {
             create_time_ed: undefined,
             create_time_st: undefined,
             name: undefined,
-            customer_no: undefined,
             phone: undefined,
             ty_pe: 0,
             head: undefined,
