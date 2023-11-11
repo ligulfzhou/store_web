@@ -126,13 +126,6 @@ const EditCustomerModal: FC<Props> = (
                         </Form.Item>
 
                         <Form.Item
-                            label="QQ"
-                            name="qq"
-                        >
-                            <Input/>
-                        </Form.Item>
-
-                        <Form.Item
                             label="客户类型"
                             name="ty_pe"
                             rules={[{required: true, message: '请选择客户类型!'}]}
@@ -161,14 +154,6 @@ const EditCustomerModal: FC<Props> = (
                         <Form.Item
                             label="地址"
                             name="address"
-                        >
-                            <Input/>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="客户编号"
-                            name="customer_no"
-                            rules={[{required: true, message: '请输入客户编号!'}]}
                         >
                             <Input/>
                         </Form.Item>
