@@ -16,7 +16,6 @@ const CustomerSearchForm = () => {
         ty_pe,
         phone,
         name,
-        customer_no,
         create_time_st,
         create_time_ed,
     } = useParameters()
