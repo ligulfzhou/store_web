@@ -46,13 +46,11 @@ const EditCustomerModal: FC<Props> = (
         let _formValues: UpdateCustomerParam = {
             address: customer?.address||'',
             birthday: customer?.birthday||null,
-            customer_no: customer?.customer_no||'',
             email: customer?.email||'',
             head: customer?.head||'',
             name: customer?.name||'',
             notes: customer?.notes||'',
             phone: customer?.phone||'',
-            qq: customer?.qq||'',
             ty_pe: customer?.ty_pe||'',
             id: customer?.id||0
         }

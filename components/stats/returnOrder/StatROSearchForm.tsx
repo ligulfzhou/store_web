@@ -12,7 +12,7 @@ interface StatROSearchParms {
 
 const OrderSearchForm: FC = () => {
     const {removeParams, reloadPage} = useRouterUtils();
-    const {pageSize, ro_search, customer_no} = useParameters()
+    const {pageSize, ro_search} = useParameters()
     const [form] = Form.useForm();
 
     useEffect(() => {
