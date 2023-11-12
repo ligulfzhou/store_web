@@ -1,5 +1,5 @@
 import React, {FC, ReactNode} from 'react';
-import {DollarCircleOutlined, LineChartOutlined, UserOutlined} from '@ant-design/icons';
+import {DollarCircleOutlined, LineChartOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
 import {Avatar, Dropdown, Layout, Menu, MenuProps, message} from 'antd';
 import {useRouter} from "next/router";
 import {useIsMounted} from "@/hooks/useIsMounted";
@@ -58,6 +58,17 @@ const menuItems: MenuProps["items"] = [
                 label: "客户列表"
             }
         ]
+    },
+    {
+        key: 'settings',
+        icon: React.createElement(SettingOutlined),
+        label: "配置",
+        children: [
+            {
+                key: "/settings/color",
+                label: "颜色=>编码"
+            }
+        ]
     }
 ]
 
@@ -101,6 +112,8 @@ const LayoutWithMenu: FC<Props> = (
             return 'customer'
         } else if (pathname.startsWith('/items')) {
             return 'items'
+        } else if (pathname.startsWith("/setting")) {
+            return "settings"
         } else {
             return ''
         }
@@ -152,7 +165,7 @@ const LayoutWithMenu: FC<Props> = (
                     width={200}
                     style={{background: 'white'}}
                     collapsible={true}
-                    trigger={null}
+                    trigger={true}
                 >
                     <Menu
                         multiple={false}

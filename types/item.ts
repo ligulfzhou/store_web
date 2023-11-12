@@ -3,7 +3,23 @@ export interface Cate {
     index: number,             // 顺序
     name: string,           // 类名
     sub_cates: string[], // 子类
+}
 
+export interface CateModel {
+    id: number,        // SERIAL
+    index: number,     // 顺序
+    name: string,   // 类名
+    cate_type: number, // 大类小类， 0 大类， 1小类，再变大，则更小
+    parent_id: number, // 父类ID
+}
+
+export interface Cates {
+    id: number,        // SERIAL
+    index: number,     // 顺序
+    name: string,   // 类名
+    cate_type: number, // 大类小类， 0 大类， 1小类，再变大，则更小
+    parent_id: number, // 父类ID
+    sub_cates: Cate[],
 }
 
 export interface Item {

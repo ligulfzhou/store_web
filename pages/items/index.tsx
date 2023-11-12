@@ -147,7 +147,8 @@ export default function Index() {
                     </Button>
 
                     <ExcelImporter callback={() => {
-                        console.log('.........')
+                        setRefresh(true)
+                        mutate(key).finally(() => setRefresh(false))
                     }} tp='item'/>
                 </div>
 

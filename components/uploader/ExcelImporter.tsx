@@ -29,12 +29,13 @@ const ExcelImporter: FC<Props> = (
             return '订单'
         }
     }
+
     const props: UploadProps = {
         name: 'file',
         multiple: false,
         showUploadList: false,
         action: `${host}/api/upload/excel`,
-        accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel",
+        accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         onChange(info) {
             if (info.file.status === 'uploading') {
                 if (!loadingMessage) {

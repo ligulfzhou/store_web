@@ -69,28 +69,20 @@ const EditModal: FC<Props> = (
     useEffect(() => {
         let cates = null
         if (obj?.cates1 && obj.cates2) {
-            cates = [obj.cates1, obj.cates2]
+            // cates = [obj.cates1, obj.cates2]
+            // todo
+            cates = [0, 1]
         }
         let _formValues: UpdateItemParam = {
             barcode: obj?.barcode || '',
-            brand: obj?.brand || '',
-            buy_price: obj?.buy_price || '',
             cates: cates,
-            cates1: obj?.cates1 || '',
-            cates2: obj?.cates2 || '',
+            // todo
+            price: 0, cost: 0, number: '', cate1_id: 0, cate2_id: 1,
             color: obj?.color || '',
-            goods_no: obj?.goods_no || '',
             name: obj?.name || '',
-            sell_price: obj?.sell_price || '',
             size: obj?.size || '',
             unit: obj?.unit || '',
             images: obj?.images || [],
-            supplier: obj?.supplier || '',
-            material: obj?.material || '',
-            pcs: obj?.pcs || '',
-            weight: obj?.weight || '',
-            english_name: obj?.english_name || '',
-            description: obj?.description || '',
             notes: obj?.notes || '',
             id: obj?.id || 0
         }

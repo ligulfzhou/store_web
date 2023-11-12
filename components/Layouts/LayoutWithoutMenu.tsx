@@ -72,7 +72,7 @@ const LayoutWithoutMenu: FC<Props> = (
                     <Dropdown menu={{items: dropDownMenus}} trigger={['hover', 'click']}>
                         <div className='flex flex-row items-center'>
                             <div className='text-white'>
-                                {account?.name}({account?.department})
+                                {account?.name}
                             </div>
 
                             <Avatar icon={<UserOutlined/>}/>
