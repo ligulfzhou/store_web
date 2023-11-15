@@ -120,7 +120,6 @@ const EditModal: FC<Props> = (
         if (ops.length > 0) {
             setOptions(ops)
         }
-
     }, [cates, isLoading])
 
     const {

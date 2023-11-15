@@ -1,26 +1,35 @@
+// export interface Cate {
+//     id: number,                // SERIAL
+//     index: number,             // 顺序
+//     name: string,           // 类名
+//     sub_cates: string[], // 子类
+//     create_time: string,
+// }
+//
+// export interface CateModel {
+//     id: number,        // SERIAL
+//     index: number,     // 顺序
+//     name: string,   // 类名
+//     cate_type: number, // 大类小类， 0 大类， 1小类，再变大，则更小
+//     parent_id: number, // 父类ID
+// }
+
 export interface Cate {
-    id: number,                // SERIAL
-    index: number,             // 顺序
-    name: string,           // 类名
-    sub_cates: string[], // 子类
-}
-
-export interface CateModel {
-    id: number,        // SERIAL
-    index: number,     // 顺序
-    name: string,   // 类名
-    cate_type: number, // 大类小类， 0 大类， 1小类，再变大，则更小
-    parent_id: number, // 父类ID
-}
-
-export interface Cates {
     id: number,        // SERIAL
     index: number,     // 顺序
     name: string,   // 类名
     cate_type: number, // 大类小类， 0 大类， 1小类，再变大，则更小
     parent_id: number, // 父类ID
     sub_cates: Cate[],
+    create_time: string
 }
+
+export interface UpdateCateParams {
+    id: number,    // SERIAL
+    index: number, // 顺序
+    name: string,  // 类名
+}
+
 
 export interface Item {
     id: number,

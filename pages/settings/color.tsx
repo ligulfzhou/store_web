@@ -6,11 +6,13 @@ import {useSWRConfig} from "swr"
 import useColorValue from "@/hooks/useColorValue";
 import {ColorToValue} from "@/types/settings";
 import EditModal from "@/components/settings/color/EditModal";
+import DeleteModal from "@/components/settings/color/DeleteModal";
 
 
 export default function () {
     const {colorValues, key, isLoading} = useColorValue()
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
     const {mutate} = useSWRConfig()
 
     const columns: ColumnsType<ColorToValue> = [
@@ -30,13 +32,23 @@ export default function () {
             title: '操作',
             key: 'action',
             render: (_, record) => (
-                <a href='#' onClick={(event) => {
-                    event.preventDefault()
-                    setEditObj(record)
-                    setIsEditModalOpen(true)
-                }}>
-                    查看
-                </a>
+                <div className='flex flex-row gap-2'>
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        setEditObj(record)
+                        setIsEditModalOpen(true)
+                    }}>
+                        查看
+                    </a>
+
+                    <a href='#' onClick={(event)=> {
+                        event.preventDefault()
+                        setEditObj(record)
+                        setIsDeleteModalOpen(true)
+                    }}>
+                        删除
+                    </a>
+                </div>
             ),
         },
     ];
@@ -48,6 +60,14 @@ export default function () {
         <LayoutWithMenu>
             <EditModal open={isEditModalOpen} closeFn={(success)=> {
                 setIsEditModalOpen(false)
+                if (success) {
+                    setRefresh(true)
+                    mutate(key).finally(() => setRefresh(false))
+                }
+            }} colorValue={editObj} />
+
+            <DeleteModal open={isDeleteModalOpen} closeFn={(success)=> {
+                setIsDeleteModalOpen(false)
                 if (success) {
                     setRefresh(true)
                     mutate(key).finally(() => setRefresh(false))

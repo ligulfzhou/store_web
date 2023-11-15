@@ -1,14 +1,41 @@
-import {Button} from 'antd';
+import {Button, Space, Table} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {useState} from "react";
 import {useSWRConfig} from "swr"
-import {CatesManagement} from "@/components/items/cates/CatesManagement";
+import useCates from "@/hooks/useCates";
+import {ColumnsType} from "antd/es/table";
+import {Cate} from "@/types";
 
 
-export default function Order() {
+export default function () {
     const {mutate} = useSWRConfig()
     const [refresh, setRefresh] = useState<boolean>(false)
-    const key = '/api/cates'
+    const {cates, key, isLoading, isError} = useCates()
+    console.log(cates)
+
+    const columns: ColumnsType<Cate> = [
+        {
+            title: 'ID',
+            dataIndex: 'id',
+        },
+        {
+            title: "类名",
+            dataIndex: "name",
+        },
+        {
+            title: "子类数",
+            dataIndex: "sub_cates"
+        },
+        {
+            title: '操作',
+            key: 'action',
+            render: () => (
+                <Space size="middle">
+                </Space>
+            ),
+        },
+    ];
+
     return (
         <LayoutWithMenu>
             <div className='p-5 m-2 bg-white rounded'>
@@ -25,9 +52,17 @@ export default function Order() {
             </div>
 
             <div className='p-5 m-2 bg-white rounded'>
-                <CatesManagement callback={ (cate1, cate2)=> {
-                    console.log(`in callback ${cate1}, ${cate2}`)
-                }} />
+
+                <Table
+                    rowKey={`id`}
+                    size={"small"}
+                    loading={isLoading || refresh}
+                    columns={columns}
+                    dataSource={cates}
+                />
+                {/*<CatesManagement callback={ (cate1, cate2)=> {*/}
+                {/*    console.log(`in callback ${cate1}, ${cate2}`)*/}
+                {/*}} />*/}
             </div>
         </LayoutWithMenu>
     );

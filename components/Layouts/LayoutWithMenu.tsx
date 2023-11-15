@@ -1,5 +1,12 @@
 import React, {FC, ReactNode} from 'react';
-import {DollarCircleOutlined, LineChartOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
+import {
+    BarsOutlined,
+    DollarCircleOutlined,
+    LineChartOutlined,
+    SettingOutlined,
+    StockOutlined,
+    UserOutlined
+} from '@ant-design/icons';
 import {Avatar, Dropdown, Layout, Menu, MenuProps, message} from 'antd';
 import {useRouter} from "next/router";
 import {useIsMounted} from "@/hooks/useIsMounted";
@@ -24,7 +31,7 @@ const menuItems: MenuProps["items"] = [
     },
     {
         key: "items",
-        icon: React.createElement(LineChartOutlined),
+        icon: React.createElement(BarsOutlined),
         label: "产品",
         children: [
             {
@@ -34,6 +41,21 @@ const menuItems: MenuProps["items"] = [
             {
                 key: "/items/cates",
                 label: "产品类别"
+            },
+        ]
+    },
+    {
+        key: "stock",
+        icon: React.createElement(StockOutlined),
+        label: "库存",
+        children: [
+            {
+                key: "/stock",
+                label: "库存"
+            },
+            {
+                key: "/stock/inout",
+                label: "出入库"
             },
         ]
     },
@@ -114,6 +136,8 @@ const LayoutWithMenu: FC<Props> = (
             return 'items'
         } else if (pathname.startsWith("/setting")) {
             return "settings"
+        } else if (pathname.startsWith("/stock")) {
+            return 'stock'
         } else {
             return ''
         }

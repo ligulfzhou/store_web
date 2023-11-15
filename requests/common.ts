@@ -1,5 +1,6 @@
 import {host} from '@/utils/const'
 import {DataResponse, EmptyResponse, ListReponse} from '@/types'
+import {UpdateCustomerParam} from "@/requests/customer";
 
 
 export async function commonListPost<T>(url: string, body: object): Promise<ListReponse<T>> {
@@ -13,6 +14,17 @@ export async function commonDataPost<T>(url: string, body: object): Promise<Data
 export async function commonEmptyPost(url: string, body: object): Promise<EmptyResponse> {
     return _commonPost(url, body)
 }
+
+
+export interface CommonDeleteParam {
+    id: number,
+}
+
+
+export async function commonDeleteAPI(url: string, {arg}: { arg: CommonDeleteParam }): Promise<EmptyResponse> {
+    return _commonPost(url, arg)
+}
+
 
 export async function _commonPost<T>(url: string, body: object): Promise<T> {
     let res = await fetch(`${host}${url}`, {

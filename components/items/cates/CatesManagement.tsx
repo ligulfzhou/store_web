@@ -62,6 +62,7 @@ export const CatesManagement: FC<Props> = () => {
                 return true
             }
             for (var ii = 0; ii < sub_cates.length; ii++) {
+                // @ts-ignore
                 if (sub_cates[ii] != newSubCates[i][ii]) {
                     console.log(`sub_cates[${ii}]!= newSubCates[${i}][${ii}]`)
                     return true
