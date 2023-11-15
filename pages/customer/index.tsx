@@ -30,6 +30,10 @@ export default function Index() {
             dataIndex: 'name',
         },
         {
+            title: '客户类型',
+            dataIndex: 'ty_pe',
+        },
+        {
             title: '负责人',
             dataIndex: 'head',
         },
