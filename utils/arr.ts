@@ -9,7 +9,7 @@ export function isArrSame<T>(arrA: T[], arrB: T[]) {
         return false
     }
 
-    for (let i = 0; i++; i < arrA.length) {
+    for (let i = 0; i < arrA.length; i++) {
         if (arrA[i] != arrB[i]) {
             return false
         }

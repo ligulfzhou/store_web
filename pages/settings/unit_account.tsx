@@ -54,7 +54,6 @@ export default function () {
         return
     }
 
-
     const updateSettings = (unitAccout: UnitOrAccount) => {
         setUnitOrAccount(unitAccout)
         callAPI({
