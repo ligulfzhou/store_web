@@ -10,7 +10,7 @@ import {useSWRConfig} from "swr";
 import useSWRMutation from "swr/mutation";
 import {updateGlobalSettings} from "@/requests/settings";
 
-type UnitOrAccount = 'account'|'unit'|''
+type UnitOrAccount = 'account' | 'unit' | ''
 
 export default function () {
     const {globalSettings, isLoading, key} = useGlobalSettings()
@@ -32,19 +32,20 @@ export default function () {
         trigger: callAPI,
         isMutating: callingAPI
     } = useSWRMutation("/api/settings/global/update", updateGlobalSettings)
+
     useEffect(() => {
         if (isLoading) {
             return
         }
         setTags(globalSettings?.units || [])
-        setTags2(globalSettings?.accounts||[])
+        setTags2(globalSettings?.accounts || [])
     }, [globalSettings, isLoading]);
 
     useEffect(() => {
         if (inputVisible) {
             inputRef.current?.focus();
         }
-        if(inputVisible2) {
+        if (inputVisible2) {
             inputRef2.current?.focus();
         }
     }, []);
@@ -59,8 +60,8 @@ export default function () {
         callAPI({
             units: tags,
             accounts: tags2
-        }).then(res=> {
-            if (res.code==0) {
+        }).then(res => {
+            if (res.code == 0) {
                 message.success(`修改成功`)
                 setUnitOrAccount('')
                 setRefresh(true)
@@ -137,21 +138,21 @@ export default function () {
 
                 <div className='w-128 flex flex-row items-center'>
                     <div>
-                        {isLoading||refresh ? (
+                        {isLoading || refresh ? (
                             <Spin size={'small'}/>
                         ) : (
                             <div className='flex flex-row items-center'>
                                 {tags.map(tag => (
                                     // <span key={tag} style={{display: 'inline-block'}}>
-                                         <Tag
-                                             closable
-                                             onClose={e => {
-                                                 e.preventDefault();
-                                                 handleClose(tag);
-                                             }}
-                                         >
-                                            {tag}
-                                        </Tag>
+                                    <Tag
+                                        closable
+                                        onClose={e => {
+                                            e.preventDefault();
+                                            handleClose(tag);
+                                        }}
+                                    >
+                                        {tag}
+                                    </Tag>
                                     // </span>
                                 ))}
                             </div>
@@ -183,8 +184,8 @@ export default function () {
                         updateSettings("unit")
                     }}
                     size={'middle'}
-                    disabled={isArrSame(globalSettings?.units||[], tags)}
-                    loading={callingAPI&& unitOrAccount=='unit'}
+                    disabled={isArrSame(globalSettings?.units || [], tags)}
+                    loading={callingAPI && unitOrAccount == 'unit'}
                 >
                     确认修改
                 </Button>
@@ -198,7 +199,7 @@ export default function () {
 
                 <div className='w-128 flex flex-row items-center'>
                     <div>
-                        {isLoading||refresh ? (
+                        {isLoading || refresh ? (
                             <Spin size={'small'}/>
                         ) : (
                             <div className='flex flex-row items-center'>
@@ -244,8 +245,8 @@ export default function () {
                         updateSettings("account")
                     }}
                     size={'middle'}
-                    disabled={isArrSame(globalSettings?.accounts||[], tags2)}
-                    loading={callingAPI&& unitOrAccount=='account'}
+                    disabled={isArrSame(globalSettings?.accounts || [], tags2)}
+                    loading={callingAPI && unitOrAccount == 'account'}
                 >
                     确认修改
                 </Button>
