@@ -10,3 +10,9 @@ export interface UpdateColorValueParams {
     color: string,
     value: number|string
 }
+
+export interface GlobalSettings {
+    id: number,
+    units: string[],
+    accounts: string[]
+}

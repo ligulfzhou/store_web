@@ -89,6 +89,10 @@ const menuItems: MenuProps["items"] = [
             {
                 key: "/settings/color",
                 label: "颜色=>编码"
+            },
+            {
+                key: "/settings/unit_account",
+                label: "单位 和 收款账号"
             }
         ]
     }

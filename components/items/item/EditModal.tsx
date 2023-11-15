@@ -100,22 +100,24 @@ const EditModal: FC<Props> = (
         }
 
         let ops: Option[] = []
-        for (let cate of cates) {
-            let op: Option = {
-                children: [],
-                label: cate.name,
-                value: cate.name
-            }
 
-            cate.sub_cates.map(sub_cate => {
-                op.children?.push({
-                    children: [],
-                    label: sub_cate,
-                    value: sub_cate
-                })
-            })
-            ops.push(op)
-        }
+        // todo
+        // for (let cate of cates) {
+        //     let op: Option = {
+        //         children: [],
+        //         label: cate.name,
+        //         value: cate.name
+        //     }
+        //
+        //     cate.sub_cates.map(sub_cate => {
+        //         op.children?.push({
+        //             children: [],
+        //             label: sub_cate,
+        //             value: sub_cate
+        //         })
+        //     })
+        //     ops.push(op)
+        // }
 
         if (ops.length > 0) {
             setOptions(ops)

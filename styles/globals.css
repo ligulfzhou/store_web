@@ -6,6 +6,11 @@ img.ant-image-preview-img {
   display: inline-block;
 }
 
+.site-tag-plus {
+  background: #fff;
+  border-style: dashed;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
