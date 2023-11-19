@@ -171,16 +171,15 @@ const EditModal: FC<Props> = (
         values['id'] = id
 
         console.log(fileList)
-
         let imageList = fileList.map(file => {
             let response = file.response as UploadImageResponse
             return response.data.url
         })
+
         console.log(imageList)
         values['images'] = imageList
 
         console.log(values)
-
         callUpdateAPI(values).then((res) => {
             if (res.code == 0) {
                 message.success(`${obj ? "修改" : "添加"}成功`)

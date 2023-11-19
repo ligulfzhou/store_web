@@ -23,15 +23,15 @@ const EditCustomerModal: FC<Props> = (
     const onFinish = (values: UpdateCustomerParam) => {
         let id = 0
         if (customer) {
-            id= customer.id
+            id = customer.id
         }
 
         values['id'] = id
         console.log(values)
 
-        callUpdateCustomerAPI(values).then((res)=> {
-            if (res.code==0) {
-                message.success(`${customer?"修改": "添加"}成功`)
+        callUpdateCustomerAPI(values).then((res) => {
+            if (res.code == 0) {
+                message.success(`${customer ? "修改" : "添加"}成功`)
                 closeFn(true)
                 form.resetFields()
             } else {
@@ -43,20 +43,23 @@ const EditCustomerModal: FC<Props> = (
     const [formValues, setFormValues] = useState<UpdateCustomerParam | undefined>(undefined)
 
     useEffect(() => {
+        if (!open) {
+            return
+        }
         let _formValues: UpdateCustomerParam = {
-            address: customer?.address||'',
-            birthday: customer?.birthday||null,
-            email: customer?.email||'',
-            head: customer?.head||'',
-            name: customer?.name||'',
-            notes: customer?.notes||'',
-            phone: customer?.phone||'',
-            ty_pe: customer?.ty_pe||'',
-            id: customer?.id||0
+            address: customer?.address || '',
+            birthday: customer?.birthday || null,
+            email: customer?.email || '',
+            head: customer?.head || '',
+            name: customer?.name || '',
+            notes: customer?.notes || '',
+            phone: customer?.phone || '',
+            ty_pe: customer?.ty_pe || '',
+            id: customer?.id || 0
         }
         setFormValues(_formValues)
         form.setFieldsValue(_formValues)
-    }, [customer])
+    }, [open])
 
     const {
         trigger: callUpdateCustomerAPI,
@@ -69,7 +72,7 @@ const EditCustomerModal: FC<Props> = (
                 width={700}
                 open={open}
                 centered={true}
-                title={`${customer? "修改": "添加"}客户`}
+                title={`${customer ? "修改" : "添加"}客户`}
                 onCancel={(e) => {
                     e.preventDefault()
                     form.resetFields()
@@ -114,7 +117,7 @@ const EditCustomerModal: FC<Props> = (
                             label="生日"
                             name="birthday"
                         >
-                            <DatePicker style={{width: 200}} />
+                            <DatePicker style={{width: 200}}/>
                         </Form.Item>
 
 
@@ -131,23 +134,23 @@ const EditCustomerModal: FC<Props> = (
                             rules={[{required: true, message: '请选择客户类型!'}]}
                         >
                             <Select
-                                style={{ width: 200 }}
+                                style={{width: 200}}
                                 loading
                                 options={
-                                [
-                                    {
-                                        label: '请选择',
-                                        value: '',
-                                    },
-                                    {
-                                        label: '普通客户',
-                                        value: 1,
-                                    },
-                                    {
-                                        label: 'VIP客户',
-                                        value: 2,
-                                    }
-                                ]}
+                                    [
+                                        {
+                                            label: '请选择',
+                                            value: '',
+                                        },
+                                        {
+                                            label: '普通客户',
+                                            value: 1,
+                                        },
+                                        {
+                                            label: 'VIP客户',
+                                            value: 2,
+                                        }
+                                    ]}
                             />
                         </Form.Item>
 

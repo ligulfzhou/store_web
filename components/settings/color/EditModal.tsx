@@ -50,7 +50,7 @@ const EditModal: FC<Props> = (
         }
         setFormValues(_formValues)
         form.setFieldsValue(_formValues)
-    }, [colorValue])
+    }, [open])
 
     const {
         trigger: callUpdateAPI,

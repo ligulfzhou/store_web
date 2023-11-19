@@ -35,7 +35,7 @@ const EditModal: FC<Props> = (
         if (obj) {
             cate_type = obj.cate_type
             pid = obj.parent_id
-        } else if(parent_id) {
+        } else if (parent_id) {
             cate_type = 1
             pid = parent_id
         }
@@ -58,10 +58,13 @@ const EditModal: FC<Props> = (
     const [formValues, setFormValues] = useState<UpdateCateParams | undefined>(undefined)
 
     useEffect(() => {
+        if (!open) {
+            return
+        }
         let cate_type = 0
         if (obj) {
             cate_type = obj.cate_type
-        } else if(parent_id) {
+        } else if (parent_id) {
             cate_type = 1
         }
 
@@ -74,7 +77,7 @@ const EditModal: FC<Props> = (
         }
         setFormValues(_formValues)
         form.setFieldsValue(_formValues)
-    }, [obj])
+    }, [open])
 
     const {
         trigger: callAPI,
