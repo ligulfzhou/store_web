@@ -1,4 +1,5 @@
 import {commonEmptyPost} from "@/requests/common";
+import {UpdateCateParams} from "@/types";
 
 
 export interface UpdateItemParam {
@@ -50,4 +51,8 @@ export function makeUpdateCustomerParamNotNull(param: UpdateItemParam) {
 
 export async function updateItem(url: string, {arg}: { arg: UpdateItemParam }) {
     return commonEmptyPost(url, makeUpdateCustomerParamNotNull(arg))
+}
+
+export async function updateCate(url: string, {arg}: { arg: UpdateCateParams}) {
+    return commonEmptyPost(url, arg)
 }

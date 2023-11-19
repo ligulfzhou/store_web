@@ -1,21 +1,23 @@
 import React, {FC, useEffect, useState} from "react";
-import {Modal, Form, Input, message, InputNumber} from "antd";
+import {Modal, Form, Input, message} from "antd";
 import useSWRMutation from "swr/mutation";
-import {updateColorValue} from "@/requests/settings";
 import {Cate, UpdateCateParams} from "@/types";
+import {updateCate} from "@/requests/item";
 
 
 interface Props {
     open: boolean,
     closeFn: (success: boolean) => void,
-    obj: Cate | undefined
+    obj: Cate | undefined,
+    parent_id: number
 }
 
 const EditModal: FC<Props> = (
     {
         open,
         closeFn,
-        obj
+        obj,
+        parent_id = 0
     }
 ) => {
     const [form] = Form.useForm();
@@ -27,25 +29,47 @@ const EditModal: FC<Props> = (
         }
 
         values['id'] = id
+        values['index'] = 0
+        let cate_type = 0
+        let pid = 0
+        if (obj) {
+            cate_type = obj.cate_type
+            pid = obj.parent_id
+        } else if(parent_id) {
+            cate_type = 1
+            pid = parent_id
+        }
+        // @ts-ignore
+        values['cate_type'] = cate_type
+        values['parent_id'] = pid
         console.log(values)
 
-        // callUpdateAPI(values).then((res) => {
-        //     if (res.code == 0) {
-        //         message.success(`${obj ? "修改" : "添加"}成功`)
-        //         closeFn(true)
-        //         form.resetFields()
-        //     } else {
-        //         message.error(res.msg)
-        //     }
-        // })
+        callAPI(values).then((res) => {
+            if (res.code == 0) {
+                message.success(`${obj ? "修改" : "添加"}成功`)
+                closeFn(true)
+                form.resetFields()
+            } else {
+                message.error(res.msg)
+            }
+        })
     };
 
     const [formValues, setFormValues] = useState<UpdateCateParams | undefined>(undefined)
 
     useEffect(() => {
+        let cate_type = 0
+        if (obj) {
+            cate_type = obj.cate_type
+        } else if(parent_id) {
+            cate_type = 1
+        }
+
         let _formValues: UpdateCateParams = {
-            name: obj?.name?obj.name: '',
-            index: obj?.index?obj.index: 0,
+            name: obj?.name ? obj.name : '',
+            index: obj?.index ? obj.index : 0,
+            parent_id: obj ? obj.parent_id : parent_id,
+            cate_type: cate_type,
             id: obj?.id || 0
         }
         setFormValues(_formValues)
@@ -53,9 +77,9 @@ const EditModal: FC<Props> = (
     }, [obj])
 
     const {
-        trigger: callUpdateAPI,
-        isMutating: callingUpdateAPI
-    } = useSWRMutation("/api/settings/edit/color/value", updateColorValue)
+        trigger: callAPI,
+        isMutating: callingAPI
+    } = useSWRMutation("/api/edit/cates", updateCate)
 
     return (
         <div>
@@ -63,7 +87,7 @@ const EditModal: FC<Props> = (
                 width={'400px'}
                 open={open}
                 centered={true}
-                title={`${obj ? "修改" : "添加"}客户`}
+                title={`${obj ? "修改" : "添加"}类名`}
                 onCancel={(e) => {
                     e.preventDefault()
                     form.resetFields()
@@ -71,7 +95,7 @@ const EditModal: FC<Props> = (
                 }}
                 onOk={() => form.submit()}
                 closable={true}
-                confirmLoading={callingUpdateAPI}
+                confirmLoading={callingAPI}
             >
                 <Form
                     form={form}
@@ -83,19 +107,11 @@ const EditModal: FC<Props> = (
                 >
                     <div className=''>
                         <Form.Item
-                            label="颜色"
+                            label="类名"
                             name="name"
-                            rules={[{required: true, message: '请输入颜色!'}]}
+                            rules={[{required: true, message: '请输入类名!'}]}
                         >
                             <Input/>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="对应数值"
-                            name="value"
-                            rules={[{required: true, message: '请输入颜色对应的数值!'}]}
-                        >
-                            <InputNumber />
                         </Form.Item>
                     </div>
                 </Form>

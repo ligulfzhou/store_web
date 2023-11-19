@@ -63,7 +63,7 @@ const EditModal: FC<Props> = (
                 width={'400px'}
                 open={open}
                 centered={true}
-                title={`${colorValue ? "修改" : "添加"}客户`}
+                title={`${colorValue ? "修改" : "添加"}颜色`}
                 onCancel={(e) => {
                     e.preventDefault()
                     form.resetFields()

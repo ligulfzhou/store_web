@@ -28,30 +28,26 @@ export interface UpdateCateParams {
     id: number,    // SERIAL
     index: number, // 顺序
     name: string,  // 类名
+    cate_type: number, // 大类小类， 0 大类， 1小类，再变大，则更小
+    parent_id: number // 父类
 }
 
 
 export interface Item {
     id: number,
-    brand: string,              // 品牌
-    cates1: string,             // 产品大类
-    cates2: string,             // 产品小类
-    goods_no: string,           // 货号
-    color: string,              // 颜色
+    images: string[],        // 商品图片
     name: string,               // 产品名称
     size: string,               // 规格
+    color: string,              // 颜色
+    cate1_id: number,              // 大类ID
+    cate2_id: number,              // 小类ID
+    cates1: string,             // 产品大类
+    cates2: string,             // 产品小类
     unit: string,               // 单位
+    price: number,                 // 标准售价
+    cost: number,                  // 成本
+    notes: string,              // 备注
+    number: string,             // 货号
     barcode: string,            // 条码
-    sell_price: number,            // 标准售价
-    buy_price: number,             // 进货价
     create_time: string, // 创建时间
-
-    images: string[],
-    supplier: string,
-    material: string,
-    pcs: number,
-    weight: number,
-    english_name: string,
-    description: string,
-    notes: string
 }
