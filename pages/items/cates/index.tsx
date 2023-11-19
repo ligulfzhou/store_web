@@ -77,8 +77,6 @@ export default function () {
     const [isSubCatesModalOpen, setIsSubCatesModalOpen] = useState<boolean>(false)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
 
-    // const [parentId, setParentId] = useState<number>(0)
-
     return (
         <LayoutWithMenu>
             <EditModal

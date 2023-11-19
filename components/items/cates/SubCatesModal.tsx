@@ -100,6 +100,7 @@ const SubCatesModal: FC<Props> = (
                         setIsEditModalOpen(false)
                         if (success) {
                             setRefresh(true)
+                            mutate(parentKey).then(r => null)
                             mutate(key).finally(() => setRefresh(false))
                         }
                     }}
