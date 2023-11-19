@@ -52,16 +52,16 @@ export default function Index() {
         },
         {
             title: "货号",
-            dataIndex: "goods_no"
+            dataIndex: "number"
         },
         {
             title: '类别',
-            dataIndex: 'head',
+            dataIndex: 'cates',
             render: (_, record) => (
                 <div>
-                    {record.cates1 && record.cates2 ? (
+                    {record.cate1_id && record.cate2_id ? (
                         <>
-                            {record.cates1}, {record.cates2}
+                            {record.cate1_id}, {record.cate2_id}
                         </>
                     ) : null}
                 </div>
@@ -69,7 +69,12 @@ export default function Index() {
         },
         {
             title: "售价",
-            dataIndex: "sell_price"
+            dataIndex: "price",
+            render: (_, record) => (
+                <div>
+                    {record.price / 100}
+                </div>
+            )
         },
         {
             title: '创建时间',

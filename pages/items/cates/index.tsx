@@ -1,4 +1,4 @@
-import {Button, Space, Table} from 'antd';
+import {Button, Table} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import React, {useState} from "react";
 import {useSWRConfig} from "swr"
@@ -22,7 +22,7 @@ export default function () {
             dataIndex: 'id',
         },
         {
-            title: "类名",
+            title: "大类名",
             dataIndex: "name",
         },
         {

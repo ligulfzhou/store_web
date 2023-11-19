@@ -41,12 +41,15 @@ const EditModal: FC<Props> = (
 
     // set form values.
     const [formValues, setFormValues] = useState<UpdateItemParam | undefined>(undefined)
+
     useEffect(() => {
+        if (!open){
+            return
+        }
+
         let cates = null
-        if (obj?.cates1 && obj.cates2) {
-            // cates = [obj.cates1, obj.cates2]
-            // todo
-            cates = [0, 1]
+        if (obj?.cate1_id && obj.cate2_id) {
+            cates = [obj.cate1_id.toString(), obj.cate2_id.toString()]
         }
         let _formValues: UpdateItemParam = {
             barcode: obj?.barcode || '',
@@ -55,6 +58,7 @@ const EditModal: FC<Props> = (
             price: obj?.price || '',
             cost: obj?.cost || '',
             number: obj?.number || '',
+            // cate1_id and cate2_id are useless
             cate1_id: obj?.cate1_id || '',
             cate2_id: obj?.cate2_id || '',
             color: obj?.color || '',
@@ -67,9 +71,22 @@ const EditModal: FC<Props> = (
         }
         console.log(_formValues)
 
+        let ufs = (obj?.images || []).map((image: string, index: number) => {
+            let uf: UploadFile =
+                {
+                    uid: (index-(obj?.images||[]).length).toString(),
+                    name: 'image.png',
+                    status: 'done',
+                    url: image,
+                };
+
+            return uf
+        })
+        setFileList(ufs)
+
         setFormValues(_formValues)
         form.setFieldsValue(_formValues)
-    }, [obj])
+    }, [open]);
 
     const {colorValues, key: cvKey, isLoading: cvLoading} = useColorValue()
     const [cvOptions, setCvOptions] = useState<Option[]>([])
@@ -78,11 +95,11 @@ const EditModal: FC<Props> = (
             return
         }
 
-        let ops = colorValues.map(cv=> {
+        let ops = colorValues.map(cv => {
             let op: Option = {
                 children: [],
                 label: cv.color,
-                value: cv.value.toString()
+                value: cv.color
             }
             return op
         });
@@ -95,7 +112,7 @@ const EditModal: FC<Props> = (
             return
         }
 
-        let ops = (globalSettings?.units||[]).map(unit=> {
+        let ops = (globalSettings?.units || []).map(unit => {
             let op: Option = {
                 children: [],
                 label: unit,
@@ -117,24 +134,23 @@ const EditModal: FC<Props> = (
         }
 
         let ops: Option[] = []
+        for (let cate of cates) {
+            let op: Option = {
+                children: [],
+                label: cate.name,
+                value: cate.id.toString()
+            }
 
-        // todo
-        // for (let cate of cates) {
-        //     let op: Option = {
-        //         children: [],
-        //         label: cate.name,
-        //         value: cate.name
-        //     }
-        //
-        //     cate.sub_cates.map(sub_cate => {
-        //         op.children?.push({
-        //             children: [],
-        //             label: sub_cate,
-        //             value: sub_cate
-        //         })
-        //     })
-        //     ops.push(op)
-        // }
+            cate.sub_cates.map(sub_cate => {
+                op.children?.push({
+                    children: [],
+                    label: sub_cate.name,
+                    value: sub_cate.id.toString()
+                })
+            })
+
+            ops.push(op)
+        }
 
         if (ops.length > 0) {
             setOptions(ops)
@@ -248,14 +264,14 @@ const EditModal: FC<Props> = (
                             name="color"
                             rules={[{required: true, message: '请选择颜色!'}]}
                         >
-                            <Select options={cvOptions} />
+                            <Select options={cvOptions}/>
                         </Form.Item>
 
                         <Form.Item
                             label="单位"
                             name="unit"
                         >
-                            <Select options={unitOptions} />
+                            <Select options={unitOptions}/>
                         </Form.Item>
                     </div>
 

@@ -14,7 +14,7 @@ export interface UpdateItemParam {
     number: string,              // 颜色
     barcode: string,            // 条码
     notes: string,
-    cates: number[] | null,
+    cates: string[] | null,
     cate1_id: number|string,             // 产品大类
     cate2_id: number|string,             // 产品小类
 }
@@ -23,10 +23,10 @@ export function makeUpdateCustomerParamNotNull(param: UpdateItemParam) {
     let cate1_id = 0
     let cate2_id = 0
     if (param.cates && param.cates.length > 0) {
-        cate1_id = param.cates[0]
+        cate1_id = parseInt(param.cates[0])
     }
     if (param.cates && param.cates.length > 1) {
-        cate2_id = param.cates[1]
+        cate2_id = parseInt(param.cates[1])
     }
     let notNullParam: UpdateItemParam = {
         cates: param.cates || [],
