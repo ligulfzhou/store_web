@@ -8,7 +8,7 @@ import {Cate} from "@/types";
 interface Props {
     open: boolean,
     closeFn: (success: boolean) => void,
-    obj: Cate
+    obj: Cate | undefined
 }
 
 const DeleteModal: FC<Props> = (
@@ -21,8 +21,7 @@ const DeleteModal: FC<Props> = (
     const [form] = Form.useForm();
 
     const onFinish = () => {
-        let id = obj.id
-
+        let id = obj?.id || 0;
         if (!id) {
             message.error("请关掉弹框 并重试")
             return
@@ -41,7 +40,7 @@ const DeleteModal: FC<Props> = (
     const {
         trigger: callAPI,
         isMutating: callingAPI
-    } = useSWRMutation("/api/settings/delete/color/value", commonDeleteAPI)
+    } = useSWRMutation("/api/delete/cates", commonDeleteAPI)
 
     return (
         <div>
@@ -59,7 +58,7 @@ const DeleteModal: FC<Props> = (
                 closable={true}
                 confirmLoading={callingAPI}
             >
-                确认删除 {obj.cate_type == 0? "大类": "小类"} {obj.name}
+                确认删除 {obj?.cate_type == 0? "大类": "小类"} {obj?.name}
             </Modal>
         </div>
     )

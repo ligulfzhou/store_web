@@ -5,12 +5,14 @@ import useSubCates from "@/hooks/useSubCates";
 import {useSWRConfig} from "swr";
 import {ColumnsType} from "antd/es/table";
 import EditModal from "@/components/items/cates/EditModal";
+import DeleteModal from "@/components/items/cates/DeleteModal";
 
 
 interface Props {
     open: boolean,
     closeFn: (success: boolean) => void,
     obj: Cate | undefined,
+    parentKey: string
 }
 
 const SubCatesModal: FC<Props> = (
@@ -18,6 +20,7 @@ const SubCatesModal: FC<Props> = (
         open,
         closeFn,
         obj,
+        parentKey
     }
 ) => {
 
@@ -51,7 +54,7 @@ const SubCatesModal: FC<Props> = (
                     <a href='#' onClick={(event) => {
                         event.preventDefault()
                         setEditObj(record)
-                        // setIsDeleteModalOpen(true)
+                        setIsDeleteModalOpen(true)
                     }}>
                         删除
                     </a>
@@ -62,8 +65,23 @@ const SubCatesModal: FC<Props> = (
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false)
     const [editObj, setEditObj] = useState<Cate | undefined>(undefined)
     const [parentId, setParentId] = useState<number>(0)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
+
     return (
         <div>
+            <DeleteModal
+                open={isDeleteModalOpen}
+                closeFn={(success) => {
+                    if (success) {/* todo */
+                        setRefresh(true)
+                        mutate(key).finally(() => setRefresh(false))
+                        mutate(parentKey).then(r => null)
+                    }
+                    setIsDeleteModalOpen(false)
+                }}
+                obj={editObj}
+            />
+
             <Modal
                 width={'1000px'}
                 open={open}

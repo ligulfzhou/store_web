@@ -7,6 +7,7 @@ import {ColumnsType} from "antd/es/table";
 import {Cate} from "@/types";
 import EditModal from "@/components/items/cates/EditModal";
 import SubCatesModal from "@/components/items/cates/SubCatesModal";
+import DeleteModal from "@/components/items/cates/DeleteModal";
 
 
 export default function () {
@@ -32,7 +33,7 @@ export default function () {
                     {record.sub_cates.length}
                     {record.sub_cates.length > 0 ? (
                         <div>
-                            ({record.sub_cates.map(item=> item.name).join(",")})
+                            ({record.sub_cates.map(item => item.name).join(",")})
                         </div>
                     ) : null}
                 </div>
@@ -62,7 +63,7 @@ export default function () {
                     <a href='#' onClick={(event) => {
                         event.preventDefault()
                         setEditObj(record)
-                        // setIsDeleteModalOpen(true)
+                        setIsDeleteModalOpen(true)
                     }}>
                         删除
                     </a>
@@ -74,6 +75,7 @@ export default function () {
     const [editObj, setEditObj] = useState<Cate | undefined>(undefined)
     const [parentId, setParentId] = useState<number>(0)
     const [isSubCatesModalOpen, setIsSubCatesModalOpen] = useState<boolean>(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
 
     // const [parentId, setParentId] = useState<number>(0)
 
@@ -95,8 +97,22 @@ export default function () {
             <SubCatesModal
                 open={isSubCatesModalOpen}
                 closeFn={(success) => {
-                    if(success) {/* todo */}
+                    if (success) {/* todo */
+                    }
                     setIsSubCatesModalOpen(false)
+                }}
+                parentKey={key}
+                obj={editObj}
+            />
+
+            <DeleteModal
+                open={isDeleteModalOpen}
+                closeFn={(success) => {
+                    if (success) {/* todo */
+                        setRefresh(true)
+                        mutate(key).finally(() => setRefresh(false))
+                    }
+                    setIsDeleteModalOpen(false)
                 }}
                 obj={editObj}
             />
@@ -134,9 +150,6 @@ export default function () {
                     columns={columns}
                     dataSource={cates}
                 />
-                {/*<CatesManagement callback={ (cate1, cate2)=> {*/}
-                {/*    console.log(`in callback ${cate1}, ${cate2}`)*/}
-                {/*}} />*/}
             </div>
         </LayoutWithMenu>
     );
