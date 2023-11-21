@@ -66,7 +66,7 @@ const CustomerSearchForm = () => {
         }
 
         // @ts-ignore
-        values['ty_pe'] = ty_pe.toString()
+        values['ty_pe'] = ty_pe? ty_pe.toString(): ''
         if (create_time_ed && create_time_st) {
             // @ts-ignore
             values['create_time'] = [moment(create_time_st, dateFormat), moment(create_time_ed, dateFormat)]
@@ -135,8 +135,8 @@ const CustomerSearchForm = () => {
                         >
                             <Input/>
                         </Form.Item>
-
                     </div>
+
                     <div>
                         <Form.Item
                             label="负责人"
@@ -147,7 +147,6 @@ const CustomerSearchForm = () => {
                     </div>
 
                     <div>
-
                         <Form.Item
                             label="手机号"
                             name="phone"
@@ -167,7 +166,7 @@ const CustomerSearchForm = () => {
                                 options={
                                     [
                                         {
-                                            label: '取消筛选',
+                                            label: '--',
                                             value: '',
                                         },
                                         ...typeOptions
