@@ -1,10 +1,12 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Form, Input, DatePicker, Col, Button, Select} from "antd";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import moment from "moment";
 import {dateFormat} from "@/utils/const";
 import useParameters from "@/hooks/useParameters";
 import {CustomerSearchParams} from '@/types/customer'
+import useCustomerTypes from "@/hooks/useCustomerTypes";
+import {Option} from "@/types";
 
 const {RangePicker} = DatePicker;
 
@@ -22,7 +24,29 @@ const CustomerSearchForm = () => {
 
     const [form] = Form.useForm();
 
+    const {customerTypes, key, isLoading} = useCustomerTypes()
+    const [typeOptions, setTypeOptions] = useState<Option[]>([])
+
     useEffect(() => {
+        if(isLoading) {return}
+
+        let typeOptions = customerTypes.map(type=> {
+            let op: Option = {
+                label: type.ty_pe,
+                value: type.id.toString()
+            }
+            return op
+        })
+        setTypeOptions(typeOptions)
+
+
+    }, [customerTypes, isLoading]);
+
+    useEffect(() => {
+        if (typeOptions.length==0) {
+            return
+        }
+
         // 用户切换tab时，清掉form
         let values = {}
         if (phone) {
@@ -42,7 +66,7 @@ const CustomerSearchForm = () => {
         }
 
         // @ts-ignore
-        values['ty_pe'] = ty_pe
+        values['ty_pe'] = ty_pe.toString()
         if (create_time_ed && create_time_st) {
             // @ts-ignore
             values['create_time'] = [moment(create_time_st, dateFormat), moment(create_time_ed, dateFormat)]
@@ -58,7 +82,7 @@ const CustomerSearchForm = () => {
         const formParams: {
             name: string | undefined,
             head: string | undefined,
-            ty_pe: number,
+            ty_pe: string,
             phone: string | undefined,
             create_time: moment.Moment[] | undefined
         } = form.getFieldsValue();
@@ -74,7 +98,7 @@ const CustomerSearchForm = () => {
             create_time_st: create_time_st,
             name: formParams.name,
             phone: formParams.phone,
-            ty_pe: formParams.ty_pe,
+            ty_pe: formParams.ty_pe.toString(),
             page: 1,
             pageSize: pageSize
         };
@@ -87,7 +111,7 @@ const CustomerSearchForm = () => {
             create_time_st: undefined,
             name: undefined,
             phone: undefined,
-            ty_pe: 0,
+            ty_pe: undefined,
             head: undefined,
             page: 1,
             pageSize: pageSize
@@ -135,7 +159,7 @@ const CustomerSearchForm = () => {
                     <div>
                         <Form.Item
                             label="客户类型"
-                            name="order_no"
+                            name="ty_pe"
                         >
                             <Select
                                 style={{width: 200}}
@@ -143,18 +167,12 @@ const CustomerSearchForm = () => {
                                 options={
                                     [
                                         {
-                                            label: '请选择',
+                                            label: '取消筛选',
                                             value: '',
                                         },
-                                        {
-                                            label: '普通客户',
-                                            value: 1,
-                                        },
-                                        {
-                                            label: 'VIP客户',
-                                            value: 2,
-                                        }
-                                    ]}
+                                        ...typeOptions
+                                    ]
+                            }
                             />
                         </Form.Item>
                     </div>

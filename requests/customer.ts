@@ -15,6 +15,14 @@ export interface UpdateCustomerParam {
 }
 
 export function makeUpdateCustomerParamNotNull(param: UpdateCustomerParam) {
+
+    let ty_pe = 0
+    if (typeof param.ty_pe == 'number') {
+        ty_pe = param.ty_pe
+    } else {
+        ty_pe = parseInt(param.ty_pe||'0')
+    }
+
     let notNullParam: UpdateCustomerParam = {
         address: param.address || '',
         birthday: param.birthday,
@@ -23,7 +31,7 @@ export function makeUpdateCustomerParamNotNull(param: UpdateCustomerParam) {
         name: param.name || '',
         notes: param.notes || '',
         phone: param.phone || '',
-        ty_pe: param.ty_pe || 0,
+        ty_pe: ty_pe,
         id: param.id || 0
     }
 

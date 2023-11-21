@@ -19,3 +19,11 @@ export interface EmptyResponse {
     code: number
     msg: string
 }
+
+
+
+export interface Option {
+    value: string;
+    label: string;
+    children?: Option[];
+}

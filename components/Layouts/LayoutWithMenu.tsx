@@ -39,6 +39,10 @@ const menuItems: MenuProps["items"] = [
                 label: "产品"
             },
             {
+                key: "/items/embryo",
+                label: "库存胚"
+            },
+            {
                 key: "/items/cates",
                 label: "产品类别"
             },
@@ -87,13 +91,17 @@ const menuItems: MenuProps["items"] = [
         label: "配置",
         children: [
             {
+                key: "/settings/ctype",
+                label: "客户类型"
+            },
+            {
                 key: "/settings/color",
                 label: "颜色=>编码"
             },
             {
                 key: "/settings/unit_account",
                 label: "单位 和 收款账号"
-            }
+            },
         ]
     }
 ]
@@ -192,8 +200,9 @@ const LayoutWithMenu: FC<Props> = (
                 <Sider
                     width={200}
                     style={{background: 'white'}}
-                    collapsible={true}
-                    trigger={true}
+                    // todo: collapsible=> true
+                    collapsible={false}
+                    trigger={false}
                 >
                     <Menu
                         multiple={false}

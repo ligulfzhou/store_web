@@ -1,9 +1,9 @@
 import React, {FC, useEffect, useState} from "react";
 import {Modal, Form, Input, message, DatePicker, Select} from "antd";
-import {Customer} from "@/types";
+import {Customer, Option} from "@/types";
 import {updateCustomer, UpdateCustomerParam} from "@/requests";
 import useSWRMutation from "swr/mutation";
-
+import useCustomerTypes from "@/hooks/useCustomerTypes";
 
 interface Props {
     open: boolean,
@@ -40,8 +40,23 @@ const EditCustomerModal: FC<Props> = (
         })
     };
 
-    const [formValues, setFormValues] = useState<UpdateCustomerParam | undefined>(undefined)
+    const {customerTypes, key, isLoading} = useCustomerTypes()
+    const [typeOptions, setTypeOptions] = useState<Option[]>([])
 
+    useEffect(() => {
+        if(isLoading) {return}
+
+        let typeOptions = customerTypes.map(type=> {
+            let op: Option = {
+                label: type.ty_pe,
+                value: type.id.toString()
+            }
+            return op
+        })
+        setTypeOptions(typeOptions)
+    }, [customerTypes, isLoading]);
+
+    const [formValues, setFormValues] = useState<UpdateCustomerParam | undefined>(undefined)
     useEffect(() => {
         if (!open) {
             return
@@ -54,7 +69,7 @@ const EditCustomerModal: FC<Props> = (
             name: customer?.name || '',
             notes: customer?.notes || '',
             phone: customer?.phone || '',
-            ty_pe: customer?.ty_pe || '',
+            ty_pe: customer?.ty_pe.toString() || '',
             id: customer?.id || 0
         }
         setFormValues(_formValues)
@@ -136,21 +151,7 @@ const EditCustomerModal: FC<Props> = (
                             <Select
                                 style={{width: 200}}
                                 loading
-                                options={
-                                    [
-                                        {
-                                            label: '请选择',
-                                            value: '',
-                                        },
-                                        {
-                                            label: '普通客户',
-                                            value: 1,
-                                        },
-                                        {
-                                            label: 'VIP客户',
-                                            value: 2,
-                                        }
-                                    ]}
+                                options={typeOptions}
                             />
                         </Form.Item>
 

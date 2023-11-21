@@ -5,7 +5,7 @@ import {Item} from "@/types/item";
 import {updateItem, UpdateItemParam} from "@/requests/item";
 import useCates from "@/hooks/useCates";
 import MultipleImageUploader from "@/components/uploader/MultipleImageUploader";
-import {DataResponse} from "@/types";
+import {DataResponse, Option} from "@/types";
 import useGlobalSettings from "@/hooks/useGlobalSettings";
 import useColorValue from "@/hooks/useColorValue";
 
@@ -14,12 +14,6 @@ type imageReponse = {
     url: string
 }
 type UploadImageResponse = DataResponse<imageReponse>
-
-interface Option {
-    value: string;
-    label: string;
-    children?: Option[];
-}
 
 interface Props {
     open: boolean,
@@ -43,7 +37,7 @@ const EditModal: FC<Props> = (
     const [formValues, setFormValues] = useState<UpdateItemParam | undefined>(undefined)
 
     useEffect(() => {
-        if (!open){
+        if (!open) {
             return
         }
 
@@ -74,7 +68,7 @@ const EditModal: FC<Props> = (
         let ufs = (obj?.images || []).map((image: string, index: number) => {
             let uf: UploadFile =
                 {
-                    uid: (index-(obj?.images||[]).length).toString(),
+                    uid: (index - (obj?.images || []).length).toString(),
                     name: 'image.png',
                     status: 'done',
                     url: image,

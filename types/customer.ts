@@ -1,6 +1,7 @@
 export interface Customer {
      id: number,
      ty_pe: number,
+     customer_type: string,
      name: string,
      head: string,
      address: string,
@@ -13,7 +14,7 @@ export interface Customer {
 
 export interface CustomerSearchParams {
      name: string|undefined,
-     ty_pe: number,
+     ty_pe: string|undefined,
      head: string|undefined,
      phone: string|undefined,
      create_time_st: string| undefined,

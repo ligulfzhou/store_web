@@ -1,5 +1,5 @@
 import {commonEmptyPost} from "@/requests/common";
-import {UpdateColorValueParams} from "@/types/settings";
+import {UpdateColorValueParams, UpdateCustomerTypeParams} from "@/types/settings";
 
 
 export async function updateColorValue(url: string, {arg}: { arg: UpdateColorValueParams}) {
@@ -15,3 +15,7 @@ export async function updateGlobalSettings(url: string, {arg}: { arg: UpdateGlob
     return commonEmptyPost(url, arg)
 }
 
+
+export async function updateCustomerType(url: string, {arg}: { arg: UpdateCustomerTypeParams}) {
+    return commonEmptyPost(url, arg)
+}
