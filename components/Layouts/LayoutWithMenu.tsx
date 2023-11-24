@@ -7,7 +7,7 @@ import {
     StockOutlined,
     UserOutlined
 } from '@ant-design/icons';
-import {Avatar, Dropdown, Layout, Menu, MenuProps, message} from 'antd';
+import {Avatar, Dropdown, Layout, Menu, MenuProps, message, Spin} from 'antd';
 import {useRouter} from "next/router";
 import {useIsMounted} from "@/hooks/useIsMounted";
 import useAccountInfo from "@/hooks/useAccountInfo";
@@ -184,16 +184,24 @@ const LayoutWithMenu: FC<Props> = (
                         门店管理后台
                     </a>
                 </div>
-                <div className=''>
-                    <Dropdown menu={{items: dropDownMenus}} trigger={['hover', 'click']}>
-                        <div className='flex flex-row items-center justify-items-center'>
-                            <div className='text-white'>
-                                {account?.name}
-                            </div>
-
+                <div className='flex flex-row items-center justify-items-center'>
+                    {isLoading ? (
+                        <div>
+                            <Spin/>
                             <Avatar icon={<UserOutlined/>}/>
                         </div>
-                    </Dropdown>
+                    ) : (
+                        <div>
+                            <Dropdown menu={{items: dropDownMenus}} trigger={['hover', 'click']}>
+                                <div className='flex flex-row items-center justify-items-center'>
+                                    <div className='text-white'>
+                                        {account?.name}
+                                    </div>
+                                    <Avatar icon={<UserOutlined/>}/>
+                                </div>
+                            </Dropdown>
+                        </div>
+                    )}
                 </div>
             </Header>
             <Layout>

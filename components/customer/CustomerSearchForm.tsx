@@ -28,9 +28,11 @@ const CustomerSearchForm = () => {
     const [typeOptions, setTypeOptions] = useState<Option[]>([])
 
     useEffect(() => {
-        if(isLoading) {return}
+        if (isLoading) {
+            return
+        }
 
-        let typeOptions = customerTypes.map(type=> {
+        let typeOptions = customerTypes.map(type => {
             let op: Option = {
                 label: type.ty_pe,
                 value: type.id.toString()
@@ -38,12 +40,10 @@ const CustomerSearchForm = () => {
             return op
         })
         setTypeOptions(typeOptions)
-
-
     }, [customerTypes, isLoading]);
 
     useEffect(() => {
-        if (typeOptions.length==0) {
+        if (typeOptions.length == 0) {
             return
         }
 
@@ -66,7 +66,7 @@ const CustomerSearchForm = () => {
         }
 
         // @ts-ignore
-        values['ty_pe'] = ty_pe? ty_pe.toString(): ''
+        values['ty_pe'] = ty_pe ? ty_pe.toString() : ''
         if (create_time_ed && create_time_st) {
             // @ts-ignore
             values['create_time'] = [moment(create_time_st, dateFormat), moment(create_time_ed, dateFormat)]
@@ -171,7 +171,7 @@ const CustomerSearchForm = () => {
                                         },
                                         ...typeOptions
                                     ]
-                            }
+                                }
                             />
                         </Form.Item>
                     </div>
