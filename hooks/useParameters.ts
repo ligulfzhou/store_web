@@ -43,12 +43,13 @@ export default function useParameters() {
         create_time_ed,
 
         // items
-
-        brand,
-        cates1,
-        cates2,
-        goods_no,
         // name, customer也有name
+        // create_time_st, customer也有
+        // create_time_ed, customer也有
+        number,
+        barcode,
+        cate1_id,
+        cate2_id,
 
     } = router.query
 
@@ -61,10 +62,11 @@ export default function useParameters() {
     create_time_ed = parseQueryParam(create_time_ed)
 
     // items
-    brand = parseQueryParam(brand)
-    cates1 = parseQueryParam(cates1)
-    cates2 = parseQueryParam(cates2)
-    goods_no = parseQueryParam(goods_no)
+    let cate1IdN = parseQueryParamToNumber(cate1_id)
+    let cate2IdN = parseQueryParamToNumber(cate2_id)
+    number = parseQueryParam(number)
+    barcode = parseQueryParam(barcode)
+
 
     let idN = parseQueryParamToNumber(id)
     let pageN = parseQueryParamToNumber(page)
@@ -123,10 +125,10 @@ export default function useParameters() {
         create_time_ed,
 
         // items
-        brand,
-        cates1,
-        cates2,
-        goods_no,
+        cate1_id: cate1IdN,
+        cate2_id: cate2IdN,
+        number,
+        barcode,
 
         order_id: order_idN,
         order_no,

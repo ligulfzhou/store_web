@@ -9,6 +9,7 @@ import useParameters from "@/hooks/useParameters";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {useState} from "react";
 import {useSWRConfig} from "swr";
+import SellModal from "@/components/order/SellModal";
 
 
 export default function Order() {
@@ -80,9 +81,16 @@ export default function Order() {
         },
     ];
 
+    const [isSellModalOpen, setIsSellModalOpen] = useState<boolean>(false)
+
     return (
         <LayoutWithMenu>
-            <div className='p-5 m-2 bg-white rounded  flex flex-row'>
+
+            <SellModal open={isSellModalOpen} closeFn={(success)=> {
+                setIsSellModalOpen(false)
+            }} />
+
+            <div className='p-5 m-2 bg-white rounded  flex flex-row gap-3'>
                 <Button
                     loading={refresh}
                     onClick={() => {
@@ -93,13 +101,15 @@ export default function Order() {
                     刷新
                 </Button>
 
-                <ExcelImporter
-                    callback={() => {
-                        setRefresh(true)
-                        mutate(key).finally(() => setRefresh(false))
+                <Button
+                    loading={refresh}
+                    onClick={() => {
+                        setIsSellModalOpen(true)
                     }}
-                    tp={'order'}
-                />
+                    type="primary">
+                    添加订单
+                </Button>
+
             </div>
 
             <div className='p-5 m-2 bg-white rounded overflow-auto'>

@@ -13,6 +13,7 @@ import useItems from "@/hooks/useItems";
 import {Item} from "@/types/item";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {fallbackImage} from "@/utils/b64";
+import SearchForm from "@/components/items/item/SearchForm";
 
 
 export default function Index() {
@@ -59,9 +60,9 @@ export default function Index() {
             dataIndex: 'cates',
             render: (_, record) => (
                 <div>
-                    {record.cate1_id && record.cate2_id ? (
+                    {record.cate1 || record.cate2 ? (
                         <>
-                            {record.cate1_id}, {record.cate2_id}
+                            {record.cate1 || ''}, {record.cate2||''}
                         </>
                     ) : null}
                 </div>
@@ -123,7 +124,7 @@ export default function Index() {
 
             {/*filters*/}
             <div className='bg-white p-5 m-2 rounded'>
-                <CustomerSearchForm/>
+                <SearchForm />
             </div>
 
             <div className='p-5 m-2 bg-white rounded'>

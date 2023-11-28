@@ -34,20 +34,34 @@ export interface UpdateCateParams {
 
 
 export interface Item {
-    id: number,
-    images: string[],        // 商品图片
-    name: string,               // 产品名称
-    size: string,               // 规格
-    color: string,              // 颜色
-    cate1_id: number,              // 大类ID
-    cate2_id: number,              // 小类ID
-    cates1: string,             // 产品大类
-    cates2: string,             // 产品小类
-    unit: string,               // 单位
-    price: number,                 // 标准售价
-    cost: number,                  // 成本
-    notes: string,              // 备注
-    number: string,             // 货号
-    barcode: string,            // 条码
+    id: number,          // id
+    images: string[],    // 商品图片
+    name: string,        // 产品名称
+    size: string,        // 规格
+    color: string,       // 颜色
+    cate1_id: number,    // 大类ID
+    cate2_id: number,    // 小类ID
+    cate1: string,       // 产品大类
+    cate2: string,       // 产品小类
+    unit: string,        // 单位
+    price: number,       // 标准售价
+    cost: number,        // 成本
+    notes: string,       // 备注
+    number: string,      // 货号
+    barcode: string,     // 条码
     create_time: string, // 创建时间
+}
+
+
+export interface ItemSearchParams {
+    name: string | undefined,
+    number: string|undefined,
+    barcode: string|undefined,
+    cate1_id: number | string | undefined,
+    cate2_id: number | string | undefined,
+    create_time_st: string | undefined,
+    create_time_ed: string | undefined,
+
+    page: number,
+    pageSize: number,
 }
