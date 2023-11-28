@@ -6,9 +6,11 @@ import {host} from "@/utils/const";
 import {EmptyResponse} from "@/types";
 import {MessageType} from "antd/lib/message";
 
+type ExcelTp = 'item' | 'customer' | 'order' | 'embryo'
+
 interface Props {
     callback: () => void
-    tp: 'item'|'customer'|'order'
+    tp: ExcelTp
 }
 
 const ExcelImporter: FC<Props> = (
@@ -20,13 +22,27 @@ const ExcelImporter: FC<Props> = (
     const key = 'excel_importer';
     let loadingMessage: MessageType | null = null;
 
-    const tpToName = ()=> {
-        if (tp=='item') {
+    const tpToName = () => {
+        if (tp == 'item') {
             return '产品'
-        } else if (tp=='customer') {
+        } else if (tp == 'customer') {
             return '客户'
+        } else if (tp == 'embryo') {
+            return '库存胚'
         } else {
             return '订单'
+        }
+    }
+    const titleToType = (title: ExcelTp) => {
+        switch (title) {
+            case "item" :
+                return 0;
+            case "embryo":
+                return 1;
+            case "customer":
+                return 2;
+            case "order":
+                return 3;
         }
     }
 
@@ -34,6 +50,7 @@ const ExcelImporter: FC<Props> = (
         name: 'file',
         multiple: false,
         showUploadList: false,
+        data: {tp: titleToType(tp)},
         action: `${host}/api/upload/excel`,
         accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         onChange(info) {

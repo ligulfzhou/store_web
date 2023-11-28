@@ -6,7 +6,6 @@ import {Order} from '@/types'
 import {useRouter} from "next/router";
 import {getColorWithStepAndIndex, getDepartmentAndNotesWithStepAndIndex, parseQueryParam} from "@/utils/utils";
 import useParameters from "@/hooks/useParameters";
-import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {useState} from "react";
 import {useSWRConfig} from "swr";
 import SellModal from "@/components/order/SellModal";
@@ -109,7 +108,6 @@ export default function Order() {
                     type="primary">
                     添加订单
                 </Button>
-
             </div>
 
             <div className='p-5 m-2 bg-white rounded overflow-auto'>

@@ -154,7 +154,7 @@ export default function Index() {
                     <ExcelImporter callback={() => {
                         setRefresh(true)
                         mutate(key).finally(() => setRefresh(false))
-                    }} tp='item'/>
+                    }} tp='embryo'/>
                 </div>
 
                 <Table
