@@ -13,16 +13,18 @@ import useItems from "@/hooks/useItems";
 import {Item} from "@/types/item";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {fallbackImage} from "@/utils/b64";
+import useEmbryos from "@/hooks/useEmbryos";
+import {Embryo} from "@/types/embryo";
 
 
 export default function Index() {
     const {page, pageSize} = useParameters()
-    const {items, total, isLoading, key} = useItems();
+    const {embryos, total, isLoading, key} = useEmbryos();
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false)
     const {reloadPage} = useRouterUtils()
     const {mutate} = useSWRConfig()
 
-    const columns: ColumnsType<Item> = [
+    const columns: ColumnsType<Embryo> = [
         {
             title: 'ID',
             dataIndex: 'id',
@@ -47,7 +49,7 @@ export default function Index() {
             )
         },
         {
-            title: '产品名',
+            title: '名称',
             dataIndex: 'name',
         },
         {
@@ -55,26 +57,8 @@ export default function Index() {
             dataIndex: "number"
         },
         {
-            title: '类别',
-            dataIndex: 'cates',
-            render: (_, record) => (
-                <div>
-                    {record.cate1_id && record.cate2_id ? (
-                        <>
-                            {record.cate1_id}, {record.cate2_id}
-                        </>
-                    ) : null}
-                </div>
-            )
-        },
-        {
-            title: "售价",
-            dataIndex: "price",
-            render: (_, record) => (
-                <div>
-                    {record.price / 100}
-                </div>
-            )
+            title: '备注',
+            dataIndex: "notes",
         },
         {
             title: '创建时间',
@@ -86,16 +70,12 @@ export default function Index() {
             )
         },
         {
-            title: '备注',
-            dataIndex: "notes",
-        },
-        {
             title: '操作',
             key: 'action',
             render: (_, record) => (
                 <a href='#' onClick={(event) => {
                     event.preventDefault()
-                    setEditItem(record)
+                    // setEditItem(record)
                     setIsEditModalOpen(true)
                 }}>
                     查看
@@ -175,7 +155,7 @@ export default function Index() {
                             })
                         }
                     }}
-                    dataSource={items}
+                    dataSource={embryos}
                 />
             </div>
         </LayoutWithMenu>
