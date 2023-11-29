@@ -28,9 +28,7 @@ const EditModal: FC<Props> = (
         obj
     }
 ) => {
-    const {cates, isLoading} = useCates()
     const [form] = Form.useForm();
-
     const {isLoading: gsLoading, key: gsKey, globalSettings} = useGlobalSettings()
 
     useEffect(() => {
@@ -101,37 +99,6 @@ const EditModal: FC<Props> = (
         setUnitOptions(ops)
 
     }, [gsLoading, globalSettings]);
-    // set cates options
-    const [options, setOptions] = useState<Option[]>([])
-
-    useEffect(() => {
-        if (isLoading) {
-            return
-        }
-
-        let ops: Option[] = []
-        for (let cate of cates) {
-            let op: Option = {
-                children: [],
-                label: cate.name,
-                value: cate.id.toString()
-            }
-
-            cate.sub_cates.map(sub_cate => {
-                op.children?.push({
-                    children: [],
-                    label: sub_cate.name,
-                    value: sub_cate.id.toString()
-                })
-            })
-
-            ops.push(op)
-        }
-
-        if (ops.length > 0) {
-            setOptions(ops)
-        }
-    }, [cates, isLoading])
 
     const {
         trigger: callUpdateAPI,
