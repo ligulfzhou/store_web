@@ -62,7 +62,7 @@ export default function Index() {
                 <div>
                     {record.cate1 || record.cate2 ? (
                         <>
-                            {record.cate1 || ''}, {record.cate2||''}
+                            {record.cate1 || ''}, {record.cate2 || ''}
                         </>
                     ) : null}
                 </div>
@@ -74,6 +74,15 @@ export default function Index() {
             render: (_, record) => (
                 <div>
                     {record.price / 100}
+                </div>
+            )
+        },
+        {
+            title: "成本",
+            dataIndex: "cost",
+            render: (_, record) => (
+                <div>
+                    {record.cost / 100}
                 </div>
             )
         },
@@ -124,7 +133,7 @@ export default function Index() {
 
             {/*filters*/}
             <div className='bg-white p-5 m-2 rounded'>
-                <SearchForm />
+                <SearchForm/>
             </div>
 
             <div className='p-5 m-2 bg-white rounded'>

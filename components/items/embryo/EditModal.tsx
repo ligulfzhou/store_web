@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from "react";
 import {Modal, Form, Input, message, InputNumber, Cascader, UploadFile, Select} from "antd";
 import useSWRMutation from "swr/mutation";
-import {UpdateEmbryoParam, updateItem, UpdateItemParam} from "@/requests/item";
+import {updateEmbryo, UpdateEmbryoParam, updateItem, UpdateItemParam} from "@/requests/item";
 import useCates from "@/hooks/useCates";
 import MultipleImageUploader from "@/components/uploader/MultipleImageUploader";
 import {DataResponse, Option} from "@/types";
@@ -33,28 +33,15 @@ const EditModal: FC<Props> = (
 
     const {isLoading: gsLoading, key: gsKey, globalSettings} = useGlobalSettings()
 
-    // set form values.
-    const [formValues, setFormValues] = useState<UpdateItemParam | undefined>(undefined)
-
     useEffect(() => {
         if (!open) {
             return
         }
 
-        let cates = null
         let _formValues: UpdateEmbryoParam = {
-            barcode: obj?.barcode || '',
-            cates: cates,
-            // todo
-            price: obj?.price || '',
-            cost: obj?.cost || '',
             number: obj?.number || '',
-            // cate1_id and cate2_id are useless
-            cate1_id: obj?.cate1_id || '',
-            cate2_id: obj?.cate2_id || '',
             color: obj?.color || '',
             name: obj?.name || '',
-            size: obj?.size || '',
             unit: obj?.unit || '',
             images: obj?.images || [],
             notes: obj?.notes || '',
@@ -74,8 +61,6 @@ const EditModal: FC<Props> = (
             return uf
         })
         setFileList(ufs)
-
-        setFormValues(_formValues)
         form.setFieldsValue(_formValues)
     }, [open]);
 
@@ -151,7 +136,7 @@ const EditModal: FC<Props> = (
     const {
         trigger: callUpdateAPI,
         isMutating: callingUpdateAPI
-    } = useSWRMutation("/api/item/edit", updateItem)
+    } = useSWRMutation("/api/embryo/edit", updateEmbryo)
 
     const [fileList, setFileList] = useState<UploadFile[]>([])
     const onFinish = (values: UpdateItemParam) => {
@@ -163,8 +148,12 @@ const EditModal: FC<Props> = (
 
         console.log(fileList)
         let imageList = fileList.map(file => {
-            let response = file.response as UploadImageResponse
-            return response.data.url
+            if (file.url) {
+                return file.url
+            } else {
+                let response = file.response as UploadImageResponse
+                return response.data.url
+            }
         })
 
         console.log(imageList)
@@ -188,7 +177,7 @@ const EditModal: FC<Props> = (
                 width={700}
                 open={open}
                 centered={true}
-                title={`${obj ? "修改" : "添加"}产品`}
+                title={`${obj ? "修改" : "添加"}库存胚`}
                 onCancel={(e) => {
                     e.preventDefault()
                     form.resetFields()
@@ -203,12 +192,11 @@ const EditModal: FC<Props> = (
                     name="basic"
                     labelCol={{span: 8}}
                     wrapperCol={{span: 16}}
-                    initialValues={{formValues}}
                     onFinish={onFinish}
                 >
                     <div>
                         <Form.Item
-                            label={"产品图片"}
+                            label={"库存胚图片"}
                         >
                             <MultipleImageUploader fileList={fileList} handleNewFileList={(newFileList) => {
                                 setFileList(newFileList)
@@ -226,25 +214,9 @@ const EditModal: FC<Props> = (
                         </Form.Item>
 
                         <Form.Item
-                            label="类别"
-                            name="cates"
-                            rules={[{required: true, message: '请选择类别!'}]}
-                        >
-                            {/*<CatesCascader/>*/}
-                            <Cascader options={options}/>
-                        </Form.Item>
-
-                        <Form.Item
                             label="编号"
                             name="number"
                             rules={[{required: true, message: '请输入编号!'}]}
-                        >
-                            <Input/>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="规格"
-                            name="size"
                         >
                             <Input/>
                         </Form.Item>
@@ -262,33 +234,6 @@ const EditModal: FC<Props> = (
                             name="unit"
                         >
                             <Select options={unitOptions}/>
-                        </Form.Item>
-                    </div>
-
-                    <div className='grid grid-cols-2 mt-6'>
-                        <Form.Item
-                            label="售价"
-                            name="price"
-                            rules={[{required: true, message: '请输入售价!'}]}
-
-                        >
-                            <InputNumber style={{width: 180}}/>
-                        </Form.Item>
-                        <Form.Item
-                            label="成本"
-                            name="cost"
-                            rules={[{required: true, message: '请输入成本!'}]}
-                        >
-                            <InputNumber style={{width: 180}}/>
-                        </Form.Item>
-                    </div>
-
-                    <div className='grid grid-cols-2 mt-6'>
-                        <Form.Item
-                            label="条码"
-                            name="barcode"
-                        >
-                            <Input/>
                         </Form.Item>
 
                         <Form.Item

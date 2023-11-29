@@ -6,11 +6,9 @@ import useParameters from "@/hooks/useParameters";
 import {defaultPageSize} from "@/utils/const";
 import React, {useState} from "react";
 import {useSWRConfig} from "swr"
-import EditModal from "@/components/items/item/EditModal";
+import EditModal from "@/components/items/embryo/EditModal";
 import CustomerSearchForm from "@/components/customer/CustomerSearchForm";
 import {formatDateTime} from "@/utils/utils";
-import useItems from "@/hooks/useItems";
-import {Item} from "@/types/item";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {fallbackImage} from "@/utils/b64";
 import useEmbryos from "@/hooks/useEmbryos";
@@ -29,6 +27,7 @@ export default function Index() {
             title: 'ID',
             dataIndex: 'id',
         },
+
         {
             title: "图片",
             dataIndex: "image",
@@ -49,12 +48,20 @@ export default function Index() {
             )
         },
         {
+            title: "编号",
+            dataIndex: "number"
+        },
+        {
             title: '名称',
             dataIndex: 'name',
         },
         {
-            title: "货号",
-            dataIndex: "number"
+            title: "颜色",
+            dataIndex: "color"
+        },
+        {
+            title: "单位",
+            dataIndex: "unit"
         },
         {
             title: '备注',
@@ -76,14 +83,14 @@ export default function Index() {
                 <div className='flex flex-row gap-3'>
                     <a href='#' onClick={(event) => {
                         event.preventDefault()
-                        // setEditItem(record)
+                        setEditItem(record)
                         setIsEditModalOpen(true)
                     }}>
                         查看
                     </a>
                     <a href='#' onClick={(event) => {
                         event.preventDefault()
-                        // setEditItem(record)
+                        setEditItem(record)
                         setIsEditModalOpen(true)
                     }}>
                         增减数量
@@ -94,7 +101,7 @@ export default function Index() {
     ];
 
     const [refresh, setRefresh] = useState<boolean>(false)
-    const [editItem, setEditItem] = useState<Item | undefined>()
+    const [editItem, setEditItem] = useState<Embryo | undefined>()
 
     return (
         <LayoutWithMenu>

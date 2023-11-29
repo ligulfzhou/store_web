@@ -20,6 +20,7 @@ const MultipleImageUploader: FC<Props> = (
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     // const [fileList, setFileList] = useState<UploadFile[]>([])
+
     const handleCancel = () => setPreviewOpen(false);
     const handlePreview = async (file: UploadFile) => {
         if (!file.url && !file.preview) {

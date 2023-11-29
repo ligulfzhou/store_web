@@ -68,3 +68,23 @@ export interface UpdateEmbryoParam {
     number: string,              // 颜色
     notes: string,
 }
+
+export function makeUpdateEmbryoParamNotNull(param: UpdateEmbryoParam) {
+    let notNullParam: UpdateEmbryoParam = {
+        number: param.number||'',
+        color: param.color || '',              // 颜色
+        name: param.name || '',               // 产品名称
+        unit: param.unit || '',               // 单位
+        images: param.images || [],
+        notes: param.notes || '',
+        id: param.id || 0
+    }
+
+    return notNullParam
+}
+
+
+export async function updateEmbryo(url: string, {arg}: { arg: UpdateEmbryoParam }) {
+    return commonEmptyPost(url, makeUpdateEmbryoParamNotNull(arg))
+}
+

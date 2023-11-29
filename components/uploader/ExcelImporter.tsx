@@ -50,6 +50,7 @@ const ExcelImporter: FC<Props> = (
         name: 'file',
         multiple: false,
         showUploadList: false,
+        withCredentials: true,
         data: {tp: titleToType(tp)},
         action: `${host}/api/upload/excel`,
         accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

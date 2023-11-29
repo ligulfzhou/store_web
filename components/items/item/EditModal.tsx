@@ -48,9 +48,8 @@ const EditModal: FC<Props> = (
         let _formValues: UpdateItemParam = {
             barcode: obj?.barcode || '',
             cates: cates,
-            // todo
-            price: obj?.price || '',
-            cost: obj?.cost || '',
+            price: obj?.price ? obj.price / 100 : '',
+            cost: obj?.cost ? obj.cost / 100 : '',
             number: obj?.number || '',
             // cate1_id and cate2_id are useless
             cate1_id: obj?.cate1_id || '',
@@ -166,7 +165,7 @@ const EditModal: FC<Props> = (
 
         console.log(fileList)
         let imageList = fileList.map(file => {
-            if(file.url) {
+            if (file.url) {
                 return file.url
             } else {
                 let response = file.response as UploadImageResponse
@@ -176,7 +175,11 @@ const EditModal: FC<Props> = (
 
         console.log(imageList)
         values['images'] = imageList
-        // debugger
+
+        // @ts-ignore
+        values['price'] = values['price'] * 100
+        // @ts-ignore
+        values['cost'] = values['cost'] * 100
 
         console.log(values)
         callUpdateAPI(values).then((res) => {
