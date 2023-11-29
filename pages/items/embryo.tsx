@@ -13,6 +13,7 @@ import {fallbackImage} from "@/utils/b64";
 import useEmbryos from "@/hooks/useEmbryos";
 import {Embryo} from "@/types/embryo";
 import SearchForm from "@/components/items/embryo/SearchForm";
+import StorageModal from "@/components/items/embryo/StorageModal";
 
 
 export default function Index() {
@@ -103,6 +104,13 @@ export default function Index() {
     const [refresh, setRefresh] = useState<boolean>(false)
     const [editItem, setEditItem] = useState<Embryo | undefined>()
 
+    const [isStorageModalOpen, setIsStorageModalOpen] = useState<boolean>(false)
+
+    const refreshPage = ()=> {
+        setRefresh(true)
+        mutate(key).finally(() => setRefresh(false))
+    }
+
     return (
         <LayoutWithMenu>
             <EditModal
@@ -110,13 +118,18 @@ export default function Index() {
                 closeFn={(success) => {
                     setIsEditModalOpen(false)
                     if (success) {
-                        setRefresh(true)
-                        mutate(key).finally(() => setRefresh(false))
+                        refreshPage()
                     }
                 }}
                 obj={editItem}
             />
 
+            <StorageModal open={isStorageModalOpen} closeFn={(success)=> {
+                setIsStorageModalOpen(false)
+                if(success) {
+                    refreshPage()
+                }
+            }} obj={editItem}/>
             {/*filters*/}
             <div className='bg-white p-5 m-2 rounded'>
                 <SearchForm/>
@@ -129,8 +142,7 @@ export default function Index() {
                         loading={refresh}
                         type="primary"
                         onClick={() => {
-                            setRefresh(true)
-                            mutate(key).finally(() => setRefresh(false))
+                            refreshPage()
                         }}
                     >
                         刷新
@@ -148,8 +160,7 @@ export default function Index() {
                     </Button>
 
                     <ExcelImporter callback={() => {
-                        setRefresh(true)
-                        mutate(key).finally(() => setRefresh(false))
+                        refreshPage()
                     }} tp='embryo'/>
                 </div>
 
