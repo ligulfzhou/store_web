@@ -56,3 +56,15 @@ export async function updateItem(url: string, {arg}: { arg: UpdateItemParam }) {
 export async function updateCate(url: string, {arg}: { arg: UpdateCateParams}) {
     return commonEmptyPost(url, arg)
 }
+
+
+
+export interface UpdateEmbryoParam {
+    id: number,
+    images: string[],
+    name: string,           // 货号
+    color: string,               // 产品名称
+    unit: string,               // 规格
+    number: string,              // 颜色
+    notes: string,
+}

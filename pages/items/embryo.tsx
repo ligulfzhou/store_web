@@ -73,13 +73,22 @@ export default function Index() {
             title: '操作',
             key: 'action',
             render: (_, record) => (
-                <a href='#' onClick={(event) => {
-                    event.preventDefault()
-                    // setEditItem(record)
-                    setIsEditModalOpen(true)
-                }}>
-                    查看
-                </a>
+                <div className='flex flex-row gap-3'>
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        // setEditItem(record)
+                        setIsEditModalOpen(true)
+                    }}>
+                        查看
+                    </a>
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        // setEditItem(record)
+                        setIsEditModalOpen(true)
+                    }}>
+                        增减数量
+                    </a>
+                </div>
             ),
         },
     ];

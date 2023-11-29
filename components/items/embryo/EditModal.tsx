@@ -1,13 +1,13 @@
 import React, {FC, useEffect, useState} from "react";
 import {Modal, Form, Input, message, InputNumber, Cascader, UploadFile, Select} from "antd";
 import useSWRMutation from "swr/mutation";
-import {Item} from "@/types/item";
-import {updateItem, UpdateItemParam} from "@/requests/item";
+import {UpdateEmbryoParam, updateItem, UpdateItemParam} from "@/requests/item";
 import useCates from "@/hooks/useCates";
 import MultipleImageUploader from "@/components/uploader/MultipleImageUploader";
 import {DataResponse, Option} from "@/types";
 import useGlobalSettings from "@/hooks/useGlobalSettings";
 import useColorValue from "@/hooks/useColorValue";
+import {Embryo} from "@/types/embryo";
 
 
 type imageReponse = {
@@ -18,7 +18,7 @@ type UploadImageResponse = DataResponse<imageReponse>
 interface Props {
     open: boolean,
     closeFn: (success: boolean) => void,
-    obj: Item | undefined
+    obj: Embryo | undefined
 }
 
 const EditModal: FC<Props> = (
@@ -42,10 +42,7 @@ const EditModal: FC<Props> = (
         }
 
         let cates = null
-        if (obj?.cate1_id && obj.cate2_id) {
-            cates = [obj.cate1_id.toString(), obj.cate2_id.toString()]
-        }
-        let _formValues: UpdateItemParam = {
+        let _formValues: UpdateEmbryoParam = {
             barcode: obj?.barcode || '',
             cates: cates,
             // todo
@@ -166,17 +163,12 @@ const EditModal: FC<Props> = (
 
         console.log(fileList)
         let imageList = fileList.map(file => {
-            if(file.url) {
-                return file.url
-            } else {
-                let response = file.response as UploadImageResponse
-                return response.data.url
-            }
+            let response = file.response as UploadImageResponse
+            return response.data.url
         })
 
         console.log(imageList)
         values['images'] = imageList
-        // debugger
 
         console.log(values)
         callUpdateAPI(values).then((res) => {
