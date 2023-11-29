@@ -9,3 +9,12 @@ export interface Embryo {
     number: string,      // 货号
     create_time: string, // 创建时间
 }
+
+
+export interface EmbryoSearchParams {
+    name: string | undefined,
+    number: string|undefined,
+
+    page: number,
+    pageSize: number,
+}

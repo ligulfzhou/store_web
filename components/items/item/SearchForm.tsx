@@ -4,7 +4,6 @@ import useRouterUtils from "@/hooks/useRouterUtils";
 import moment from "moment";
 import {dateFormat} from "@/utils/const";
 import useParameters from "@/hooks/useParameters";
-import {CustomerSearchParams} from '@/types/customer'
 import {ItemSearchParams} from '@/types/item'
 import {Option} from "@/types";
 import useCates from "@/hooks/useCates";

@@ -7,12 +7,12 @@ import {defaultPageSize} from "@/utils/const";
 import React, {useState} from "react";
 import {useSWRConfig} from "swr"
 import EditModal from "@/components/items/embryo/EditModal";
-import CustomerSearchForm from "@/components/customer/CustomerSearchForm";
 import {formatDateTime} from "@/utils/utils";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {fallbackImage} from "@/utils/b64";
 import useEmbryos from "@/hooks/useEmbryos";
 import {Embryo} from "@/types/embryo";
+import SearchForm from "@/components/items/embryo/SearchForm";
 
 
 export default function Index() {
@@ -119,7 +119,7 @@ export default function Index() {
 
             {/*filters*/}
             <div className='bg-white p-5 m-2 rounded'>
-                <CustomerSearchForm/>
+                <SearchForm/>
             </div>
 
             <div className='p-5 m-2 bg-white rounded'>
