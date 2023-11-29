@@ -92,7 +92,7 @@ export default function Index() {
                     <a href='#' onClick={(event) => {
                         event.preventDefault()
                         setEditItem(record)
-                        setIsEditModalOpen(true)
+                        setIsStorageModalOpen(true)
                     }}>
                         增减数量
                     </a>

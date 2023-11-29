@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {Modal, Form, Input, message, Select} from "antd";
+import {Modal, Form, message, Select, InputNumber} from "antd";
 import useSWRMutation from "swr/mutation";
 import {updateEmbryo, UpdateItemParam} from "@/requests/item";
 import {Embryo} from "@/types/embryo";
@@ -33,6 +33,8 @@ const StorageModal: FC<Props> = (
         values['id'] = id
 
         console.log(values)
+        message.error("不着急，还没实现")
+        return
         callUpdateAPI(values).then((res) => {
             if (res.code == 0) {
                 message.success(`${obj ? "修改" : "添加"}成功`)
@@ -47,7 +49,6 @@ const StorageModal: FC<Props> = (
     return (
         <div>
             <Modal
-                width={700}
                 open={open}
                 centered={true}
                 title={`${obj ? "修改" : "添加"}库存胚`}
@@ -67,11 +68,11 @@ const StorageModal: FC<Props> = (
                     wrapperCol={{span: 16}}
                     onFinish={onFinish}
                 >
-                    <div className='grid grid-cols-2'>
+                    <div className=''>
                         <Form.Item
-                            label="颜色"
-                            name="color"
-                            rules={[{required: true, message: '请选择颜色!'}]}
+                            label="增加/减少库存"
+                            name="incOrDec"
+                            rules={[{required: true, message: '请选择增加 还是 减少!'}]}
                         >
                             <Select options={[
                                 {
@@ -86,13 +87,12 @@ const StorageModal: FC<Props> = (
                         </Form.Item>
 
                         <Form.Item
-                            label="名称"
+                            label="数量"
                             name="name"
-                            rules={[{required: true, message: '请输入名称!'}]}
+                            rules={[{required: true, message: '请输入数量!'}]}
                         >
-                            <Input/>
+                            <InputNumber style={{width: 250}} />
                         </Form.Item>
-
                     </div>
                 </Form>
             </Modal>
