@@ -6,18 +6,6 @@ export const host = 'https://lkx-api.ligulfzhou.com'
 export const defaultPageSize = 50
 
 
-// export const units = [
-//     '个', '包', '袋', '盒', '台', '串', '克'
-// ]
-
-// export const unitsOptions = units.map(unit => (
-//     {
-//         label: unit,
-//         value: unit
-//     }
-// ))
-
-
 interface Option {
     index: number,
     name: string,
