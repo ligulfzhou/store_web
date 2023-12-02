@@ -14,6 +14,7 @@ import useEmbryos from "@/hooks/useEmbryos";
 import {Embryo} from "@/types/embryo";
 import SearchForm from "@/components/items/embryo/SearchForm";
 import StorageModal from "@/components/items/embryo/StorageModal";
+import InoutListModal from "@/components/items/embryo/InoutListModal";
 
 
 export default function Index() {
@@ -66,7 +67,18 @@ export default function Index() {
         },
         {
             title: "库存数",
-            dataIndex: "count"
+            dataIndex: "count",
+            render: (_, record) => (
+                <div>
+                    <a href='#' onClick={(env) => {
+                        env.preventDefault()
+                        setEditItem(record)
+                        setIsInoutListModalOpen(true)
+                    }}>
+                        {record.count}
+                    </a>
+                </div>
+            )
         },
         {
             title: '备注',
@@ -110,13 +122,18 @@ export default function Index() {
 
     const [isStorageModalOpen, setIsStorageModalOpen] = useState<boolean>(false)
 
-    const refreshPage = ()=> {
+    const [isInoutListModalOpen, setIsInoutListModalOpen] = useState<boolean>(false)
+    const refreshPage = () => {
         setRefresh(true)
         mutate(key).finally(() => setRefresh(false))
     }
 
     return (
         <LayoutWithMenu>
+            <InoutListModal open={isInoutListModalOpen} closeFn={() => {
+                setIsInoutListModalOpen(false)
+            }} obj={editItem}/>
+
             <EditModal
                 open={isEditModalOpen}
                 closeFn={(success) => {
@@ -128,9 +145,9 @@ export default function Index() {
                 obj={editItem}
             />
 
-            <StorageModal open={isStorageModalOpen} closeFn={(success)=> {
+            <StorageModal open={isStorageModalOpen} closeFn={(success) => {
                 setIsStorageModalOpen(false)
-                if(success) {
+                if (success) {
                     refreshPage()
                 }
             }} obj={editItem}/>
