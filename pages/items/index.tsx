@@ -91,6 +91,36 @@ export default function Index() {
             dataIndex: "count"
         },
         {
+            title: "库存胚",
+            dataIndex: "embryo",
+            render: (_, record)=> (
+                <div>
+                    {record.embryo ? (
+                        <div className='flex flex-row'>
+                            <Image.PreviewGroup>
+                                <div className='flex flex-row gap-1'>
+                                    {record.embryo.images.map((image_url, index) => (
+                                        <Image
+                                            key={`image-${index}`}
+                                            width={24}
+                                            height={24}
+                                            src={image_url}
+                                            fallback={fallbackImage}/>
+                                    ))}
+                                </div>
+                            </Image.PreviewGroup>
+                            <div>
+                                {record.embryo.name}:
+                            </div>
+                            <div>
+                                {record.embryo.count} ({record.embryo.unit})
+                            </div>
+                        </div>
+                    ): null}
+                </div>
+            )
+        },
+        {
             title: '备注',
             dataIndex: "notes",
         },

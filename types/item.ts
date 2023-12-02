@@ -14,6 +14,8 @@
 //     parent_id: number, // 父类ID
 // }
 
+import {Embryo} from "@/types/embryo";
+
 export interface Cate {
     id: number,        // SERIAL
     index: number,     // 顺序
@@ -51,13 +53,14 @@ export interface Item {
     barcode: string,     // 条码
     count: number,
     create_time: string, // 创建时间
+    embryo: Embryo | undefined
 }
 
 
 export interface ItemSearchParams {
     name: string | undefined,
-    number: string|undefined,
-    barcode: string|undefined,
+    number: string | undefined,
+    barcode: string | undefined,
     cate1_id: number | string | undefined,
     cate2_id: number | string | undefined,
     create_time_st: string | undefined,

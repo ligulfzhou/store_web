@@ -83,7 +83,7 @@ const SubCatesModal: FC<Props> = (
             />
 
             <Modal
-                width={'1000px'}
+                width={'750px'}
                 open={open}
                 centered={true}
                 title={`查看'${obj?.name + "'"+'的'||''}子类`}
