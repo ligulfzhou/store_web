@@ -15,8 +15,8 @@ export interface UpdateItemParam {
     barcode: string,            // 条码
     notes: string,
     cates: string[] | null,
-    cate1_id: number|string,             // 产品大类
-    cate2_id: number|string,             // 产品小类
+    cate1_id: number | string,             // 产品大类
+    cate2_id: number | string,             // 产品小类
 }
 
 export function makeUpdateCustomerParamNotNull(param: UpdateItemParam) {
@@ -32,14 +32,14 @@ export function makeUpdateCustomerParamNotNull(param: UpdateItemParam) {
         cates: param.cates || [],
         cate1_id: cate1_id,             // 产品大类
         cate2_id: cate2_id,             // 产品小类
-        number: param.number||'',
+        number: param.number || '',
         color: param.color || '',              // 颜色
         name: param.name || '',               // 产品名称
         size: param.size || '',               // 规格
         unit: param.unit || '',               // 单位
         barcode: param.barcode || '',            // 条码
-        price: param.price|| 0,            // 标准售价
-        cost: param.cost|| 0,             // 进货价
+        price: param.price || 0,            // 标准售价
+        cost: param.cost || 0,             // 进货价
         images: param.images || [],
         notes: param.notes || '',
         id: param.id || 0
@@ -53,10 +53,9 @@ export async function updateItem(url: string, {arg}: { arg: UpdateItemParam }) {
     return commonEmptyPost(url, makeUpdateCustomerParamNotNull(arg))
 }
 
-export async function updateCate(url: string, {arg}: { arg: UpdateCateParams}) {
+export async function updateCate(url: string, {arg}: { arg: UpdateCateParams }) {
     return commonEmptyPost(url, arg)
 }
-
 
 
 export interface UpdateEmbryoParam {
@@ -71,7 +70,7 @@ export interface UpdateEmbryoParam {
 
 export function makeUpdateEmbryoParamNotNull(param: UpdateEmbryoParam) {
     let notNullParam: UpdateEmbryoParam = {
-        number: param.number||'',
+        number: param.number || '',
         color: param.color || '',              // 颜色
         name: param.name || '',               // 产品名称
         unit: param.unit || '',               // 单位
@@ -86,5 +85,17 @@ export function makeUpdateEmbryoParamNotNull(param: UpdateEmbryoParam) {
 
 export async function updateEmbryo(url: string, {arg}: { arg: UpdateEmbryoParam }) {
     return commonEmptyPost(url, makeUpdateEmbryoParamNotNull(arg))
+}
+
+
+export interface UpdateEmbryoInoutParam {
+    id: number,
+    in_out: boolean|number,
+    count: number,
+}
+
+
+export async function updateEmbryoInout(url: string, {arg}: { arg: UpdateEmbryoInoutParam }) {
+    return commonEmptyPost(url, arg)
 }
 

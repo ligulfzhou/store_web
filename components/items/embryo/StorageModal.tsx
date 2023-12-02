@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {Modal, Form, message, Select, InputNumber} from "antd";
 import useSWRMutation from "swr/mutation";
-import {updateEmbryo, UpdateItemParam} from "@/requests/item";
+import {updateEmbryoInout, UpdateEmbryoInoutParam} from "@/requests/item";
 import {Embryo} from "@/types/embryo";
 
 
@@ -23,21 +23,25 @@ const StorageModal: FC<Props> = (
     const {
         trigger: callUpdateAPI,
         isMutating: callingUpdateAPI
-    } = useSWRMutation("/api/embryo/edit", updateEmbryo)
+    } = useSWRMutation("/api/embryo/inout", updateEmbryoInout)
 
-    const onFinish = (values: UpdateItemParam) => {
+    const onFinish = (values: UpdateEmbryoInoutParam) => {
         let id = 0
         if (obj) {
             id = obj.id
         }
         values['id'] = id
 
+        if (typeof (values['in_out']) == 'string' && parseInt(values['in_out']) == 1) {
+            values['in_out'] = true
+        } else {
+            values['in_out'] = false
+        }
+
         console.log(values)
-        message.error("不着急，还没实现")
-        return
         callUpdateAPI(values).then((res) => {
             if (res.code == 0) {
-                message.success(`${obj ? "修改" : "添加"}成功`)
+                message.success(`修改库存成功`)
                 closeFn(true)
                 form.resetFields()
             } else {
@@ -51,7 +55,7 @@ const StorageModal: FC<Props> = (
             <Modal
                 open={open}
                 centered={true}
-                title={`${obj ? "修改" : "添加"}库存胚`}
+                title={`修改库存胚 库存`}
                 onCancel={(e) => {
                     e.preventDefault()
                     form.resetFields()
@@ -71,7 +75,7 @@ const StorageModal: FC<Props> = (
                     <div className=''>
                         <Form.Item
                             label="增加/减少库存"
-                            name="incOrDec"
+                            name="in_out"
                             rules={[{required: true, message: '请选择增加 还是 减少!'}]}
                         >
                             <Select options={[
@@ -88,10 +92,10 @@ const StorageModal: FC<Props> = (
 
                         <Form.Item
                             label="数量"
-                            name="name"
+                            name="count"
                             rules={[{required: true, message: '请输入数量!'}]}
                         >
-                            <InputNumber style={{width: 250}} />
+                            <InputNumber style={{width: 250}}/>
                         </Form.Item>
                     </div>
                 </Form>
