@@ -7,13 +7,13 @@ import {defaultPageSize} from "@/utils/const";
 import React, {useState} from "react";
 import {useSWRConfig} from "swr"
 import EditModal from "@/components/items/item/EditModal";
-import CustomerSearchForm from "@/components/customer/CustomerSearchForm";
 import {formatDateTime} from "@/utils/utils";
 import useItems from "@/hooks/useItems";
 import {Item} from "@/types/item";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {fallbackImage} from "@/utils/b64";
 import SearchForm from "@/components/items/item/SearchForm";
+import StorageModal from "@/components/items/item/StorageModal";
 
 
 export default function Index() {
@@ -107,19 +107,37 @@ export default function Index() {
             title: '操作',
             key: 'action',
             render: (_, record) => (
-                <a href='#' onClick={(event) => {
-                    event.preventDefault()
-                    setEditItem(record)
-                    setIsEditModalOpen(true)
-                }}>
-                    查看
-                </a>
+                <div className='flex flex-row gap-3'>
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        setEditItem(record)
+                        setIsEditModalOpen(true)
+                    }}>
+                        查看
+                    </a>
+
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        setEditItem(record)
+                        setIsStorageModalOpen(true)
+                    }}>
+                        出入库
+                    </a>
+
+                </div>
             ),
         },
     ];
 
     const [refresh, setRefresh] = useState<boolean>(false)
     const [editItem, setEditItem] = useState<Item | undefined>()
+
+    const [isStorageModalOpen, setIsStorageModalOpen] = useState<boolean>(false)
+
+    const refreshPage = () => {
+        setRefresh(true)
+        mutate(key).finally(() => setRefresh(false))
+    }
 
     return (
         <LayoutWithMenu>
@@ -128,12 +146,18 @@ export default function Index() {
                 closeFn={(success) => {
                     setIsEditModalOpen(false)
                     if (success) {
-                        setRefresh(true)
-                        mutate(key).finally(() => setRefresh(false))
+                        refreshPage()
                     }
                 }}
                 obj={editItem}
             />
+
+            <StorageModal open={isStorageModalOpen} closeFn={(success) => {
+                setIsStorageModalOpen(false)
+                if (success) {
+                    refreshPage()
+                }
+            }} obj={editItem}/>
 
             {/*filters*/}
             <div className='bg-white p-5 m-2 rounded'>
@@ -147,8 +171,7 @@ export default function Index() {
                         loading={refresh}
                         type="primary"
                         onClick={() => {
-                            setRefresh(true)
-                            mutate(key).finally(() => setRefresh(false))
+                            refreshPage()
                         }}
                     >
                         刷新
@@ -158,16 +181,14 @@ export default function Index() {
                         className='mb-4'
                         type="primary"
                         onClick={() => {
-                            setEditItem(undefined)
-                            setIsEditModalOpen(true)
+                            refreshPage()
                         }}
                     >
                         添加
                     </Button>
 
                     <ExcelImporter callback={() => {
-                        setRefresh(true)
-                        mutate(key).finally(() => setRefresh(false))
+                        refreshPage()
                     }} tp='item'/>
                 </div>
 

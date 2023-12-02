@@ -99,3 +99,14 @@ export async function updateEmbryoInout(url: string, {arg}: { arg: UpdateEmbryoI
     return commonEmptyPost(url, arg)
 }
 
+export interface UpdateItemInoutParam {
+    id: number,
+    in_out: boolean|number,
+    count: number,
+}
+
+
+export async function updateItemInout(url: string, {arg}: { arg: UpdateItemInoutParam }) {
+    return commonEmptyPost(url, arg)
+}
+
