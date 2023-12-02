@@ -1,118 +1,234 @@
-import {Table, Space, Button, Tag} from 'antd';
+import {Table, Button, Image} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {ColumnsType} from "antd/es/table";
-import useOrders from "@/hooks/useOrders";
-import {Order} from '@/types'
-import {useRouter} from "next/router";
-import {getColorWithStepAndIndex, getDepartmentAndNotesWithStepAndIndex, parseQueryParam} from "@/utils/utils";
+import useRouterUtils from "@/hooks/useRouterUtils";
 import useParameters from "@/hooks/useParameters";
+import {defaultPageSize} from "@/utils/const";
+import React, {useState} from "react";
+import {useSWRConfig} from "swr"
+import EditModal from "@/components/items/item/EditModal";
+import {formatDateTime} from "@/utils/utils";
+import useItems from "@/hooks/useItems";
+import {Item} from "@/types/item";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
-import {useState} from "react";
-import {useSWRConfig} from "swr";
+import {fallbackImage} from "@/utils/b64";
+import SearchForm from "@/components/items/item/SearchForm";
+import StorageModal from "@/components/items/item/StorageModal";
 
 
 export default function Index() {
-    const router = useRouter()
     const {page, pageSize} = useParameters()
-    let customerNo = parseQueryParam(router.query.customerNo)
-    const {orders, total, isLoading, isValidating, key} = useOrders(customerNo)
-    const [refresh, setRefresh] = useState<boolean>(false);
+    const {items, total, isLoading, key} = useItems();
+    const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false)
+    const {reloadPage} = useRouterUtils()
     const {mutate} = useSWRConfig()
 
-    const columns: ColumnsType<Order> = [
+    const columns: ColumnsType<Item> = [
         {
             title: 'ID',
             dataIndex: 'id',
         },
         {
-            title: "订单编号",
-            dataIndex: "order_no",
-            render: (text) => (
-                <div className='font-medium'>
-                    {text}
+            title: "图片",
+            dataIndex: "image",
+            width: "80px",
+            render: (_, record) => (
+                <Image.PreviewGroup>
+                    <div className='flex flex-row gap-1'>
+                        {record.images.map((image_url, index) => (
+                            <Image
+                                key={`image-${index}`}
+                                width={24}
+                                height={24}
+                                src={image_url}
+                                fallback={fallbackImage}/>
+                        ))}
+                    </div>
+                </Image.PreviewGroup>
+            )
+        },
+        {
+            title: '产品名',
+            dataIndex: 'name',
+        },
+        {
+            title: "货号",
+            dataIndex: "number"
+        },
+        {
+            title: '类别',
+            dataIndex: 'cates',
+            render: (_, record) => (
+                <div>
+                    {record.cate1 || record.cate2 ? (
+                        <>
+                            {record.cate1 || ''}, {record.cate2 || ''}
+                        </>
+                    ) : null}
                 </div>
             )
         },
         {
-            title: "下单时间",
-            dataIndex: "order_date"
-        },
-        {
-            title: "交付时间",
-            dataIndex: "delivery_date"
-        },
-        {
-            title: "返单/加急",
-            key: "return_order_or_urgent",
-            dataIndex: 'return_order_or_urgent',
+            title: "售价",
+            dataIndex: "price",
             render: (_, record) => (
-                <>
-                    {record.is_return_order ? <Tag color='red'>返单</Tag> : null}
-                    {record.is_urgent ? <Tag className='yellow'>加急单</Tag> : null}
-                </>
+                <div>
+                    {record.price / 100}
+                </div>
             )
         },
         {
-            title: "流程进度",
-            key: "step_count",
-            dataIndex: 'step_count',
-            width: "500px",
+            title: "成本",
+            dataIndex: "cost",
             render: (_, record) => (
-                <>
-                    {record.steps.map(stepIndexCount => (
-                        <Tag color={getColorWithStepAndIndex(stepIndexCount.step, stepIndexCount.index)}
-                             key={`${record.id}-${stepIndexCount.step}-${stepIndexCount.index}`}>
-                            <div className='text-black'>
-                                {getDepartmentAndNotesWithStepAndIndex(stepIndexCount.step, stepIndexCount.index)} {stepIndexCount.count}
+                <div>
+                    {record.cost / 100}
+                </div>
+            )
+        },
+        {
+            title: "库存",
+            dataIndex: "count"
+        },
+        {
+            title: "库存胚",
+            dataIndex: "embryo",
+            render: (_, record)=> (
+                <div>
+                    {record.embryo ? (
+                        <div className='flex flex-row'>
+                            <Image.PreviewGroup>
+                                <div className='flex flex-row gap-1'>
+                                    {record.embryo.images.map((image_url, index) => (
+                                        <Image
+                                            key={`image-${index}`}
+                                            width={24}
+                                            height={24}
+                                            src={image_url}
+                                            fallback={fallbackImage}/>
+                                    ))}
+                                </div>
+                            </Image.PreviewGroup>
+                            <div>
+                                {record.embryo.name}:
                             </div>
-                        </Tag>
-                    ))}
-                </>
+                            <div>
+                                {record.embryo.count} ({record.embryo.unit})
+                            </div>
+                        </div>
+                    ): null}
+                </div>
+            )
+        },
+        {
+            title: '备注',
+            dataIndex: "notes",
+        },
+        {
+            title: '创建时间',
+            key: 'create_time',
+            render: (_, record) => (
+                <div>
+                    {formatDateTime(new Date(record.create_time))}
+                </div>
             )
         },
         {
             title: '操作',
             key: 'action',
-            render: () => (
-                <Space size="middle">
-                </Space>
+            render: (_, record) => (
+                <div className='flex flex-row gap-3'>
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        setEditItem(record)
+                        setIsEditModalOpen(true)
+                    }}>
+                        查看
+                    </a>
+
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        setEditItem(record)
+                        setIsStorageModalOpen(true)
+                    }}>
+                        出入库
+                    </a>
+
+                </div>
             ),
         },
     ];
 
+    const [refresh, setRefresh] = useState<boolean>(false)
+    const [editItem, setEditItem] = useState<Item | undefined>()
+
+    const [isStorageModalOpen, setIsStorageModalOpen] = useState<boolean>(false)
+
+    const refreshPage = () => {
+        setRefresh(true)
+        mutate(key).finally(() => setRefresh(false))
+    }
+
     return (
         <LayoutWithMenu>
-            <div className='p-5 m-2 bg-white rounded  flex flex-row'>
-                <Button
-                    loading={refresh}
-                    onClick={() => {
-                        setRefresh(true)
-                        mutate(key).finally(() => setRefresh(false))
-                    }}
-                    type="primary">
-                    刷新
-                </Button>
+            <EditModal
+                open={isEditModalOpen}
+                closeFn={(success) => {
+                    setIsEditModalOpen(false)
+                    if (success) {
+                        refreshPage()
+                    }
+                }}
+                obj={editItem}
+            />
 
-                <ExcelImporter
-                    callback={() => {
-                        setRefresh(true)
-                        mutate(key).finally(() => setRefresh(false))
-                    }}
-                    tp={'order'}
-                />
+            <StorageModal open={isStorageModalOpen} closeFn={(success) => {
+                setIsStorageModalOpen(false)
+                if (success) {
+                    refreshPage()
+                }
+            }} obj={editItem}/>
+
+            {/*filters*/}
+            <div className='bg-white p-5 m-2 rounded'>
+                <SearchForm/>
             </div>
 
-            <div className='p-5 m-2 bg-white rounded overflow-auto'>
+            <div className='p-5 m-2 bg-white rounded'>
+                <div className='mb-2 gap-4 flex flex-row justify-start'>
+                    <Button
+                        className='mb-4'
+                        loading={refresh}
+                        type="primary"
+                        onClick={() => {
+                            refreshPage()
+                        }}
+                    >
+                        刷新
+                    </Button>
+                </div>
+
                 <Table
-                    rowKey={`id`}
+                    rowKey={'id'}
+                    bordered={true}
                     size={"small"}
-                    loading={isLoading || (refresh && isValidating)}
+                    loading={isLoading || refresh}
                     columns={columns}
-                    pagination={{total: total, current: page, pageSize: pageSize}}
-                    dataSource={orders}
+                    pagination={{
+                        total: total,
+                        current: page,
+                        defaultPageSize: defaultPageSize,
+                        pageSize: pageSize,
+                        onChange: (thisPage, thisPageSize) => {
+                            reloadPage({
+                                page: thisPage,
+                                pageSize: thisPageSize
+                            })
+                        }
+                    }}
+                    dataSource={items}
                 />
             </div>
         </LayoutWithMenu>
     );
-
 };

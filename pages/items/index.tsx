@@ -211,7 +211,8 @@ export default function Index() {
                         className='mb-4'
                         type="primary"
                         onClick={() => {
-                            refreshPage()
+                            setEditItem(undefined)
+                            setIsEditModalOpen(true)
                         }}
                     >
                         添加
