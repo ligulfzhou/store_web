@@ -65,6 +65,10 @@ export default function Index() {
             dataIndex: "unit"
         },
         {
+            title: "库存数",
+            dataIndex: "count"
+        },
+        {
             title: '备注',
             dataIndex: "notes",
         },

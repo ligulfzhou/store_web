@@ -8,6 +8,7 @@ export interface Embryo {
     notes: string,       // 备注
     number: string,      // 货号
     create_time: string, // 创建时间
+    count: number,       // 库存数
 }
 
 
