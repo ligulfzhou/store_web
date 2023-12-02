@@ -1,3 +1,5 @@
+import {Item} from "@/types/item";
+
 export interface Embryo {
     id: number,          // id
     images: string[],    // 商品图片
@@ -29,4 +31,17 @@ export interface EmbryoInout {
      via: string,                // 规格
      create_time: string, // 创建时间
      embryo: Embryo,
+}
+
+
+export interface ItemInout {
+    id: number,
+    account_id: number,            // 经手账号id
+    account: string,            // 经手账号 名
+    embryo_id: number,             // 产品名称
+    count: number,                 // 数量
+    in_true_out_false: boolean,    // 增加还是减少
+    via: string,                // 规格
+    create_time: string, // 创建时间
+    item: Item,
 }

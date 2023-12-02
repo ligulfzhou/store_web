@@ -14,6 +14,7 @@ import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {fallbackImage} from "@/utils/b64";
 import SearchForm from "@/components/items/item/SearchForm";
 import StorageModal from "@/components/items/item/StorageModal";
+import InoutListModal from "@/components/items/item/InoutListModal";
 
 
 export default function Index() {
@@ -88,7 +89,18 @@ export default function Index() {
         },
         {
             title: "库存",
-            dataIndex: "count"
+            dataIndex: "count",
+            render: (_, record) => (
+                <div>
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        setEditItem(record)
+                        setIsInoutListModalOpen(true)
+                    }}>
+                        {record.count}
+                    </a>
+                </div>
+            )
         },
         {
             title: "库存胚",
@@ -154,6 +166,13 @@ export default function Index() {
                         出入库
                     </a>
 
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        setEditItem(record)
+                        setIsInoutListModalOpen(true)
+                    }}>
+                        查看出入库列表
+                    </a>
                 </div>
             ),
         },
@@ -163,6 +182,7 @@ export default function Index() {
     const [editItem, setEditItem] = useState<Item | undefined>()
 
     const [isStorageModalOpen, setIsStorageModalOpen] = useState<boolean>(false)
+    const [isInoutListModalOpen, setIsInoutListModalOpen] = useState<boolean>(false)
 
     const refreshPage = () => {
         setRefresh(true)
@@ -171,6 +191,10 @@ export default function Index() {
 
     return (
         <LayoutWithMenu>
+            <InoutListModal open={isInoutListModalOpen} closeFn={()=> {
+                setIsInoutListModalOpen(false)
+            }} obj={editItem} />
+
             <EditModal
                 open={isEditModalOpen}
                 closeFn={(success) => {
