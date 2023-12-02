@@ -49,6 +49,7 @@ export interface Item {
     notes: string,       // 备注
     number: string,      // 货号
     barcode: string,     // 条码
+    count: number,
     create_time: string, // 创建时间
 }
 

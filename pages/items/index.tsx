@@ -87,6 +87,14 @@ export default function Index() {
             )
         },
         {
+            title: "库存",
+            dataIndex: "count"
+        },
+        {
+            title: '备注',
+            dataIndex: "notes",
+        },
+        {
             title: '创建时间',
             key: 'create_time',
             render: (_, record) => (
@@ -94,10 +102,6 @@ export default function Index() {
                     {formatDateTime(new Date(record.create_time))}
                 </div>
             )
-        },
-        {
-            title: '备注',
-            dataIndex: "notes",
         },
         {
             title: '操作',

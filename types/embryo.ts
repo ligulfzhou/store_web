@@ -1,4 +1,3 @@
-
 export interface Embryo {
     id: number,          // id
     images: string[],    // 商品图片
@@ -14,7 +13,7 @@ export interface Embryo {
 
 export interface EmbryoSearchParams {
     name: string | undefined,
-    number: string|undefined,
+    number: string | undefined,
 
     page: number,
     pageSize: number,
