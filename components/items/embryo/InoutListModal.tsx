@@ -21,7 +21,6 @@ const InoutListModal: FC<Props> = (
         obj,
     }
 ) => {
-
     const {inouts, key, isLoading} = useEmbryoInouts(obj?.id || 0)
     const {mutate} = useSWRConfig()
     const [refresh, setRefresh] = useState<boolean>(false)

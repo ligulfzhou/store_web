@@ -14,6 +14,10 @@ import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {fallbackImage} from "@/utils/b64";
 import SearchForm from "@/components/items/item/SearchForm";
 import StorageModal from "@/components/items/item/StorageModal";
+import EmbryoStorageModal  from "@/components/items/embryo/StorageModal";
+import InoutListModal from "@/components/items/item/InoutListModal";
+import EmbryoInoutListModal from "@/components/items/embryo/InoutListModal";
+import {Embryo} from "@/types/embryo";
 
 
 export default function Index() {
@@ -88,7 +92,18 @@ export default function Index() {
         },
         {
             title: "库存",
-            dataIndex: "count"
+            dataIndex: "count",
+            render: (_, record) => (
+                <div>
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        setEditItem(record)
+                        setIsInoutListModalOpen(true)
+                    }}>
+                        {record.count} ({record.unit})
+                    </a>
+                </div>
+            )
         },
         {
             title: "库存胚",
@@ -113,8 +128,25 @@ export default function Index() {
                                 {record.embryo.name}:
                             </div>
                             <div>
-                                {record.embryo.count} ({record.embryo.unit})
+                                <a href='#' onClick={(env)=> {
+                                    env.preventDefault()
+                                    setEditEmbryoItem(record.embryo)
+                                    setIsEmbryoInoutListModalOpen(true)
+                                }}>
+                                    {record.embryo.count} ({record.embryo.unit})
+                                </a>
                             </div>
+
+                            <div className='ml-3'>
+                                <a href='#' onClick={(env)=> {
+                                    env.preventDefault()
+                                    setEditEmbryoItem(record.embryo)
+                                    setIsEmbryoStorageModalOpen(true)
+                                }}>
+                                    出入库
+                                </a>
+                            </div>
+
                         </div>
                     ): null}
                 </div>
@@ -154,6 +186,13 @@ export default function Index() {
                         出入库
                     </a>
 
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        setEditItem(record)
+                        setIsInoutListModalOpen(true)
+                    }}>
+                        查看出入库列表
+                    </a>
                 </div>
             ),
         },
@@ -161,8 +200,13 @@ export default function Index() {
 
     const [refresh, setRefresh] = useState<boolean>(false)
     const [editItem, setEditItem] = useState<Item | undefined>()
+    const [editEmbryoItem, setEditEmbryoItem] = useState<Embryo | undefined>()
 
     const [isStorageModalOpen, setIsStorageModalOpen] = useState<boolean>(false)
+    const [isEmbryoStorageModalOpen, setIsEmbryoStorageModalOpen] = useState<boolean>(false)
+
+    const [isInoutListModalOpen, setIsInoutListModalOpen] = useState<boolean>(false)
+    const [isEmbryoInoutListModalOpen, setIsEmbryoInoutListModalOpen] = useState<boolean>(false)
 
     const refreshPage = () => {
         setRefresh(true)
@@ -171,6 +215,14 @@ export default function Index() {
 
     return (
         <LayoutWithMenu>
+            <InoutListModal open={isInoutListModalOpen} closeFn={()=> {
+                setIsInoutListModalOpen(false)
+            }} obj={editItem} />
+
+            <EmbryoInoutListModal open={isEmbryoInoutListModalOpen} closeFn={()=> {
+                setIsEmbryoInoutListModalOpen(false)
+            }} obj={editEmbryoItem} />
+
             <EditModal
                 open={isEditModalOpen}
                 closeFn={(success) => {
@@ -181,6 +233,10 @@ export default function Index() {
                 }}
                 obj={editItem}
             />
+
+            <EmbryoStorageModal open={isEmbryoStorageModalOpen} closeFn={()=> {
+                setIsEmbryoStorageModalOpen(false)
+            }} obj={editEmbryoItem} />
 
             <StorageModal open={isStorageModalOpen} closeFn={(success) => {
                 setIsStorageModalOpen(false)

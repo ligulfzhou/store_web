@@ -55,7 +55,7 @@ const StorageModal: FC<Props> = (
             <Modal
                 open={open}
                 centered={true}
-                title={`修改库存胚 库存`}
+                title={`修改产品 库存`}
                 onCancel={(e) => {
                     e.preventDefault()
                     form.resetFields()
