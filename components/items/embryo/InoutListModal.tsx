@@ -45,7 +45,7 @@ const InoutListModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {record.in_true_out_false ? "入库": "出库"}
+                    {record.in_true_out_false ? "入库" : "出库"}
                 </div>
             )
         },
@@ -54,7 +54,7 @@ const InoutListModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {record.count}
+                    {Math.abs(record.count)}
                 </div>
             )
         },
