@@ -37,7 +37,7 @@ const InoutListModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {record.item.name}
+                    {record.item_name}
                 </div>
             )
         },

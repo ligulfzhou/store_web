@@ -43,5 +43,7 @@ export interface ItemInout {
     in_true_out_false: boolean,    // 增加还是减少
     via: string,                // 规格
     create_time: string, // 创建时间
-    item: Item,
+
+    item_name: string,
+    // item: Item,
 }
