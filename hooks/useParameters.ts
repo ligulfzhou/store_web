@@ -42,6 +42,9 @@ export default function useParameters() {
         create_time_st,
         create_time_ed,
 
+        // 出库入
+        inout,
+
         // items
         // name, customer也有name
         // create_time_st, customer也有
@@ -67,7 +70,11 @@ export default function useParameters() {
     number = parseQueryParam(number)
     barcode = parseQueryParam(barcode)
 
-
+    // 出入库
+    let in_out: boolean|undefined = undefined;
+    if(inout) {
+        in_out = parseQueryParamToBoolean(inout)
+    }
     let idN = parseQueryParamToNumber(id)
     let pageN = parseQueryParamToNumber(page)
     let pageSizeN = parseQueryParamToNumber(pageSize)
@@ -77,7 +84,6 @@ export default function useParameters() {
 
     sorter_field = parseQueryParam(sorter_field)
     sorter_order = parseQueryParam(sorter_order)
-
 
     order_date_start = parseQueryParam(order_date_start)
     order_date_end = parseQueryParam(order_date_end)
@@ -129,6 +135,10 @@ export default function useParameters() {
         cate2_id: cate2IdN,
         number,
         barcode,
+
+
+        // 出入库
+        in_out,
 
         order_id: order_idN,
         order_no,

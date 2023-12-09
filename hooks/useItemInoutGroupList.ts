@@ -2,12 +2,15 @@ import useSWR from 'swr'
 import {fetcher} from "@/utils/utils";
 import {host} from "@/utils/const";
 import {ListReponse} from "@/types/common";
-import {ItemInoutBucket} from "@/types/embryo";
+import {ItemInoutBucket} from "@/types/item";
 import useParameters from "@/hooks/useParameters";
 
 export default function useItemInoutGroupList() {
-    const {page, pageSize} = useParameters()
-    const key = `${host}/api/item/inout/group/list?page=${page}&pageSize=${pageSize}`
+    const {page, pageSize, in_out} = useParameters()
+    let key = `${host}/api/item/inout/group/list?page=${page}&pageSize=${pageSize}`
+    if (in_out!= undefined) {
+        key = `${host}/api/item/inout/group/list?page=${page}&pageSize=${pageSize}&in_out=in_out`
+    }
     const { data, error } = useSWR<ListReponse<ItemInoutBucket>>(
         key,
         fetcher

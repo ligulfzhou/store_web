@@ -275,6 +275,7 @@ const StockOutModal: FC<Props> = (
                     }).then(data=> {
                         if(data.code==0) {
                             message.success("出库成功")
+                            closeFn(true)
                         } else {
                             message.warning("失败☹️")
                         }
@@ -282,7 +283,6 @@ const StockOutModal: FC<Props> = (
 
                 }}
                 okButtonProps={{disabled: dataSource.length==0}}
-                // confirmLoading={}
             >
                 <div className='flex flex-row gap-4'>
                     <SearchInput

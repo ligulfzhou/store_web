@@ -7,7 +7,7 @@ import {useState} from "react";
 import {useSWRConfig} from "swr";
 import StockOutModal from "@/components/stock/StockOutModal";
 import useItemInoutGroupList from "@/hooks/useItemInoutGroupList";
-import {ItemInoutBucket} from "@/types/embryo";
+import {ItemInoutBucket} from "@/types/item";
 
 
 export default function Index() {
@@ -22,21 +22,31 @@ export default function Index() {
             dataIndex: 'id',
         },
         {
-            title: "订单编号",
-            dataIndex: "order_no",
-            render: (text) => (
-                <div className='font-medium'>
-                    {text}
+            title: "出/入库",
+            dataIndex: "in_true_out_false",
+            render: (_, record) => (
+                <div>
+                    {record.in_true_out_false? "入库": "出库"}
                 </div>
             )
         },
         {
-            title: "下单时间",
-            dataIndex: "order_date"
+            title: "数量",
+            dataIndex: "total_count",
+            render: (_, record)=> (
+                <div>
+                    {Math.abs(record.total_count)}
+                </div>
+            )
         },
         {
-            title: "交付时间",
-            dataIndex: "delivery_date"
+            title: "金额",
+            dataIndex: "total_sum",
+            render: (_, record)=> (
+                <div>
+                    {Math.abs(parseInt(String(record.total_sum / 100)))} (元)
+                </div>
+            )
         },
         {
             title: '操作',
@@ -57,6 +67,7 @@ export default function Index() {
                 console.log('stock-out-modal closed...')
                 if (success) {
                     console.log('success......')
+                    mutate(key).finally(() => setRefresh(false))
                 }
             }} />
 
@@ -65,7 +76,7 @@ export default function Index() {
                     loading={refresh}
                     onClick={() => {
                         setRefresh(true)
-                        // mutate(key).finally(() => setRefresh(false))
+                        mutate(key).finally(() => setRefresh(false))
                     }}
                     type="primary">
                     刷新

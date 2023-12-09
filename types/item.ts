@@ -14,7 +14,7 @@
 //     parent_id: number, // 父类ID
 // }
 
-import {Embryo} from "@/types/embryo";
+import {Embryo, ItemInout} from "@/types/embryo";
 
 export interface Cate {
     id: number,        // SERIAL
@@ -68,4 +68,19 @@ export interface ItemSearchParams {
 
     page: number,
     pageSize: number,
+}
+
+
+export interface ItemInoutBucket {
+    id: number,
+    account_id: number,
+    account: String,
+    in_true_out_false: boolean,
+    via: string,
+    create_time: string,
+
+    total_count: number,
+    total_sum: number,
+
+    items: ItemInout[],
 }
