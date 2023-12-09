@@ -9,13 +9,14 @@ import useParameters from "@/hooks/useParameters";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {useState} from "react";
 import {useSWRConfig} from "swr";
+import StockOutModal from "@/components/stock/StockOutModal";
 
 
 export default function Index() {
     const router = useRouter()
     const {page, pageSize} = useParameters()
     let customerNo = parseQueryParam(router.query.customerNo)
-    const {orders, total, isLoading, isValidating, key} = useOrders(customerNo)
+    // const {orders, total, isLoading, isValidating, key} = useOrders(customerNo)
     const [refresh, setRefresh] = useState<boolean>(false);
     const {mutate} = useSWRConfig()
 
@@ -80,36 +81,47 @@ export default function Index() {
         },
     ];
 
+    const [isStockOutModalOpen, setIsStockOutModalOpen] = useState<boolean>(false)
+
     return (
         <LayoutWithMenu>
-            <div className='p-5 m-2 bg-white rounded  flex flex-row'>
+            <StockOutModal open={isStockOutModalOpen} closeFn={(success)=> {
+                setIsStockOutModalOpen(false)
+                console.log('stock-out-modal closed...')
+                if (success) {
+                    console.log('success......')
+                }
+            }} />
+
+            <div className='p-5 m-2 bg-white rounded flex flex-row gap-2'>
                 <Button
                     loading={refresh}
                     onClick={() => {
                         setRefresh(true)
-                        mutate(key).finally(() => setRefresh(false))
+                        // mutate(key).finally(() => setRefresh(false))
                     }}
                     type="primary">
                     刷新
                 </Button>
 
-                <ExcelImporter
-                    callback={() => {
-                        setRefresh(true)
-                        mutate(key).finally(() => setRefresh(false))
+                <Button
+                    loading={refresh}
+                    onClick={() => {
+                        setIsStockOutModalOpen(true)
                     }}
-                    tp={'order'}
-                />
+                    type="primary">
+                    出库
+                </Button>
             </div>
 
             <div className='p-5 m-2 bg-white rounded overflow-auto'>
                 <Table
                     rowKey={`id`}
                     size={"small"}
-                    loading={isLoading || (refresh && isValidating)}
+                    // loading={isLoading || (refresh && isValidating)}
                     columns={columns}
-                    pagination={{total: total, current: page, pageSize: pageSize}}
-                    dataSource={orders}
+                    pagination={{total: 10, current: page, pageSize: pageSize}}
+                    dataSource={[]}
                 />
             </div>
         </LayoutWithMenu>

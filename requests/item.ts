@@ -1,22 +1,22 @@
-import {commonEmptyPost} from "@/requests/common";
-import {UpdateCateParams} from "@/types";
+import {commonEmptyPost, commonListGet} from "@/requests/common";
+import {Item, UpdateCateParams} from "@/types";
 
 
 export interface UpdateItemParam {
     id: number,
     images: string[],
-    name: string,           // 货号
-    size: string,              // 颜色
-    color: string,               // 产品名称
-    unit: string,               // 规格
-    price: number | string,            // 标准售价
-    cost: number | string,             // 进货价
-    number: string,              // 颜色
-    barcode: string,            // 条码
+    name: string,
+    size: string,
+    color: string,
+    unit: string,
+    price: number | string,
+    cost: number | string,
+    number: string,
+    barcode: string,
     notes: string,
     cates: string[] | null,
-    cate1_id: number | string,             // 产品大类
-    cate2_id: number | string,             // 产品小类
+    cate1_id: number | string,
+    cate2_id: number | string,
 }
 
 export function makeUpdateCustomerParamNotNull(param: UpdateItemParam) {
@@ -90,7 +90,7 @@ export async function updateEmbryo(url: string, {arg}: { arg: UpdateEmbryoParam 
 
 export interface UpdateEmbryoInoutParam {
     id: number,
-    in_out: boolean|number,
+    in_out: boolean | number,
     count: number,
 }
 
@@ -101,7 +101,7 @@ export async function updateEmbryoInout(url: string, {arg}: { arg: UpdateEmbryoI
 
 export interface UpdateItemInoutParam {
     id: number,
-    in_out: boolean|number,
+    in_out: boolean | number,
     count: number,
 }
 
@@ -110,3 +110,30 @@ export async function updateItemInout(url: string, {arg}: { arg: UpdateItemInout
     return commonEmptyPost(url, arg)
 }
 
+
+export interface SearchItemParam {
+    id: number,
+    in_out: boolean | number,
+    count: number,
+}
+
+
+export async function searchItems(url: string, {arg}: { arg: SearchItemParam }) {
+    return commonListGet<Item>(url, arg)
+}
+
+
+// export interface ItemCount{
+//     item_id: number,
+//     count: number
+// }
+export interface ItemStockOutParam {
+    items: {
+        item_id: number,
+        count: number | string,
+    }[]
+}
+
+export async function itemStockOut(url: string, {arg}: { arg: ItemStockOutParam }) {
+    return commonEmptyPost(url, arg)
+}
