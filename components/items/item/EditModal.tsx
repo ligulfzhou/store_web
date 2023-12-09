@@ -177,9 +177,9 @@ const EditModal: FC<Props> = (
         values['images'] = imageList
 
         // @ts-ignore
-        values['price'] = values['price'] * 100
+        values['price'] = parseInt(values['price'] * 100)
         // @ts-ignore
-        values['cost'] = values['cost'] * 100
+        values['cost'] = parseInt(values['cost'] * 100)
 
         console.log(values)
         callUpdateAPI(values).then((res) => {

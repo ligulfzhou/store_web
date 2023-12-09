@@ -100,6 +100,7 @@ interface DataType {
     id: number;
     name: string;
     count: number|string;
+    current_count: number,
     price: number;
     barcode: string;
 }
@@ -161,6 +162,10 @@ const StockOutModal: FC<Props> = (
             )
         },
         {
+            title: '当前库存',
+            dataIndex: 'current_count',
+        },
+        {
             title: '出库数',
             dataIndex: 'count',
             editable: true
@@ -196,7 +201,8 @@ const StockOutModal: FC<Props> = (
             price: selectedItem.price,
             count: 0,
             id: selectedItem.id,
-            barcode: selectedItem.barcode
+            barcode: selectedItem.barcode,
+            current_count: selectedItem.count,
         };
         setDataSource([...dataSource, newData]);
         setValue('')

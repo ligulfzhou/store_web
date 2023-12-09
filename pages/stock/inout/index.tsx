@@ -1,26 +1,22 @@
 import {Table, Space, Button, Tag} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {ColumnsType} from "antd/es/table";
-import useOrders from "@/hooks/useOrders";
-import {Order} from '@/types'
-import {useRouter} from "next/router";
 import {getColorWithStepAndIndex, getDepartmentAndNotesWithStepAndIndex, parseQueryParam} from "@/utils/utils";
 import useParameters from "@/hooks/useParameters";
-import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {useState} from "react";
 import {useSWRConfig} from "swr";
 import StockOutModal from "@/components/stock/StockOutModal";
+import useItemInoutGroupList from "@/hooks/useItemInoutGroupList";
+import {ItemInoutBucket} from "@/types/embryo";
 
 
 export default function Index() {
-    const router = useRouter()
     const {page, pageSize} = useParameters()
-    let customerNo = parseQueryParam(router.query.customerNo)
-    // const {orders, total, isLoading, isValidating, key} = useOrders(customerNo)
+    const {key, isLoading, buckets} = useItemInoutGroupList()
     const [refresh, setRefresh] = useState<boolean>(false);
     const {mutate} = useSWRConfig()
 
-    const columns: ColumnsType<Order> = [
+    const columns: ColumnsType<ItemInoutBucket> = [
         {
             title: 'ID',
             dataIndex: 'id',
@@ -41,35 +37,6 @@ export default function Index() {
         {
             title: "交付时间",
             dataIndex: "delivery_date"
-        },
-        {
-            title: "返单/加急",
-            key: "return_order_or_urgent",
-            dataIndex: 'return_order_or_urgent',
-            render: (_, record) => (
-                <>
-                    {record.is_return_order ? <Tag color='red'>返单</Tag> : null}
-                    {record.is_urgent ? <Tag className='yellow'>加急单</Tag> : null}
-                </>
-            )
-        },
-        {
-            title: "流程进度",
-            key: "step_count",
-            dataIndex: 'step_count',
-            width: "500px",
-            render: (_, record) => (
-                <>
-                    {record.steps.map(stepIndexCount => (
-                        <Tag color={getColorWithStepAndIndex(stepIndexCount.step, stepIndexCount.index)}
-                             key={`${record.id}-${stepIndexCount.step}-${stepIndexCount.index}`}>
-                            <div className='text-black'>
-                                {getDepartmentAndNotesWithStepAndIndex(stepIndexCount.step, stepIndexCount.index)} {stepIndexCount.count}
-                            </div>
-                        </Tag>
-                    ))}
-                </>
-            )
         },
         {
             title: '操作',
@@ -118,10 +85,10 @@ export default function Index() {
                 <Table
                     rowKey={`id`}
                     size={"small"}
-                    // loading={isLoading || (refresh && isValidating)}
+                    loading={isLoading || refresh}
                     columns={columns}
                     pagination={{total: 10, current: page, pageSize: pageSize}}
-                    dataSource={[]}
+                    dataSource={buckets}
                 />
             </div>
         </LayoutWithMenu>
