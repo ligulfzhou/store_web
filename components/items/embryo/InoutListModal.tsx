@@ -71,10 +71,9 @@ const InoutListModal: FC<Props> = (
             title: "方式：(导入/手动/订单)",
             dataIndex: "name",
             render: (_, record) => (
-                <div className='flex flex-row justify-center'>
-                    <div className='text-center w-full'>
-                        {viaToString(record.via)}
-                    </div>
+                // <div className='text-center w-full'>
+                <div>
+                    {viaToString(record.via)}
                 </div>
             )
         },

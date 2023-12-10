@@ -2,7 +2,7 @@ import React, {FC, useState} from "react";
 import {Modal, Button, Table} from "antd";
 import {useSWRConfig} from "swr";
 import {ColumnsType} from "antd/es/table";
-import {EmbryoInout, ItemInout} from "@/types/embryo";
+import {EmbryoInout} from "@/types/embryo";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import {viaToString} from "@/utils/stock";
 import useParameters from "@/hooks/useParameters";

@@ -72,6 +72,7 @@ const InoutListModal: FC<Props> = (
             title: "方式：(导入/手动/订单)",
             dataIndex: "name",
             render: (_, record) => (
+                // <div className='text-center w-full'>
                 <div>
                     {viaToString(record.via)}
                 </div>
