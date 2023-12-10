@@ -43,7 +43,7 @@ export default function Index() {
             dataIndex: "total_sum",
             render: (_, record)=> (
                 <div>
-                    {Math.abs(parseInt(String(record.total_sum / 100)))} (元)
+                    {Math.abs(parseInt(String(record.total_sum / 1000)))} (元)
                 </div>
             )
         },
