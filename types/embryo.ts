@@ -30,7 +30,10 @@ export interface EmbryoInout {
     in_true_out_false: boolean,    // 增加还是减少
     via: string,                // 规格
     create_time: string, // 创建时间
-    embryo: Embryo,
+
+    unit: string,
+    embryo_name: string,
+
 }
 
 
