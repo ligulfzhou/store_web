@@ -44,6 +44,7 @@ export interface ItemInout {
     via: string,                // 规格
     create_time: string, // 创建时间
 
+    unit: string,
     item_name: string,
 }
 

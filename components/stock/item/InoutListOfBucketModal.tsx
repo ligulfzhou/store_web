@@ -64,7 +64,7 @@ const InoutListOfBucketModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {Math.abs(record.count / 10)}
+                    {Math.abs(record.count / 10)} ({record.unit})
                 </div>
             )
         },

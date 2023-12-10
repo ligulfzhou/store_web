@@ -55,7 +55,7 @@ const InoutListModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {Math.abs(record.count)}
+                    {Math.abs(record.count/10)}
                 </div>
             )
         },
