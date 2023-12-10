@@ -8,7 +8,7 @@ import {DateWithOrders} from "@/types/orders";
 export default function useOrderDates(customerNo: string) {
     const {page, pageSize} = useParameters()
 
-    const key = `${host}/api/orders/by/dates?page=${page}&pageSize=${pageSize}&customer_no=${customerNo}`;
+    const key = `${host}/api/orders/by/dates?page=${page}&page_size=${pageSize}&customer_no=${customerNo}`;
     const {data, error} = useSWR<ListReponse<DateWithOrders>>(
         key,
         fetcher

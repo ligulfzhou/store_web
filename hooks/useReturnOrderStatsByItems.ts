@@ -8,7 +8,7 @@ import {ReturnOrderStatsByItem} from "@/types/stats";
 export default function useReturnOrderStatsByItems () {
     const {page, pageSize} = useParameters()
 
-    const key = `${host}/api/stats/return/orders/by/items?page=${page}&pageSize=${pageSize}`
+    const key = `${host}/api/stats/return/orders/by/items?page=${page}&page_size=${pageSize}`
     const { data, error } = useSWR<ListReponse<ReturnOrderStatsByItem>>(
         key, fetcher
     )

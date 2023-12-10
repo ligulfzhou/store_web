@@ -19,7 +19,7 @@ export default function useItems() {
         create_time_ed
     } = useParameters()
 
-    const key = `${host}/api/items?name=${name}&cate1_id=${cate1_id}&cate2_id=${cate2_id}&number=${number}&barcode=${barcode}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}&page=${page}&pageSize=${pageSize}`
+    const key = `${host}/api/items?name=${name}&cate1_id=${cate1_id}&cate2_id=${cate2_id}&number=${number}&barcode=${barcode}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}&page=${page}&page_size=${pageSize}`
     const {data, error} = useSWR<ListReponse<Item>>(
         key,
         fetcher

@@ -7,9 +7,9 @@ import useParameters from "@/hooks/useParameters";
 
 export default function useItemInoutGroupList() {
     const {page, pageSize, in_out} = useParameters()
-    let key = `${host}/api/item/inout/group/list?page=${page}&pageSize=${pageSize}`
+    let key = `${host}/api/item/inout/group/list?page=${page}&page_size=${pageSize}`
     if (in_out!= undefined) {
-        key = `${host}/api/item/inout/group/list?page=${page}&pageSize=${pageSize}&in_out=in_out`
+        key = `${host}/api/item/inout/group/list?page=${page}&page_size=${pageSize}&in_out=in_out`
     }
     const { data, error } = useSWR<ListReponse<ItemInoutBucket>>(
         key,

@@ -14,7 +14,7 @@ export default function useEmbryos() {
         number,
     } = useParameters()
 
-    const key = `${host}/api/embryos?name=${name}&number=${number}&page=${page}&pageSize=${pageSize}`
+    const key = `${host}/api/embryos?name=${name}&number=${number}&page=${page}&page_size=${pageSize}`
     const {data, error} = useSWR<ListReponse<Embryo>>(
         key,
         fetcher

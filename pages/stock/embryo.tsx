@@ -1,4 +1,4 @@
-import {Table, Space, Button} from 'antd';
+import {Table, Space, Button, Tag} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {ColumnsType} from "antd/es/table";
 import useParameters from "@/hooks/useParameters";
@@ -79,15 +79,6 @@ export default function Index() {
                     }}
                     type="primary">
                     刷新
-                </Button>
-
-                <Button
-                    loading={refresh}
-                    onClick={() => {
-                        setIsStockOutModalOpen(true)
-                    }}
-                    type="primary">
-                    出库
                 </Button>
             </div>
 

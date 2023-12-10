@@ -8,7 +8,7 @@ import {OrderPlainItemsModel} from "@/types/orders";
 export default function useOrderPlainItems(order_id: number=0, order_no: String='') {
     const {page, pageSize} = useParameters()
 
-    const key = `${host}/api/order/plain/items?page=${page}&pageSize=${pageSize}&order_no=${order_no}&order_id=${order_id}`
+    const key = `${host}/api/order/plain/items?page=${page}&page_size=${pageSize}&order_no=${order_no}&order_id=${order_id}`
     const {data, error} = useSWR<ListReponse<OrderPlainItemsModel>>(
         key, fetcher
     )

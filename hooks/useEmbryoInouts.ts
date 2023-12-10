@@ -7,7 +7,7 @@ import useParameters from "@/hooks/useParameters";
 
 export default function useEmbryoInouts(embryoId: number) {
     const {mpage, mpageSize} = useParameters()
-    const key = `${host}/api/embryo/inout/list?page=${mpage}&pageSize=${mpageSize}&embryo_id=${embryoId}`
+    const key = `${host}/api/embryo/inout/list?page=${mpage}&page_size=${mpageSize}&embryo_id=${embryoId}`
     const { data, error } = useSWR<ListReponse<EmbryoInout>>(
         key,
         fetcher

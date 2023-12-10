@@ -58,8 +58,12 @@ const menuItems: MenuProps["items"] = [
                 label: "库存"
             },
             {
-                key: "/stock/inout",
-                label: "出入库"
+                key: "/stock/item",
+                label: "产品-出入库"
+            },
+            {
+                key: "/stock/embryo",
+                label: "库存胚-出入库"
             },
         ]
     },
