@@ -14,10 +14,12 @@ import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {fallbackImage} from "@/utils/b64";
 import SearchForm from "@/components/items/item/SearchForm";
 import StorageModal from "@/components/items/item/StorageModal";
-import EmbryoStorageModal  from "@/components/items/embryo/StorageModal";
+import EmbryoStorageModal from "@/components/items/embryo/StorageModal";
 import InoutListModal from "@/components/items/item/InoutListModal";
 import EmbryoInoutListModal from "@/components/items/embryo/InoutListModal";
 import {Embryo} from "@/types/embryo";
+import Barcode from "react-barcode";
+import BarcodeModal from "@/components/BarcodeModal";
 
 
 export default function Index() {
@@ -100,7 +102,7 @@ export default function Index() {
                         setEditItem(record)
                         setIsInoutListModalOpen(true)
                     }}>
-                        {record.count/10} ({record.unit})
+                        {record.count / 10} ({record.unit})
                     </a>
                 </div>
             )
@@ -108,7 +110,7 @@ export default function Index() {
         {
             title: "库存胚",
             dataIndex: "embryo",
-            render: (_, record)=> (
+            render: (_, record) => (
                 <div>
                     {record.embryo ? (
                         <div className='flex flex-row'>
@@ -128,7 +130,7 @@ export default function Index() {
                                 {record.embryo.name}:
                             </div>
                             <div>
-                                <a href='#' onClick={(env)=> {
+                                <a href='#' onClick={(env) => {
                                     env.preventDefault()
                                     setEditEmbryoItem(record.embryo)
                                     setIsEmbryoInoutListModalOpen(true)
@@ -138,7 +140,7 @@ export default function Index() {
                             </div>
 
                             <div className='ml-3'>
-                                <a href='#' onClick={(env)=> {
+                                <a href='#' onClick={(env) => {
                                     env.preventDefault()
                                     setEditEmbryoItem(record.embryo)
                                     setIsEmbryoStorageModalOpen(true)
@@ -148,7 +150,7 @@ export default function Index() {
                             </div>
 
                         </div>
-                    ): null}
+                    ) : null}
                 </div>
             )
         },
@@ -193,6 +195,14 @@ export default function Index() {
                     }}>
                         查看出入库列表
                     </a>
+
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
+                        setBarcodeValue(record.barcode)
+                        setIsbarcodeOpen(true)
+                    }}>
+                        条码
+                    </a>
                 </div>
             ),
         },
@@ -208,6 +218,9 @@ export default function Index() {
     const [isInoutListModalOpen, setIsInoutListModalOpen] = useState<boolean>(false)
     const [isEmbryoInoutListModalOpen, setIsEmbryoInoutListModalOpen] = useState<boolean>(false)
 
+    const [isbarcodeOpen, setIsbarcodeOpen] = useState<boolean>(false)
+    const [barcodeValue, setBarcodeValue] = useState<string>('')
+
     const refreshPage = () => {
         setRefresh(true)
         mutate(key).finally(() => setRefresh(false))
@@ -215,13 +228,17 @@ export default function Index() {
 
     return (
         <LayoutWithMenu>
-            <InoutListModal open={isInoutListModalOpen} closeFn={()=> {
+            <InoutListModal open={isInoutListModalOpen} closeFn={() => {
                 setIsInoutListModalOpen(false)
-            }} obj={editItem} />
+            }} obj={editItem}/>
 
-            <EmbryoInoutListModal open={isEmbryoInoutListModalOpen} closeFn={()=> {
+            <EmbryoInoutListModal open={isEmbryoInoutListModalOpen} closeFn={() => {
                 setIsEmbryoInoutListModalOpen(false)
-            }} obj={editEmbryoItem} />
+            }} obj={editEmbryoItem}/>
+
+            <BarcodeModal open={isbarcodeOpen} closeFn={(success) => {
+                setIsbarcodeOpen(false)
+            }} text={barcodeValue}/>
 
             <EditModal
                 open={isEditModalOpen}
@@ -234,9 +251,9 @@ export default function Index() {
                 obj={editItem}
             />
 
-            <EmbryoStorageModal open={isEmbryoStorageModalOpen} closeFn={()=> {
+            <EmbryoStorageModal open={isEmbryoStorageModalOpen} closeFn={() => {
                 setIsEmbryoStorageModalOpen(false)
-            }} obj={editEmbryoItem} />
+            }} obj={editEmbryoItem}/>
 
             <StorageModal open={isStorageModalOpen} closeFn={(success) => {
                 setIsStorageModalOpen(false)

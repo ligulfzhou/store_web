@@ -91,7 +91,7 @@ const InoutListModal: FC<Props> = (
     return (
         <div>
             <Modal
-                width={'750px'}
+                width={'1000px'}
                 open={open}
                 centered={true}
                 title={`查看'${obj?.name + "'" + '的' || ''}出入库`}

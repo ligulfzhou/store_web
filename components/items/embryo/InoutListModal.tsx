@@ -36,7 +36,7 @@ const InoutListModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {record.embryo.name}
+                    {record.embryo_name}
                 </div>
             )
         },
@@ -71,8 +71,10 @@ const InoutListModal: FC<Props> = (
             title: "方式：(导入/手动/订单)",
             dataIndex: "name",
             render: (_, record) => (
-                <div>
-                    {viaToString(record.via)}
+                <div className='flex flex-row justify-center'>
+                    <div className='text-center w-full'>
+                        {viaToString(record.via)}
+                    </div>
                 </div>
             )
         },
@@ -90,7 +92,7 @@ const InoutListModal: FC<Props> = (
     return (
         <div>
             <Modal
-                width={'750px'}
+                width={'1000px'}
                 open={open}
                 centered={true}
                 title={`查看'${obj?.name + "'" + '的' || ''}出入库`}
