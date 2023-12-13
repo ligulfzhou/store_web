@@ -9,6 +9,7 @@ import useParameters from "@/hooks/useParameters";
 import {useState} from "react";
 import {useSWRConfig} from "swr";
 import SellModal from "@/components/order/SellModal";
+import ReceiptModal from "@/components/ReceiptModal";
 
 
 export default function Order() {
@@ -82,12 +83,20 @@ export default function Order() {
 
     const [isSellModalOpen, setIsSellModalOpen] = useState<boolean>(false)
 
+    const [isReceiptModalOpen, setIsReceiptModalOpen] = useState<boolean>(false)
+
     return (
         <LayoutWithMenu>
+            <ReceiptModal
+                open={isReceiptModalOpen}
+                closeFn={() => {
+                    setIsReceiptModalOpen(false)
+                }}
+            />
 
-            <SellModal open={isSellModalOpen} closeFn={(success)=> {
+            <SellModal open={isSellModalOpen} closeFn={(success) => {
                 setIsSellModalOpen(false)
-            }} />
+            }}/>
 
             <div className='p-5 m-2 bg-white rounded  flex flex-row gap-3'>
                 <Button

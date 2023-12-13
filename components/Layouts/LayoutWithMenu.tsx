@@ -74,7 +74,7 @@ const menuItems: MenuProps["items"] = [
         children: [
             {
                 'key': '/order',
-                'label': '所有客户'
+                'label': '订单列表'
             }
         ]
     },

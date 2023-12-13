@@ -62,6 +62,10 @@ export default function Index() {
             dataIndex: "number"
         },
         {
+            title: "条码",
+            dataIndex: "barcode"
+        },
+        {
             title: '类别',
             dataIndex: 'cates',
             render: (_, record) => (
