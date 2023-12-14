@@ -95,15 +95,6 @@ export default function Index() {
             )
         },
         {
-            title: "成本",
-            dataIndex: "cost",
-            render: (_, record) => (
-                <div>
-                    {record.cost / 100}
-                </div>
-            )
-        },
-        {
             title: "库存",
             dataIndex: "count",
             render: (_, record) => (
