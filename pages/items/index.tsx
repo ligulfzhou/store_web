@@ -18,7 +18,6 @@ import EmbryoStorageModal from "@/components/items/embryo/StorageModal";
 import InoutListModal from "@/components/items/item/InoutListModal";
 import EmbryoInoutListModal from "@/components/items/embryo/InoutListModal";
 import {Embryo} from "@/types/embryo";
-import Barcode from "react-barcode";
 import BarcodeModal from "@/components/BarcodeModal";
 
 
@@ -56,6 +55,14 @@ export default function Index() {
         {
             title: '产品名',
             dataIndex: 'name',
+        },
+        {
+            title: '电镀/颜色',
+            dataIndex: 'color',
+        },
+        {
+            title: '规格',
+            dataIndex: 'size',
         },
         {
             title: "货号",

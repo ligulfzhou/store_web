@@ -99,7 +99,7 @@ export default function () {
                     </Button>
                 </div>
 
-                <div className='w-128 h-96 border-2 border-gray-50'>
+                <div className='border-2 border-gray-50'>
                     <Table
                         rowKey={`id`}
                         size={"small"}
