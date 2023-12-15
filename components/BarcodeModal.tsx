@@ -77,7 +77,7 @@ const BarcodeModal: FC<Props> = (
                     ref={wrapper_ref}
                     className='flex flex-row justify-center'
                 >
-                    <Barcode value={text} width={2} height={50}/>,
+                    <Barcode value={text} width={2} height={50}/>
                 </div>
 
                 {/* buttons */}
