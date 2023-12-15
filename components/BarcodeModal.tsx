@@ -18,7 +18,7 @@ const BarcodeModal: FC<Props> = (
         text = ''
     }
 ) => {
-    const wrapper_ref = React.useRef<HTMLDivElement|null>(null);
+    const wrapper_ref = React.useRef<HTMLDivElement | null>(null);
     const onClick = () => {
         const opt = {
             scale: 4
@@ -29,8 +29,8 @@ const BarcodeModal: FC<Props> = (
             const iframe = document.createElement('iframe')
             iframe.name = 'printf'
             iframe.id = 'printf'
-            iframe.height = '100px';
-            iframe.width = '200px';
+            iframe.height = '0';
+            iframe.width = '0';
             document.body.appendChild(iframe)
 
             // @ts-ignore
