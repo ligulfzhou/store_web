@@ -4,7 +4,7 @@ import {ColumnsType} from "antd/es/table";
 import useOrders from "@/hooks/useOrders";
 import {Order} from '@/types'
 import {useRouter} from "next/router";
-import {getColorWithStepAndIndex, getDepartmentAndNotesWithStepAndIndex, parseQueryParam} from "@/utils/utils";
+import {parseQueryParam} from "@/utils/utils";
 import useParameters from "@/hooks/useParameters";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
 import {useState} from "react";
@@ -59,14 +59,7 @@ export default function Index() {
             width: "500px",
             render: (_, record) => (
                 <>
-                    {record.steps.map(stepIndexCount => (
-                        <Tag color={getColorWithStepAndIndex(stepIndexCount.step, stepIndexCount.index)}
-                             key={`${record.id}-${stepIndexCount.step}-${stepIndexCount.index}`}>
-                            <div className='text-black'>
-                                {getDepartmentAndNotesWithStepAndIndex(stepIndexCount.step, stepIndexCount.index)} {stepIndexCount.count}
-                            </div>
-                        </Tag>
-                    ))}
+
                 </>
             )
         },

@@ -1,4 +1,4 @@
-import {DataResponse, ListReponse, Order, OrderGoods} from '@/types'
+import {DataResponse, ListReponse, Order} from '@/types'
 import {commonDataGet, commonDataPost, commonEmptyPost, commonListGet} from "@/requests/common";
 
 

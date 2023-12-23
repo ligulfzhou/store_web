@@ -4,7 +4,7 @@ import cx from "classnames";
 import {Button, Input, message} from "antd";
 import {CloseCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {TrashIcon} from "@radix-ui/react-icons";
-import ExtractCatesModal from "@/components/items/cates/ExtractCatesModal";
+// import ExtractCatesModal from "@/components/items/cates/ExtractCatesModal";
 import {removeIndex} from "@/utils/arr";
 
 interface Props {
@@ -111,12 +111,12 @@ export const CatesManagement: FC<Props> = () => {
     return (
         <div className='w-1/2 flex flex-col justify-center items-center mx-auto'>
 
-            <ExtractCatesModal
-                open={isExtractCatesModalOpen}
-                closeFn={(success) => {
-                    setIsExtractCatesModalOpen(false)
-                }}
-            />
+            {/*<ExtractCatesModal*/}
+            {/*    open={isExtractCatesModalOpen}*/}
+            {/*    closeFn={(success) => {*/}
+            {/*        setIsExtractCatesModalOpen(false)*/}
+            {/*    }}*/}
+            {/*/>*/}
 
             {/* 产品类别 + 提取按钮 */}
             <div className='w-full flex flex-row justify-around mb-3 items-center gap-4'>
