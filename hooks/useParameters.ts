@@ -54,6 +54,10 @@ export default function useParameters() {
         cate1_id,
         cate2_id,
 
+        // orders
+        customer_id,
+        account_id,
+
     } = router.query
 
     // customers
@@ -113,6 +117,8 @@ export default function useParameters() {
         ro_search = 'goods'
     }
 
+    let accountIdN= parseQueryParamToNumber(account_id)
+    let customerIdN = parseQueryParamToNumber(customer_id)
 
     return {
         id: idN,
@@ -144,6 +150,9 @@ export default function useParameters() {
         order_no,
         sorter_field,
         sorter_order,
+
+        customer_id: customerIdN,
+        account_id: accountIdN,
 
         order_date_start,
         order_date_end,

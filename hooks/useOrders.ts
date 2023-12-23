@@ -3,34 +3,31 @@ import {fetcher} from "@/utils/utils";
 import useParameters from "./useParameters";
 import {host} from "@/utils/const";
 import {ListReponse} from "@/types/common";
-import {Order} from "@/types/orders";
+import {OrderInList} from "@/types/orders";
 
-export default function useOrders(customerNo: string) {
+export default function useOrders() {
     const {
         page,
         pageSize,
         sorter_order,
         sorter_field,
+        account_id,
+        customer_id,
         order_no,
-        order_date_start,
-        order_date_end,
-        delivery_date_start,
-        delivery_date_end,
-        is_urgent,
-        is_return_order,
-        is_special
+        create_time_ed,
+        create_time_st
     } = useParameters()
 
-    let key = `${host}/api/orders?page=${page}&page_size=${pageSize}&customer_no=${customerNo}&order_no=${order_no}&order_date_start=${order_date_start}&order_date_end=${order_date_end}&delivery_date_start=${delivery_date_start}&delivery_date_end=${delivery_date_end}&is_urgent=${is_urgent}&is_return_order=${is_return_order}&is_special=${is_special}`
+    let key = `${host}/api/orders/list?page=${page}&page_size=${pageSize}&order_no=${order_no}&account_id=${account_id}&customer_id=${customer_id}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}`
     if (sorter_order && sorter_field) {
-        key = `${host}/api/orders?page=${page}&page_size=${pageSize}&customer_no=${customerNo}&order_no=${order_no}&order_date_start=${order_date_start}&order_date_end=${order_date_end}&delivery_date_start=${delivery_date_start}&delivery_date_end=${delivery_date_end}&is_urgent=${is_urgent}&is_return_order=${is_return_order}&is_special=${is_special}&sorter_field=${sorter_field}&sorter_order=${sorter_order}`
+        key = `${host}/api/orders/list?page=${page}&page_size=${pageSize}&order_no=${order_no}&account_id=${account_id}&customer_id=${customer_id}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}&sorter_field=${sorter_field}&sorter_order=${sorter_order}`
     }
 
-    const {data, error, mutate, isValidating} = useSWR<ListReponse<Order>>(
+    const {data, error, mutate, isValidating} = useSWR<ListReponse<OrderInList>>(
         key, fetcher
     )
 
-    let orders: Order[] = []
+    let orders: OrderInList[] = []
     let total: number = 0
     if (data !== undefined && data.data !== undefined && data.data.list) {
         orders = data.data.list

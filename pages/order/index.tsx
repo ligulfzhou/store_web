@@ -2,25 +2,24 @@ import {Table, Space, Button, Tag} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {ColumnsType} from "antd/es/table";
 import useOrders from "@/hooks/useOrders";
-import {Order} from '@/types'
-import {useRouter} from "next/router";
-import {parseQueryParam} from "@/utils/utils";
+import {OrderInList} from '@/types'
 import useParameters from "@/hooks/useParameters";
 import {useState} from "react";
 import {useSWRConfig} from "swr";
 import ReceiptModal from "@/components/ReceiptModal";
 import CreateOrderModal from "@/components/order/CreateOrderModal";
+import {defaultPageSize} from "@/utils/const";
+import useRouterUtils from "@/hooks/useRouterUtils";
 
 
 export default function Order() {
-    const router = useRouter()
     const {page, pageSize} = useParameters()
-    let customerNo = parseQueryParam(router.query.customerNo)
-    const {orders, total, isLoading, isValidating, key} = useOrders(customerNo)
+    const {orders, total, isLoading, isValidating, key} = useOrders()
     const [refresh, setRefresh] = useState<boolean>(false);
     const {mutate} = useSWRConfig()
+    const {reloadPage} = useRouterUtils()
 
-    const columns: ColumnsType<Order> = [
+    const columns: ColumnsType<OrderInList> = [
         {
             title: 'ID',
             dataIndex: 'id',
@@ -28,40 +27,31 @@ export default function Order() {
         {
             title: "订单编号",
             dataIndex: "order_no",
-            render: (text) => (
+            render: (_, record) => (
                 <div className='font-medium'>
-                    {text}
+                    还未生成
                 </div>
             )
         },
         {
+            title: "客户",
+            dataIndex: "customer"
+        },
+        {
             title: "下单时间",
-            dataIndex: "order_date"
+            dataIndex: "create_time"
         },
         {
-            title: "交付时间",
-            dataIndex: "delivery_date"
+            title: "销售数量",
+            dataIndex: "count"
         },
         {
-            title: "返单/加急",
-            key: "return_order_or_urgent",
-            dataIndex: 'return_order_or_urgent',
+            title: "销售金额",
+            dataIndex: "total",
             render: (_, record) => (
-                <>
-                    {record.is_return_order ? <Tag color='red'>返单</Tag> : null}
-                    {record.is_urgent ? <Tag className='yellow'>加急单</Tag> : null}
-                </>
-            )
-        },
-        {
-            title: "流程进度",
-            key: "step_count",
-            dataIndex: 'step_count',
-            width: "500px",
-            render: (_, record) => (
-                <>
-                    ...
-                </>
+                <div>
+                    {record.total / 100}¥
+                </div>
             )
         },
         {
@@ -89,6 +79,10 @@ export default function Order() {
 
             <CreateOrderModal open={isSellModalOpen} closeFn={(success) => {
                 setIsSellModalOpen(false)
+                if (success) {
+                    setRefresh(true)
+                    mutate(key).finally(() => setRefresh(false))
+                }
             }}/>
 
             <div className='p-5 m-2 bg-white rounded  flex flex-row gap-3'>
@@ -118,7 +112,18 @@ export default function Order() {
                     size={"small"}
                     loading={isLoading || (refresh && isValidating)}
                     columns={columns}
-                    pagination={{total: total, current: page, pageSize: pageSize}}
+                    pagination={{
+                        total: total,
+                        current: page,
+                        defaultPageSize: defaultPageSize,
+                        pageSize: pageSize,
+                        onChange: (thisPage, thisPageSize) => {
+                            reloadPage({
+                                page: thisPage,
+                                pageSize: thisPageSize
+                            })
+                        }
+                    }}
                     dataSource={orders}
                 />
             </div>

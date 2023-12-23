@@ -1,3 +1,15 @@
+export interface OrderInList {
+    id: number,
+    account_id: number,
+    account: string,
+    customer_id: number,
+    customer: string,
+    item_images: string[],
+    create_time: string,
+    total: number,
+    count: number,
+}
+
 
 export interface Order {
     id: number,
@@ -76,14 +88,14 @@ export interface Order {
 // ----- ----- ----- ----- -----
 
 export interface OrderSearchParms {
-    order_no: string|undefined,
-    order_date_start: string|undefined,
-    order_date_end: string|undefined,
-    delivery_date_start: string|undefined,
-    delivery_date_end: string|undefined,
-    is_return_order: boolean|undefined,
-    is_urgent: boolean|undefined,
-    is_special: boolean|undefined,
+    order_no: string | undefined,
+    order_date_start: string | undefined,
+    order_date_end: string | undefined,
+    delivery_date_start: string | undefined,
+    delivery_date_end: string | undefined,
+    is_return_order: boolean | undefined,
+    is_urgent: boolean | undefined,
+    is_special: boolean | undefined,
     page: number,
     pageSize: number,
     // sorter_field: string|undefined,
