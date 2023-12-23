@@ -8,8 +8,8 @@ import {getColorWithStepAndIndex, getDepartmentAndNotesWithStepAndIndex, parseQu
 import useParameters from "@/hooks/useParameters";
 import {useState} from "react";
 import {useSWRConfig} from "swr";
-import SellModal from "@/components/order/SellModal";
 import ReceiptModal from "@/components/ReceiptModal";
+import CreateOrderModal from "@/components/order/CreateOrderModal";
 
 
 export default function Order() {
@@ -94,7 +94,7 @@ export default function Order() {
                 }}
             />
 
-            <SellModal open={isSellModalOpen} closeFn={(success) => {
+            <CreateOrderModal open={isSellModalOpen} closeFn={(success) => {
                 setIsSellModalOpen(false)
             }}/>
 
