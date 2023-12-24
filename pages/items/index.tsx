@@ -34,6 +34,10 @@ export default function Index() {
             dataIndex: 'id',
         },
         {
+            title: "货号",
+            dataIndex: "number",
+        },
+        {
             title: "图片",
             dataIndex: "image",
             width: "80px",
@@ -63,14 +67,6 @@ export default function Index() {
         {
             title: '规格',
             dataIndex: 'size',
-        },
-        {
-            title: "货号",
-            dataIndex: "number"
-        },
-        {
-            title: "条码",
-            dataIndex: "barcode"
         },
         {
             title: '类别',
