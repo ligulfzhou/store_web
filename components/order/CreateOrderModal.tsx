@@ -144,7 +144,6 @@ const CreateOrderModal: FC<Props> = (
         if (customersLoading) {
             return
         }
-
         let customerOptions = customers.map(customer => {
             let op: Option = {
                 label: `${customer.name}-${customer.phone}-${customer.address}`,
@@ -152,9 +151,7 @@ const CreateOrderModal: FC<Props> = (
             }
             return op
         })
-
         setCustomerOptions(customerOptions)
-
     }, [customers, customersLoading]);
 
     const handleDelete = (key: string) => {

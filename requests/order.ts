@@ -1,5 +1,4 @@
-import {DataResponse, ListReponse, Order} from '@/types'
-import {commonDataGet, commonDataPost, commonEmptyPost, commonListGet} from "@/requests/common";
+import {commonDataPost} from "@/requests/common";
 
 
 export interface CreateOrderParams {
