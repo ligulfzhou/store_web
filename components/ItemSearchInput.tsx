@@ -25,7 +25,7 @@ const fetch_api = (value: string, callback: Function) => {
 
             let ops = data.data.list.map(item => {
                 let op: Option = {
-                    label: `条码: ${item.barcode}, 颜色: ${item.color}, 品名: ${item.name}`,
+                    label: `编号: ${item.number}, 颜色: ${item.color}, 品名: ${item.name}`,
                     value: JSON.stringify(item),
                 }
 

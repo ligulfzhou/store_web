@@ -98,13 +98,16 @@ const EditableCell: React.FC<EditableCellProps> = (
 type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
-    id: number;
-    name: string;
-    count: number;
-    discount: number,
-    current_count: number,
-    price: number;
-    barcode: string;
+    id: number
+    number: string
+    size: string
+    count: number
+    unit: string
+    price: number
+    discount: number
+    discount_price: number
+    name: string
+    current_count: number
 }
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
@@ -162,19 +165,28 @@ const CreateOrderModal: FC<Props> = (
     // @ts-ignore
     const defaultColumns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[] = [
         {
-            title: '产品',
-            dataIndex: 'name',
+            title: '货号',
+            dataIndex: 'number',
         },
         {
-            title: '条码',
-            dataIndex: 'barcode',
+            title: '规格',
+            dataIndex: 'size',
+        },
+        {
+            title: '当前库存',
+            dataIndex: 'current_count',
+        },
+        {
+            title: '销售数',
+            dataIndex: 'count',
+            editable: true
         },
         {
             title: '单位',
-            dataIndex: 'name',
+            dataIndex: 'unit',
         },
         {
-            title: '原价',
+            title: '单价',
             dataIndex: 'price',
             // @ts-ignore
             render: (_, record: DataType) => (
@@ -205,16 +217,7 @@ const CreateOrderModal: FC<Props> = (
             )
         },
         {
-            title: '当前库存',
-            dataIndex: 'current_count',
-        },
-        {
-            title: '销售数',
-            dataIndex: 'count',
-            editable: true
-        },
-        {
-            title: '金额',
+            title: '总金额',
             dataIndex: 'total',
             // @ts-ignore
             render: (_, record: DataType) => (
@@ -250,13 +253,16 @@ const CreateOrderModal: FC<Props> = (
         }
 
         const newData: DataType = {
+            discount_price: selectedItem.price,
+            size: selectedItem.size,
+            unit: selectedItem.unit,
+            number: selectedItem.number,
             name: selectedItem.name,
             price: selectedItem.price,
             count: 0,
             discount: 100,
             id: selectedItem.id,
-            barcode: selectedItem.barcode,
-            current_count: selectedItem.count,
+            current_count: selectedItem.count
         };
         setDataSource([...dataSource, newData]);
         setValue('')
@@ -328,11 +334,11 @@ const CreateOrderModal: FC<Props> = (
                     console.log(customerId)
                     let items = dataSource.map(item => ({
                         item_id: item.id,
-                        count: typeof item.count=='string'? parseInt(item.count): item.count,
-                        discount: typeof item.discount=='string'? parseInt(item.discount): item.discount
+                        count: typeof item.count == 'string' ? parseInt(item.count) : item.count,
+                        discount: typeof item.discount == 'string' ? parseInt(item.discount) : item.discount
                     }))
                     callCreateOrderAPI({
-                        customer_id: typeof customerId=='string'? parseInt(customerId): customerId,
+                        customer_id: typeof customerId == 'string' ? parseInt(customerId) : customerId,
                         items
                     }).then(data => {
                         if (data.code == 0) {
