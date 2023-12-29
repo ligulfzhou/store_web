@@ -31,6 +31,7 @@ const StorageModal: FC<Props> = (
             id = obj.id
         }
         values['id'] = id
+        values['count'] = values['count'] * 10
 
         if (typeof (values['in_out']) == 'string' && parseInt(values['in_out']) == 1) {
             values['in_out'] = true
