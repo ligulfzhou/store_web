@@ -289,9 +289,14 @@ export default function Index() {
                         添加
                     </Button>
 
-                    <ExcelImporter callback={() => {
-                        refreshPage()
-                    }} tp='item'/>
+                    <ExcelImporter
+                        callback={() => {
+                            refreshPage()
+                        }}
+                        tp='item'
+                        disabled={false}
+                        extra={{}}
+                    />
                 </div>
 
                 <Table

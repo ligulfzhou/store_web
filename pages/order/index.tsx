@@ -10,6 +10,7 @@ import ReceiptModal from "@/components/ReceiptModal";
 import CreateOrderModal from "@/components/order/CreateOrderModal";
 import {defaultPageSize} from "@/utils/const";
 import useRouterUtils from "@/hooks/useRouterUtils";
+import ImportOrderExcelModal from "@/components/order/ImportOrderExcelModal";
 
 
 export default function Order() {
@@ -88,8 +89,14 @@ export default function Order() {
 
     const [isReceiptModalOpen, setIsReceiptModalOpen] = useState<boolean>(false)
 
+    const [isImportOrderExcelOpen, setIsImportOrderExcelOpen] = useState<boolean>(false)
+
     return (
         <LayoutWithMenu>
+            <ImportOrderExcelModal open={isImportOrderExcelOpen} closeFn={(success) => {
+                setIsImportOrderExcelOpen(false)
+            }}/>
+
             <ReceiptModal
                 open={isReceiptModalOpen}
                 closeFn={() => {
@@ -114,6 +121,15 @@ export default function Order() {
                     }}
                     type="primary">
                     刷新
+                </Button>
+
+                <Button
+                    loading={refresh}
+                    onClick={() => {
+                        setIsImportOrderExcelOpen(true)
+                    }}
+                    type="primary">
+                    导入订单
                 </Button>
 
                 <Button

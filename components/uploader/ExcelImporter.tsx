@@ -11,12 +11,16 @@ type ExcelTp = 'item' | 'customer' | 'order' | 'embryo'
 interface Props {
     callback: () => void
     tp: ExcelTp
+    disabled: boolean,
+    extra: object,
 }
 
 const ExcelImporter: FC<Props> = (
     {
         callback,
-        tp
+        tp,
+        disabled=false,
+        extra= {},
     }
 ) => {
     const key = 'excel_importer';
@@ -51,7 +55,10 @@ const ExcelImporter: FC<Props> = (
         multiple: false,
         showUploadList: false,
         withCredentials: true,
-        data: {tp: titleToType(tp)},
+        data: {
+            tp: titleToType(tp),
+            ...extra
+        },
         action: `${host}/api/upload/excel`,
         accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         onChange(info) {
@@ -83,7 +90,7 @@ const ExcelImporter: FC<Props> = (
     return (
         <>
             <Upload {...props}>
-                <Button icon={<UploadOutlined/>}>导入{tpToName()}</Button>
+                <Button disabled={disabled} icon={<UploadOutlined/>}>导入{tpToName()}</Button>
             </Upload>
         </>
     )

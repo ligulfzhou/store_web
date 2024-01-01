@@ -29,7 +29,6 @@ export default function Index() {
             title: 'ID',
             dataIndex: 'id',
         },
-
         {
             title: "图片",
             dataIndex: "image",
@@ -180,9 +179,14 @@ export default function Index() {
                         添加
                     </Button>
 
-                    <ExcelImporter callback={() => {
-                        refreshPage()
-                    }} tp='embryo'/>
+                    <ExcelImporter
+                        callback={() => {
+                            refreshPage()
+                        }}
+                        tp='embryo'
+                        disabled={false}
+                        extra={{}}
+                    />
                 </div>
 
                 <Table
