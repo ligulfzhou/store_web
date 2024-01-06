@@ -30,7 +30,7 @@ export default function Order() {
             dataIndex: "order_no",
             render: (_, record) => (
                 <div className='font-medium'>
-                    还未生成
+                    NOOMI-{record.id.toString().padStart(4, '0')}
                 </div>
             )
         },
