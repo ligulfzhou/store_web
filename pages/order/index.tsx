@@ -44,7 +44,12 @@ export default function Order() {
         },
         {
             title: "销售数量",
-            dataIndex: "count"
+            dataIndex: "count",
+            render: (_, record) => (
+                <div>
+                    {record.count / 10}
+                </div>
+            )
         },
         {
             title: "销售金额",

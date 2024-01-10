@@ -39,8 +39,8 @@ export default function Index() {
                         {record.images.map((image_url, index) => (
                             <Image
                                 key={`image-${index}`}
-                                width={24}
-                                height={24}
+                                width={96}
+                                height={96}
                                 src={image_url}
                                 fallback={fallbackImage}/>
                         ))}
