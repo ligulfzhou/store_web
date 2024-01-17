@@ -10,7 +10,7 @@ import DeleteModal from "@/components/settings/color/DeleteModal";
 
 
 export default function () {
-    const {colorValues, key, isLoading} = useColorValue()
+    const {colorValues, key, isLoading} = useColorValue(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
     const {mutate} = useSWRConfig()

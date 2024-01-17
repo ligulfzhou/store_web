@@ -4,8 +4,12 @@ import {host} from "@/utils/const";
 import {ListReponse} from "@/types/common";
 import {ColorToValue} from "@/types/settings";
 
-export default function useColorValue() {
-    const key = `${host}/api/settings/color/value`
+export default function useColorValue(byColor: boolean=true) {
+    let key = `${host}/api/settings/color/value/sort/by/color`
+    if (!byColor) {
+        key = `${host}/api/settings/color/value`
+    }
+
     const { data, error } = useSWR<ListReponse<ColorToValue>>(
         key,
         fetcher
