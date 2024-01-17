@@ -121,7 +121,7 @@ const InoutListModal: FC<Props> = (
                         size={"small"}
                         loading={isLoading || refresh}
                         columns={columns}
-                        dataSource={inouts}
+                        dataSource={[]}
                         onChange={(pagination, filters, sorter) => {
                             reloadPage({
                                 mpage: pagination.current,
