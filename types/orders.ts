@@ -12,17 +12,33 @@ export interface OrderInList {
 
 export interface Order {
     id: number,
-    customer_no: string,
-    order_no: string,
-    order_date: number
-    delivery_date: number,
-    is_return_order: boolean,
-    is_urgent: boolean
-    is_special: boolean,
-    special_customer: string,
-    done_count: number,
-    exception_count: number,
-    total_count: number,
+    order_no: string
+    account_id: number
+    account: string
+    customer_id: number
+    customer: string
+    create_time: string
+    order_date: string
+    delivery_date: string
+}
+
+export interface OrderItem {
+    id: number
+    order_id: number
+    index: number
+    item_id: number
+    item_images: string[]
+    count: number
+    origin_price: number
+    price: number
+    total_price: number
+    discount: number
+    create_time: string
+}
+
+export interface OrderDetail {
+    order: Order
+    items: OrderItem[]
 }
 
 

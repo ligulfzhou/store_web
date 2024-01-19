@@ -206,10 +206,11 @@ const CreateOrderModal: FC<Props> = (
         {
             title: "折后价",
             dataIndex: 'discount_price',
+            editable: true,
             // @ts-ignore
             render: (_, record: DataType) => (
                 <div>
-                    {record.price * record.discount / 10000}
+                    {record.discount_price}
                 </div>
             )
         },
@@ -219,7 +220,8 @@ const CreateOrderModal: FC<Props> = (
             // @ts-ignore
             render: (_, record: DataType) => (
                 <div>
-                    {record.count * record.price * record.discount / 10000}¥
+                    {/*{record.count * record.price * record.discount / 10000}¥*/}
+                    {record.count * record.discount_price}¥
                 </div>
             )
         },
@@ -250,7 +252,7 @@ const CreateOrderModal: FC<Props> = (
         }
 
         const newData: DataType = {
-            discount_price: selectedItem.price,
+            discount_price: selectedItem.price/100,
             size: selectedItem.size,
             unit: selectedItem.unit,
             number: selectedItem.number,
@@ -270,6 +272,15 @@ const CreateOrderModal: FC<Props> = (
         const newData = [...dataSource];
         const index = newData.findIndex(item => row.id === item.id);
         const item = newData[index];
+        console.log('handleSave...')
+        console.log(`new: ${row.discount_price}, ${row.discount}, old: ${item.discount_price}, ${item.discount}`)
+        if (row.discount != item.discount) {
+            row.discount_price = row.price * row.discount / 10000
+        } else if (row.discount_price != item.discount_price) {
+            let discount = row.discount_price / row.price * 10000
+            row.discount = Math.round(discount)
+        }
+
         newData.splice(index, 1, {
             ...item,
             ...row,
@@ -332,10 +343,12 @@ const CreateOrderModal: FC<Props> = (
                     let items = dataSource.map(item => ({
                         item_id: item.id,
                         count: typeof item.count == 'string' ? parseInt(item.count) : item.count,
-                        discount: typeof item.discount == 'string' ? parseInt(item.discount) : item.discount
+                        discount: typeof item.discount == 'string' ? parseInt(item.discount) : item.discount,
+                        discount_price: typeof item.discount_price == 'string' ? parseInt(item.discount_price)*100: item.discount_price*100
                     }))
+                    // console.log(`items: ${items[0].discount_price}`)
                     callCreateOrderAPI({
-                        customer_id: typeof customerId == 'string' ? parseInt(customerId) : customerId,
+                        customer_id: customerId,
                         items
                     }).then(data => {
                         if (data.code == 0) {
@@ -367,7 +380,8 @@ const CreateOrderModal: FC<Props> = (
                                     loading
                                     onChange={(value) => {
                                         console.log(value)
-                                        setCustomerId(value)
+                                        let customerId = typeof value == 'string'? parseInt(value): value
+                                        setCustomerId(customerId)
                                     }}
                                     options={customerOptions}
                                 />

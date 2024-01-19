@@ -11,6 +11,7 @@ import CreateOrderModal from "@/components/order/CreateOrderModal";
 import {defaultPageSize} from "@/utils/const";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import ImportOrderExcelModal from "@/components/order/ImportOrderExcelModal";
+import OrderDetailModal from "@/components/order/OrderDetailModal";
 
 
 export default function Order() {
@@ -85,16 +86,19 @@ export default function Order() {
             key: 'action',
             render: () => (
                 <Space size="middle">
+                    <div>
+
+                    </div>
                 </Space>
             ),
         },
     ];
 
     const [isSellModalOpen, setIsSellModalOpen] = useState<boolean>(false)
-
     const [isReceiptModalOpen, setIsReceiptModalOpen] = useState<boolean>(false)
-
     const [isImportOrderExcelOpen, setIsImportOrderExcelOpen] = useState<boolean>(false)
+    const [isOrderDetailOpen, setIsOrderDetailOpen] = useState<boolean>(false)
+    const [orderId, setOrderId] = useState<number>(0)
 
     return (
         <LayoutWithMenu>
@@ -116,6 +120,10 @@ export default function Order() {
                     mutate(key).finally(() => setRefresh(false))
                 }
             }}/>
+
+            <OrderDetailModal open={isOrderDetailOpen} closeFn={() => {
+                setIsOrderDetailOpen(false)
+            }} id={orderId}/>
 
             <div className='p-5 m-2 bg-white rounded  flex flex-row gap-3'>
                 <Button
