@@ -6,6 +6,7 @@ import {Embryo, EmbryoInout} from "@/types/embryo";
 import useEmbryoInouts from "@/hooks/useEmbryoInouts";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import {viaToString} from "@/utils/stock";
+import {formatUTCDateTime} from "@/utils/utils";
 
 
 interface Props {
@@ -82,7 +83,7 @@ const InoutListModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {record.create_time}
+                    {formatUTCDateTime(record.create_time)}
                 </div>
             )
         },

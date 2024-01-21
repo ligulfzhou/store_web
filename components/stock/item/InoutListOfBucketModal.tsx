@@ -7,6 +7,7 @@ import useRouterUtils from "@/hooks/useRouterUtils";
 import {viaToString} from "@/utils/stock";
 import useItemInoutsOfBucket from "@/hooks/useItemInoutsOfBucket";
 import useParameters from "@/hooks/useParameters";
+import {formatUTCDateTime} from "@/utils/utils";
 
 
 interface Props {
@@ -91,7 +92,7 @@ const InoutListOfBucketModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {record.create_time}
+                    {formatUTCDateTime(record.create_time)}
                 </div>
             )
         },

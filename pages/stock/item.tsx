@@ -8,6 +8,7 @@ import StockOutModal from "@/components/stock/StockOutModal";
 import useItemInoutGroupList from "@/hooks/useItemInoutGroupList";
 import {ItemInoutBucket} from "@/types/item";
 import InoutListOfBucketModal from "@/components/stock/item/InoutListOfBucketModal";
+import {formatUTCDateTime} from "@/utils/utils";
 
 
 export default function Index() {
@@ -51,6 +52,11 @@ export default function Index() {
         {
             title: "时间",
             dataIndex: "create_time",
+            render: (_, record)=> (
+                <div>
+                    {formatUTCDateTime(record.create_time)}
+                </div>
+            )
         },
         {
             title: '操作',
