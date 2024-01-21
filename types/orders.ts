@@ -12,6 +12,7 @@ export interface OrderInList {
 
 export interface Order {
     id: number,
+    tp: number,
     order_no: string
     account_id: number
     account: string

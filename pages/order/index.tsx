@@ -2,9 +2,9 @@ import {Table, Space, Button, Image} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {ColumnsType} from "antd/es/table";
 import useOrders from "@/hooks/useOrders";
-import {OrderInList} from '@/types'
+import {OrderInList, Order} from '@/types'
 import useParameters from "@/hooks/useParameters";
-import {useState} from "react";
+import React, {useState} from "react";
 import {useSWRConfig} from "swr";
 import ReceiptModal from "@/components/ReceiptModal";
 import CreateOrderModal from "@/components/order/CreateOrderModal";
@@ -13,6 +13,7 @@ import useRouterUtils from "@/hooks/useRouterUtils";
 import ImportOrderExcelModal from "@/components/order/ImportOrderExcelModal";
 import OrderDetailModal from "@/components/order/OrderDetailModal";
 import {formatUTCDateTime} from "@/utils/utils";
+import DeleteModal from "@/components/order/DeleteOrderModal";
 
 
 export default function Order() {
@@ -43,7 +44,7 @@ export default function Order() {
         {
             title: "下单时间",
             dataIndex: "create_time",
-            render: (_, record)=> (
+            render: (_, record) => (
                 <div>
                     {formatUTCDateTime(record.create_time)}
                 </div>
@@ -90,10 +91,16 @@ export default function Order() {
         {
             title: '操作',
             key: 'action',
-            render: () => (
+            render: (_, record) => (
                 <Space size="middle">
                     <div>
-
+                        <a href='#' onClick={(event) => {
+                            event.preventDefault()
+                            setOrderId(record.id)
+                            setIsDeleteOpen(true)
+                        }}>
+                            删除
+                        </a>
                     </div>
                 </Space>
             ),
@@ -105,6 +112,7 @@ export default function Order() {
     const [isImportOrderExcelOpen, setIsImportOrderExcelOpen] = useState<boolean>(false)
     const [isOrderDetailOpen, setIsOrderDetailOpen] = useState<boolean>(false)
     const [orderId, setOrderId] = useState<number>(0)
+    const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
 
     return (
         <LayoutWithMenu>
@@ -130,6 +138,18 @@ export default function Order() {
             <OrderDetailModal open={isOrderDetailOpen} closeFn={() => {
                 setIsOrderDetailOpen(false)
             }} id={orderId}/>
+
+            <DeleteModal
+                open={isDeleteOpen}
+                closeFn={(success) => {
+                    if (success) {
+                        setRefresh(true)
+                        mutate(key).finally(() => setRefresh(false))
+                    }
+                    setIsDeleteOpen(false)
+                }}
+                id={orderId}
+            />
 
             <div className='p-5 m-2 bg-white rounded  flex flex-row gap-3'>
                 <Button
@@ -183,6 +203,7 @@ export default function Order() {
                 />
             </div>
         </LayoutWithMenu>
-    );
+    )
+        ;
 
 };
