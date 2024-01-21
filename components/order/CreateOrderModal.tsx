@@ -411,9 +411,8 @@ const CreateOrderModal: FC<Props> = (
                             </Form.Item>
                         </div>
                     </Form>
-
-
                 </div>
+
                 <div className='p-5 m-2 bg-white rounded'>
                     <div
                         className='font-bold mb-4'>待销售的产品列表: {dataSource.map(item => item.discount * item.count * item.price / 10000).reduce((x, y) => x + y, 0)}¥,
