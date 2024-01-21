@@ -40,6 +40,11 @@ export function formatDate(date: number | Date) {
     return format(date, "yyyy-MM-dd");
 }
 
+export function formatUTCDateTime(str_date: string) {
+    let dt = new Date(Date.parse(str_date))
+    return format(dt, "yyyy-MM-dd HH:mm:ss");
+}
+
 export function formatDateTime(date: number | Date) {
     return format(date, "yyyy-MM-dd HH:mm:ss");
 }

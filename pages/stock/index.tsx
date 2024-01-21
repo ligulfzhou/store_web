@@ -7,7 +7,7 @@ import {defaultPageSize} from "@/utils/const";
 import React, {useState} from "react";
 import {useSWRConfig} from "swr"
 import EditModal from "@/components/items/item/EditModal";
-import {formatDateTime} from "@/utils/utils";
+import {formatDateTime, formatUTCDateTime} from "@/utils/utils";
 import useItems from "@/hooks/useItems";
 import {Item} from "@/types/item";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
@@ -161,7 +161,7 @@ export default function Index() {
             key: 'create_time',
             render: (_, record) => (
                 <div>
-                    {formatDateTime(new Date(record.create_time))}
+                    {formatUTCDateTime(record.create_time)}
                 </div>
             )
         },

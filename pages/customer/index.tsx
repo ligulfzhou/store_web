@@ -10,7 +10,7 @@ import React, {useState} from "react";
 import {useSWRConfig} from "swr"
 import EditCustomerModal from "@/components/customer/EditCustomerModal";
 import CustomerSearchForm from "@/components/customer/CustomerSearchForm";
-import {formatDateTime} from "@/utils/utils";
+import {formatUTCDateTime} from "@/utils/utils";
 
 
 export default function Index() {
@@ -50,7 +50,7 @@ export default function Index() {
             key: 'create_time',
             render: (_, record)=> (
                 <div>
-                    {formatDateTime(new Date(record.create_time))}
+                    {formatUTCDateTime(record.create_time)}
                 </div>
             )
         },

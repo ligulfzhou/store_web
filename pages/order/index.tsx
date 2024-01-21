@@ -12,6 +12,7 @@ import {defaultPageSize} from "@/utils/const";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import ImportOrderExcelModal from "@/components/order/ImportOrderExcelModal";
 import OrderDetailModal from "@/components/order/OrderDetailModal";
+import {formatUTCDateTime} from "@/utils/utils";
 
 
 export default function Order() {
@@ -41,7 +42,12 @@ export default function Order() {
         },
         {
             title: "下单时间",
-            dataIndex: "create_time"
+            dataIndex: "create_time",
+            render: (_, record)=> (
+                <div>
+                    {formatUTCDateTime(record.create_time)}
+                </div>
+            )
         },
         {
             title: "销售数量",
