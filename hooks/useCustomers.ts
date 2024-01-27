@@ -5,7 +5,7 @@ import {ListReponse} from "@/types/common";
 import useParameters from "@/hooks/useParameters";
 import {Customer} from "@/types/customer";
 
-export default function useCustomers() {
+export default function useCustomers(all: boolean = false) {
     const {
         page,
         pageSize,
@@ -17,7 +17,12 @@ export default function useCustomers() {
         create_time_ed
     } = useParameters()
 
-    const key = `${host}/api/customers?ty_pe=${ty_pe}&phone=${phone}&name=${name}&head=${head}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}&page=${page}&page_size=${pageSize}`
+    let key = ''
+    if (all) {
+        key = `${host}/api/customers/all`
+    } else {
+        key = `${host}/api/customers?ty_pe=${ty_pe}&phone=${phone}&name=${name}&head=${head}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}&page=${page}&page_size=${pageSize}`
+    }
     const {data, error} = useSWR<ListReponse<Customer>>(
         key,
         fetcher

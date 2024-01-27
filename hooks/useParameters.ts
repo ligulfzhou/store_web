@@ -58,6 +58,8 @@ export default function useParameters() {
         customer_id,
         account_id,
 
+        imported
+
     } = router.query
 
     // customers
@@ -120,6 +122,8 @@ export default function useParameters() {
     let accountIdN= parseQueryParamToNumber(account_id)
     let customerIdN = parseQueryParamToNumber(customer_id)
 
+    let importedN= parseQueryParamToNumber(imported)
+
     return {
         id: idN,
         page: pageN,
@@ -161,6 +165,8 @@ export default function useParameters() {
         is_return_order: is_return_orderB,
         is_urgent: is_urgentB,
         is_special: is_specialB,
+
+        imported: importedN,
 
         ro_search,
     }

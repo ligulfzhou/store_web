@@ -15,12 +15,19 @@ export default function useOrders() {
         customer_id,
         order_no,
         create_time_ed,
-        create_time_st
+        create_time_st,
+        imported
     } = useParameters()
 
-    let key = `${host}/api/orders/list?page=${page}&page_size=${pageSize}&order_no=${order_no}&account_id=${account_id}&customer_id=${customer_id}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}`
-    if (sorter_order && sorter_field) {
+    let key = ''
+    if (imported && (sorter_order && sorter_field)) {
+        key = `${host}/api/imported/orders/list?page=${page}&page_size=${pageSize}&order_no=${order_no}&account_id=${account_id}&customer_id=${customer_id}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}&sorter_field=${sorter_field}&sorter_order=${sorter_order}`
+    } else if (imported && !(sorter_order && sorter_field)) {
+        key = `${host}/api/imported/orders/list?page=${page}&page_size=${pageSize}&order_no=${order_no}&account_id=${account_id}&customer_id=${customer_id}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}`
+    } else if (!imported && (sorter_order && sorter_field)) {
         key = `${host}/api/orders/list?page=${page}&page_size=${pageSize}&order_no=${order_no}&account_id=${account_id}&customer_id=${customer_id}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}&sorter_field=${sorter_field}&sorter_order=${sorter_order}`
+    } else {
+        key = `${host}/api/orders/list?page=${page}&page_size=${pageSize}&order_no=${order_no}&account_id=${account_id}&customer_id=${customer_id}&create_time_st=${create_time_st}&create_time_ed=${create_time_ed}`
     }
 
     const {data, error, mutate, isValidating} = useSWR<ListReponse<OrderInList>>(

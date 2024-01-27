@@ -137,7 +137,7 @@ const CreateOrderModal: FC<Props> = (
     const [dataSource, setDataSource] = useState<DataType[]>([]);
     const [count, setCount] = useState(0);
 
-    const {customers, isLoading: customersLoading} = useCustomers()
+    const {customers, isLoading: customersLoading} = useCustomers(true)
     const [customerOptions, setCustomerOptions] = useState<Option[]>([])
     const [customerId, setCustomerId] = useState<number>(0)
     useEffect(() => {

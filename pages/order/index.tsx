@@ -182,6 +182,20 @@ export default function Order() {
             </div>
 
             <div className='p-5 m-2 bg-white rounded overflow-auto'>
+                <div className='mb-4'>
+                    <Segmented options={["导入的订单", "手动添加的订单"]} onChange={(res)=> {
+                        let imported = 0;
+                        let value = typeof res == 'number'? res.toString() : res
+                        if (value.includes("导入")) {
+                            imported = 1
+                        }
+                        reloadPage({
+                            'page': 1,
+                            'imported': imported
+                        })
+                        console.log(res)
+                    }}/>
+                </div>
                 <Table
                     rowKey={`id`}
                     size={"small"}

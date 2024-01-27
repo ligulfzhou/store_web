@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from "react";
-import {Form, Input, Modal, Select} from "antd";
+import {Form, Modal, Select} from "antd";
 import {Option} from "@/types";
 import ExcelImporter from "@/components/uploader/ExcelImporter";
 import useCustomers from "@/hooks/useCustomers";
@@ -18,7 +18,7 @@ const ImportOrderExcelModal: FC<Props> = (
     const [form] = Form.useForm();
 
     const [customerId, setCustomerId] = useState<number>(0)
-    const {customers, isLoading: isCustomersLoading} = useCustomers()
+    const {customers, isLoading: isCustomersLoading} = useCustomers(true)
     const [customerOptions, setCustomerOptions] = useState<Option[]>([])
 
     useEffect(() => {
