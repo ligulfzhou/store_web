@@ -27,6 +27,7 @@ export interface OrderItem {
     id: number
     order_id: number
     index: number
+    number: string,
     item_id: number
     item_images: string[]
     count: number
