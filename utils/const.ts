@@ -4,3 +4,4 @@ export const maxTableColumnStrLen: number = 25
 export const host = 'https://lkx-api.ligulfzhou.com'
 
 export const defaultPageSize = 50
+export const dateFormat = 'YYYY-MM-DD';
