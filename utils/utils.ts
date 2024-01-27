@@ -1,4 +1,4 @@
-import {maxTableColumnStrLen, progresses} from '@/utils/const'
+import {maxTableColumnStrLen} from '@/utils/const'
 import {format} from "date-fns";
 import {customAlphabet} from "nanoid";
 
@@ -16,24 +16,6 @@ export async function fetcher<JSON = any>(
         ...init
     })
     return res.json()
-}
-
-export function getOptionsForStep(n: number) {
-    for (let progress of progresses) {
-        if (progress.step == n) {
-            return [
-                {
-                    'value': 0,
-                    'label': '请选择'
-                },
-                ...progress.options.map(option => ({
-                    'value': option.index,
-                    'label': option.name
-                }))]
-        }
-    }
-
-    return []
 }
 
 export function formatDate(date: number | Date) {

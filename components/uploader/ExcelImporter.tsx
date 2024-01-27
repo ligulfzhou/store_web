@@ -6,7 +6,7 @@ import {host} from "@/utils/const";
 import {EmptyResponse} from "@/types";
 import {MessageType} from "antd/lib/message";
 
-type ExcelTp = 'item' | 'customer' | 'order' | 'embryo'
+type ExcelTp = 'item' | 'customer' | 'order' | 'embryo' | 'legacy_order'
 
 interface Props {
     callback: () => void
@@ -33,6 +33,8 @@ const ExcelImporter: FC<Props> = (
             return '客户'
         } else if (tp == 'embryo') {
             return '库存胚'
+        } else if (tp == 'legacy_order') {
+            return '订单(系统内产品)'
         } else {
             return '订单'
         }
@@ -47,6 +49,8 @@ const ExcelImporter: FC<Props> = (
                 return 2;
             case "order":
                 return 3;
+            case "legacy_order":
+                return 4
         }
     }
 

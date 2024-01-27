@@ -220,8 +220,8 @@ const CreateOrderModal: FC<Props> = (
             // @ts-ignore
             render: (_, record: DataType) => (
                 <div>
-                    {/*{record.count * record.price * record.discount / 10000}¥*/}
-                    {record.count * record.discount_price}¥
+                    {/*{record.count * record.discount_price}¥*/}
+                    {Math.round((record.count *100) * (record.discount_price*100)) / 10000}¥
                 </div>
             )
         },

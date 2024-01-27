@@ -27,9 +27,18 @@ img.ant-image-preview-img {
     border-radius: 2px;
 }
 
+.code-box-demo {
+    overflow-x: auto;
+}
+
+.code-box-demo .ant-segmented {
+    margin-bottom: 10px;
+}
+
 [data-theme='dark'] .editable-row:hover .editable-cell-value-wrap {
     border: 1px solid #434343;
 }
+
 
 @layer base {
     :root {

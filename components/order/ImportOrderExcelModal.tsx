@@ -87,7 +87,7 @@ const ImportOrderExcelModal: FC<Props> = (
                     >
                         <ExcelImporter
                             extra={
-                                {'customer_id': 1}
+                                {'customer_id': customerId}
                             }
                             callback={() => {
                             }}

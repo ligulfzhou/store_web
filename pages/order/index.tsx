@@ -1,8 +1,8 @@
-import {Table, Space, Button, Image} from 'antd';
+import {Table, Space, Button, Image, Segmented} from 'antd';
 import LayoutWithMenu from "@/components/Layouts/LayoutWithMenu";
 import {ColumnsType} from "antd/es/table";
 import useOrders from "@/hooks/useOrders";
-import {OrderInList, Order} from '@/types'
+import {OrderInList} from '@/types'
 import useParameters from "@/hooks/useParameters";
 import React, {useState} from "react";
 import {useSWRConfig} from "swr";
