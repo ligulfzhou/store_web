@@ -102,6 +102,16 @@ export default function Order() {
                             删除
                         </a>
                     </div>
+
+                    <div>
+                        <a href='#' onClick={(event) => {
+                            event.preventDefault()
+                            setOrderId(record.id)
+                            setIsOrderDetailOpen(true)
+                        }}>
+                            详情
+                        </a>
+                    </div>
                 </Space>
             ),
         },
