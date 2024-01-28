@@ -2,9 +2,7 @@ import React, {FC, useState} from "react";
 import {Modal, Button, Table} from "antd";
 import {useSWRConfig} from "swr";
 import {ColumnsType} from "antd/es/table";
-import {ItemInout} from "@/types/embryo";
 import useRouterUtils from "@/hooks/useRouterUtils";
-import {viaToString} from "@/utils/stock";
 import useOrderDetail from "@/hooks/useOrderDetail";
 import {OrderItem} from "@/types";
 
@@ -42,11 +40,11 @@ const OrderDetailModal: FC<Props> = (
             )
         },
         {
-            title: "出/入库",
+            title: "编号",
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {/*{record.in_true_out_false ? "入库" : "出库"}*/}
+                    {record.number}
                 </div>
             )
         },
@@ -60,21 +58,11 @@ const OrderDetailModal: FC<Props> = (
             )
         },
         {
-            title: "经手人",
-            dataIndex: "name",
+            title: "图片",
+            dataIndex: "images",
             render: (_, record) => (
                 <div>
-                    {/*{record.account}*/}
-                </div>
-            )
-        },
-        {
-            title: "方式：(导入/手动/订单)",
-            dataIndex: "name",
-            render: (_, record) => (
-                // <div className='text-center w-full'>
-                <div>
-                    {/*{viaToString(record.via)}*/}
+                    {record.images}
                 </div>
             )
         },
@@ -105,7 +93,7 @@ const OrderDetailModal: FC<Props> = (
             >
                 <div className='flex flex-row gap-4'>
                     <Button
-                        loading={refresh}
+                        loading={isLoading || refresh}
                         type="primary"
                         onClick={() => {
                             setRefresh(true)
@@ -122,7 +110,7 @@ const OrderDetailModal: FC<Props> = (
                         size={"small"}
                         loading={isLoading || refresh}
                         columns={columns}
-                        dataSource={order?.items||[]}
+                        dataSource={order?.items || []}
                         onChange={(pagination, filters, sorter) => {
                             reloadPage({
                                 mpage: pagination.current,

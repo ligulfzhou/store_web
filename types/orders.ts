@@ -30,7 +30,7 @@ export interface OrderItem {
     index: number
     number: string,
     item_id: number
-    item_images: string[]
+    images: string[]
     count: number
     origin_price: number
     price: number
