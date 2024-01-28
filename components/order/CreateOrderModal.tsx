@@ -342,7 +342,7 @@ const CreateOrderModal: FC<Props> = (
                     console.log(customerId)
                     let items = dataSource.map(item => ({
                         item_id: item.id,
-                        count: typeof item.count == 'string' ? parseInt(item.count) : item.count,
+                        count: typeof item.count == 'string' ? parseInt(item.count) * 10 : item.count * 10,
                         discount: typeof item.discount == 'string' ? parseInt(item.discount) : item.discount,
                         discount_price: typeof item.discount_price == 'string' ? parseInt(item.discount_price)*100: item.discount_price*100
                     }))
