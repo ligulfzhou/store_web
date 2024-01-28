@@ -29,6 +29,8 @@ export interface OrderItem {
     name: string,
     index: number
     number: string,
+    size: string,
+    color: string,
     item_id: number
     images: string[]
     count: number

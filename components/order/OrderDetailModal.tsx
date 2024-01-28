@@ -5,6 +5,7 @@ import {ColumnsType} from "antd/es/table";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import useOrderDetail from "@/hooks/useOrderDetail";
 import {OrderItem} from "@/types";
+import {formatUTCDateTime} from "@/utils/utils";
 
 
 interface Props {
@@ -31,33 +32,6 @@ const OrderDetailModal: FC<Props> = (
             dataIndex: 'id',
         },
         {
-            title: "名称",
-            dataIndex: "name",
-            render: (_, record) => (
-                <div>
-                    {record.name}
-                </div>
-            )
-        },
-        {
-            title: "编号",
-            dataIndex: "name",
-            render: (_, record) => (
-                <div>
-                    {record.number}
-                </div>
-            )
-        },
-        {
-            title: "数量",
-            dataIndex: "name",
-            render: (_, record) => (
-                <div>
-                    {Math.abs(record.count / 10)}
-                </div>
-            )
-        },
-        {
             title: "图片",
             dataIndex: "images",
             render: (_, record) => (
@@ -67,11 +41,54 @@ const OrderDetailModal: FC<Props> = (
             )
         },
         {
+            title: "名称",
+            dataIndex: "name",
+        },
+        {
+            title: "编号",
+            dataIndex: "number",
+        },
+        {
+            title: "尺寸",
+            dataIndex: "size",
+        },
+        {
+            title: "颜色",
+            dataIndex: "color",
+        },
+        {
+            title: "数量",
+            dataIndex: "count",
+            render: (_, record) => (
+                <div>
+                    {Math.abs(record.count / 10)}
+                </div>
+            )
+        },
+        {
+            title: "价格",
+            dataIndex: "price",
+            render: (_, record) => (
+                <div>
+                    {Math.abs(record.price / 100)}
+                </div>
+            )
+        },
+        {
+            title: "总价",
+            dataIndex: "price",
+            render: (_, record) => (
+                <div>
+                    {Math.abs(record.total_price / 100)}
+                </div>
+            )
+        },
+        {
             title: "时间",
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {record.create_time}
+                    {formatUTCDateTime(record.create_time)}
                 </div>
             )
         },
