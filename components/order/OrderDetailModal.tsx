@@ -6,6 +6,7 @@ import {ItemInout} from "@/types/embryo";
 import useRouterUtils from "@/hooks/useRouterUtils";
 import {viaToString} from "@/utils/stock";
 import useOrderDetail from "@/hooks/useOrderDetail";
+import {OrderItem} from "@/types";
 
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
     id: number | undefined,
 }
 
-const InoutListModal: FC<Props> = (
+const OrderDetailModal: FC<Props> = (
     {
         open,
         closeFn,
@@ -26,7 +27,7 @@ const InoutListModal: FC<Props> = (
     const [refresh, setRefresh] = useState<boolean>(false)
     const {reloadPage} = useRouterUtils()
 
-    const columns: ColumnsType<ItemInout> = [
+    const columns: ColumnsType<OrderItem> = [
         {
             title: 'ID',
             dataIndex: 'id',
@@ -36,7 +37,7 @@ const InoutListModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {record.item_name}
+                    {record.name}
                 </div>
             )
         },
@@ -45,7 +46,7 @@ const InoutListModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {record.in_true_out_false ? "入库" : "出库"}
+                    {/*{record.in_true_out_false ? "入库" : "出库"}*/}
                 </div>
             )
         },
@@ -63,7 +64,7 @@ const InoutListModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {record.account}
+                    {/*{record.account}*/}
                 </div>
             )
         },
@@ -73,7 +74,7 @@ const InoutListModal: FC<Props> = (
             render: (_, record) => (
                 // <div className='text-center w-full'>
                 <div>
-                    {viaToString(record.via)}
+                    {/*{viaToString(record.via)}*/}
                 </div>
             )
         },
@@ -121,7 +122,7 @@ const InoutListModal: FC<Props> = (
                         size={"small"}
                         loading={isLoading || refresh}
                         columns={columns}
-                        dataSource={[]}
+                        dataSource={order?.items||[]}
                         onChange={(pagination, filters, sorter) => {
                             reloadPage({
                                 mpage: pagination.current,
@@ -135,4 +136,4 @@ const InoutListModal: FC<Props> = (
     );
 }
 
-export default InoutListModal
+export default OrderDetailModal

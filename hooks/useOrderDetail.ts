@@ -3,18 +3,26 @@ import {fetcher} from "@/utils/utils";
 import {host} from "@/utils/const";
 import {DataResponse} from "@/types/common";
 import {OrderDetail} from "@/types/orders";
+import useParameters from "@/hooks/useParameters";
+import {da} from "date-fns/locale";
 
 export default function useOrderDetail(id: number) {
+    const {imported} = useParameters()
 
-    const key = `/api/order/detail?order_id=${id}`
+    var key = ''
+    if (imported > 0) {
+        key = `/api/imported/order/detail?order_id=${id}`
+    } else {
+        key = `/api/order/detail?order_id=${id}`
+    }
     const {data, error, mutate} = useSWR<DataResponse<OrderDetail>>(
         `${host}${key}`,
         fetcher
     )
 
-    let order: OrderDetail|undefined = undefined
+    let order: OrderDetail | undefined = undefined
     if (data !== undefined && data.data !== undefined) {
-        order=data.data
+        order = data.data
     }
 
     return {

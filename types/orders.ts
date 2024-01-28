@@ -26,6 +26,7 @@ export interface Order {
 export interface OrderItem {
     id: number
     order_id: number
+    name: string,
     index: number
     number: string,
     item_id: number
