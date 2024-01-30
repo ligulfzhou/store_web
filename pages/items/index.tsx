@@ -19,6 +19,7 @@ import InoutListModal from "@/components/items/item/InoutListModal";
 import EmbryoInoutListModal from "@/components/items/embryo/InoutListModal";
 import {Embryo} from "@/types/embryo";
 import BarcodeModal from "@/components/BarcodeModal";
+import DeleteModal from "@/components/items/item/DeleteModal";
 
 
 export default function Index() {
@@ -196,6 +197,14 @@ export default function Index() {
 
                     <a href='#' onClick={(event) => {
                         event.preventDefault()
+                        setEditItem(record)
+                        setIsDeleteOpen(true)
+                    }}>
+                        删除
+                    </a>
+
+                    <a href='#' onClick={(event) => {
+                        event.preventDefault()
                         setBarcodeValue(record.barcode)
                         setIsbarcodeOpen(true)
                     }}>
@@ -219,6 +228,7 @@ export default function Index() {
     const [isbarcodeOpen, setIsbarcodeOpen] = useState<boolean>(false)
     const [barcodeValue, setBarcodeValue] = useState<string>('')
 
+    const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
     const refreshPage = () => {
         setRefresh(true)
         mutate(key).finally(() => setRefresh(false))
@@ -248,6 +258,13 @@ export default function Index() {
                 }}
                 obj={editItem}
             />
+
+            <DeleteModal open={isDeleteOpen} closeFn={(success)=> {
+                setIsDeleteOpen(false)
+                if (success) {
+                    refreshPage()
+                }
+            }} item={editItem} />
 
             <EmbryoStorageModal open={isEmbryoStorageModalOpen} closeFn={() => {
                 setIsEmbryoStorageModalOpen(false)

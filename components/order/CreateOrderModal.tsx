@@ -346,7 +346,6 @@ const CreateOrderModal: FC<Props> = (
                         discount: typeof item.discount == 'string' ? parseInt(item.discount) : item.discount,
                         discount_price: typeof item.discount_price == 'string' ? parseInt(item.discount_price)*100: item.discount_price*100
                     }))
-                    // console.log(`items: ${items[0].discount_price}`)
                     callCreateOrderAPI({
                         customer_id: customerId,
                         items

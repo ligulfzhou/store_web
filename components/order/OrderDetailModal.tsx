@@ -124,6 +124,7 @@ const OrderDetailModal: FC<Props> = (
                         loading={isLoading || refresh}
                         type="primary"
                         onClick={() => {
+                            console.log(`key: ${key}`)
                             setRefresh(true)
                             mutate(key).finally(() => setRefresh(false))
                         }}

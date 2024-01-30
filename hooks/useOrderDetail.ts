@@ -9,7 +9,7 @@ import {da} from "date-fns/locale";
 export default function useOrderDetail(id: number) {
     const {imported} = useParameters()
 
-    var key = ''
+    let key = '';
     if (imported > 0) {
         key = `/api/imported/order/detail?order_id=${id}`
     } else {
