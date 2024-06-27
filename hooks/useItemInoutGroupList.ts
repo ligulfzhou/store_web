@@ -16,13 +16,16 @@ export default function useItemInoutGroupList() {
         fetcher
     )
 
+    let total = 0
     let buckets: ItemInoutBucket[] = []
     if (data !== undefined && data.data !== undefined && data.data.list) {
         buckets = data.data.list
+        total = data.data.total
     }
 
     return {
         key,
+        total,
         buckets,
         isLoading: !error && !data,
         isError: error

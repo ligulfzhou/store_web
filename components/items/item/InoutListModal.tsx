@@ -28,9 +28,8 @@ const InoutListModal: FC<Props> = (
     const {total, inouts, key, isLoading} = useItemInouts(obj?.id || 0)
     const {mutate} = useSWRConfig()
     const {mpage, mpageSize} = useParameters()
-    const {removeParams} = useRouterUtils()
     const [refresh, setRefresh] = useState<boolean>(false)
-    const {reloadPage} = useRouterUtils()
+    const {reloadPage, removeParams} = useRouterUtils()
 
     const columns: ColumnsType<ItemInout> = [
         {

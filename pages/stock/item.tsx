@@ -9,13 +9,17 @@ import useItemInoutGroupList from "@/hooks/useItemInoutGroupList";
 import {ItemInoutBucket} from "@/types/item";
 import InoutListOfBucketModal from "@/components/stock/item/InoutListOfBucketModal";
 import {formatUTCDateTime} from "@/utils/utils";
+import useRouterUtils from "@/hooks/useRouterUtils";
+import {defaultPageSize} from "@/utils/const";
 
 
 export default function Index() {
     const {page, pageSize} = useParameters()
-    const {key, isLoading, buckets} = useItemInoutGroupList()
+    const {key, isLoading, buckets, total} = useItemInoutGroupList()
+    console.log(`total: ${total}`)
     const [refresh, setRefresh] = useState<boolean>(false);
     const {mutate} = useSWRConfig()
+    const {reloadPage} = useRouterUtils()
 
     const columns: ColumnsType<ItemInoutBucket> = [
         {
@@ -124,8 +128,19 @@ export default function Index() {
                     size={"small"}
                     loading={isLoading || refresh}
                     columns={columns}
-                    pagination={{total: 10, current: page, pageSize: pageSize}}
                     dataSource={buckets}
+                    pagination={{
+                        total: total,
+                        current: page,
+                        pageSize: pageSize,
+                        defaultPageSize: defaultPageSize,
+                        onChange: (thisPage, thisPageSize) => {
+                            reloadPage({
+                                page: thisPage,
+                                pageSize: thisPageSize
+                            })
+                        }
+                    }}
                 />
             </div>
         </LayoutWithMenu>
