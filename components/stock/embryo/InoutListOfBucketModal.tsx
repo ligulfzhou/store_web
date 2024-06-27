@@ -8,6 +8,7 @@ import {viaToString} from "@/utils/stock";
 import useParameters from "@/hooks/useParameters";
 import useEmbryoInoutsOfBucket from "@/hooks/useEmbryoInoutsOfBucket";
 import {formatUTCDateTime} from "@/utils/utils";
+import {defaultPageSize} from "@/utils/const";
 
 
 interface Props {
@@ -133,12 +134,17 @@ const InoutListOfBucketModal: FC<Props> = (
                         loading={isLoading || refresh}
                         columns={columns}
                         dataSource={inouts}
-                        pagination={{total: total, current: mpage, pageSize: mpageSize}}
-                        onChange={(pagination, filters, sorter) => {
-                            reloadPage({
-                                mpage: pagination.current,
-                                mpageSize: pagination.pageSize,
-                            })
+                        pagination={{
+                            total: total,
+                            current: mpage,
+                            pageSize: mpageSize,
+                            defaultPageSize: defaultPageSize,
+                            onChange: (thisPage, thisPageSize) => {
+                                reloadPage({
+                                    page: thisPage,
+                                    pageSize: thisPageSize
+                                })
+                            }
                         }}
                     />
                 </div>

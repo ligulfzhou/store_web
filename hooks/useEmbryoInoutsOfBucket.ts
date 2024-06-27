@@ -8,13 +8,13 @@ import useParameters from "@/hooks/useParameters";
 export default function useEmbryoInoutsOfBucket(bucket_id: number) {
     const {mpage, mpageSize} = useParameters()
     const key = `${host}/api/embryo/inout/list/of/bucket?page=${mpage}&page_size=${mpageSize}&bucket_id=${bucket_id}`
-    const { data, error } = useSWR<ListReponse<EmbryoInout>>(
+    const {data, error} = useSWR<ListReponse<EmbryoInout>>(
         key,
         fetcher
     )
 
     let inouts: EmbryoInout[] = []
-    let total: number = 0
+    let total = 0
     if (data !== undefined && data.data !== undefined && data.data.list) {
         inouts = data.data.list
         total = data.data.total
