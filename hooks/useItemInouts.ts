@@ -13,14 +13,17 @@ export default function useItemInouts(itemId: number) {
         fetcher
     )
 
+    let total = 0
     let inouts: ItemInout[] = []
     if (data !== undefined && data.data !== undefined && data.data.list) {
         inouts = data.data.list
+        total = data.data.total
     }
 
     return {
         key,
         inouts,
+        total,
         isLoading: !error && !data,
         isError: error
     }

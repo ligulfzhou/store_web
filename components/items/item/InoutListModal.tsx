@@ -8,6 +8,8 @@ import {viaToString} from "@/utils/stock";
 import {Item} from "@/types";
 import useItemInouts from "@/hooks/useItemInouts";
 import {formatUTCDateTime} from "@/utils/utils";
+import useParameters from "@/hooks/useParameters";
+import {defaultPageSize} from "@/utils/const";
 
 
 interface Props {
@@ -23,8 +25,10 @@ const InoutListModal: FC<Props> = (
         obj,
     }
 ) => {
-    const {inouts, key, isLoading} = useItemInouts(obj?.id || 0)
+    const {total, inouts, key, isLoading} = useItemInouts(obj?.id || 0)
     const {mutate} = useSWRConfig()
+    const {mpage, mpageSize} = useParameters()
+    const {removeParams} = useRouterUtils()
     const [refresh, setRefresh] = useState<boolean>(false)
     const {reloadPage} = useRouterUtils()
 
@@ -56,7 +60,7 @@ const InoutListModal: FC<Props> = (
             dataIndex: "name",
             render: (_, record) => (
                 <div>
-                    {Math.abs(record.count/10)}
+                    {Math.abs(record.count)}
                 </div>
             )
         },
@@ -99,6 +103,7 @@ const InoutListModal: FC<Props> = (
                 title={`查看'${obj?.name + "'" + '的' || ''}出入库`}
                 onCancel={(e) => {
                     e.preventDefault()
+                    removeParams(['mpage', 'mpageSize'])
                     closeFn(false)
                 }}
                 footer={null}
@@ -125,11 +130,17 @@ const InoutListModal: FC<Props> = (
                         loading={isLoading || refresh}
                         columns={columns}
                         dataSource={inouts}
-                        onChange={(pagination, filters, sorter) => {
-                            reloadPage({
-                                mpage: pagination.current,
-                                mpageSize: pagination.pageSize,
-                            })
+                        pagination={{
+                            total: total,
+                            current: mpage,
+                            pageSize: mpageSize,
+                            defaultPageSize: defaultPageSize,
+                            onChange: (thisPage, thisPageSize) => {
+                                reloadPage({
+                                    page: thisPage,
+                                    pageSize: thisPageSize
+                                })
+                            }
                         }}
                     />
                 </div>
