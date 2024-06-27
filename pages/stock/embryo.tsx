@@ -8,13 +8,17 @@ import StockOutModal from "@/components/stock/StockOutModal";
 import {ItemInoutBucket} from "@/types/item";
 import useEmbryoInoutGroupList from "@/hooks/useEmbryoInoutGroupList";
 import InoutListOfBucketModal from "@/components/stock/embryo/InoutListOfBucketModal";
+import {defaultPageSize} from "@/utils/const";
+import useRouterUtils from "@/hooks/useRouterUtils";
+import {formatUTCDateTime} from "@/utils/utils";
 
 
 export default function Index() {
     const {page, pageSize} = useParameters()
-    const {key, isLoading, buckets} = useEmbryoInoutGroupList()
+    const {key, isLoading, buckets, total} = useEmbryoInoutGroupList()
     const [refresh, setRefresh] = useState<boolean>(false);
     const {mutate} = useSWRConfig()
+    const {reloadPage} = useRouterUtils()
 
     const columns: ColumnsType<ItemInoutBucket> = [
         {
@@ -51,6 +55,11 @@ export default function Index() {
         {
             title: "时间",
             dataIndex: "create_time",
+            render: (_, record) => (
+                <div>
+                    {formatUTCDateTime(record.create_time)}
+                </div>
+            )
         },
         {
             title: '操作',
@@ -109,8 +118,19 @@ export default function Index() {
                     size={"small"}
                     loading={isLoading || refresh}
                     columns={columns}
-                    pagination={{total: 10, current: page, pageSize: pageSize}}
                     dataSource={buckets}
+                    pagination={{
+                        total: total,
+                        current: page,
+                        pageSize: pageSize,
+                        defaultPageSize: defaultPageSize,
+                        onChange: (thisPage, thisPageSize) => {
+                            reloadPage({
+                                page: thisPage,
+                                pageSize: thisPageSize
+                            })
+                        }
+                    }}
                 />
             </div>
         </LayoutWithMenu>
