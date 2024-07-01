@@ -17,6 +17,7 @@
     "antd": "4.24.14",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "html2canvas": "^1.4.1",
     "next": "13.4.12",
     "react": "18.2.0",
     "react-barcode": "^1.4.6",

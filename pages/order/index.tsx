@@ -107,6 +107,16 @@ export default function Order() {
                             详情
                         </a>
                     </div>
+
+                    <div>
+                        <a href='#' onClick={(event) => {
+                            event.preventDefault()
+                            setOrderId(record.id)
+                            setIsOrderPrintModalOpen(true)
+                        }}>
+                            打印订单
+                        </a>
+                    </div>
                 </Space>
             ),
         },
@@ -130,6 +140,7 @@ export default function Order() {
                 closeFn={() => {
                     setIsOrderPrintModalOpen(false)
                 }}
+                id={orderId}
             />
 
             <CreateOrderModal open={isSellModalOpen} closeFn={(success) => {

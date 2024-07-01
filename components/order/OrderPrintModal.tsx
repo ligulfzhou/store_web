@@ -1,10 +1,12 @@
 import React, {FC} from "react";
 import {Button, Modal} from "antd";
+import useOrderDetail from "@/hooks/useOrderDetail";
 
 
 interface Props {
     open: boolean,
     closeFn: (success: boolean) => void,
+    id: number | undefined,
 }
 
 const OrderPrintModal: FC<Props> = (
@@ -12,13 +14,25 @@ const OrderPrintModal: FC<Props> = (
 
         open,
         closeFn,
+        id
     }
 ) => {
-    const onClick = () => {
-        const opt = {
-            scale: 4
+    const {order, key, isLoading} = useOrderDetail(id || 0)
+    const printOrder = () => {
+        var prtContent = document.getElementById("toPrint");
+        var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+        if (!prtContent || !WinPrint) {
+            // won't happen
+            return
         }
+        WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        // WinPrint.close();
     }
+
+    console.log(`loading: ${isLoading}, order: ${order}, order.items: ${order?.items || []}`)
 
     // @ts-ignore
     return (
@@ -27,7 +41,7 @@ const OrderPrintModal: FC<Props> = (
                 width={'1200px'}
                 open={open}
                 centered={true}
-                title={'条形码'}
+                title={'打印订单'}
                 onCancel={(e) => {
                     e.preventDefault()
                     closeFn(false)
@@ -36,108 +50,57 @@ const OrderPrintModal: FC<Props> = (
                 closable={true}
             >
                 <div
-                    className='flex flex-row justify-center'
+                    id='toPrint'
+                    className='flex flex-col justify-center'
                 >
+                    <div className='center'>
+                        <div className='text-center text-xl font-bold'>订货单</div>
+                    </div>
+                    <div>
+                        <table className="border w-full">
+                            <thead>
+                            <tr className="center">
+                                <td className='bg-blue-100 border text-left'>序号</td>
+                                <td className='bg-blue-100 border text-left'>品名</td>
+                                <td className='bg-blue-100 border text-left'>规格</td>
+                                <td className='bg-blue-100 border text-left'>单位</td>
+                                <td className='bg-blue-100 border text-left'>数量</td>
+                                <td className='bg-blue-100 border text-left'>单价</td>
+                                <td className='bg-blue-100 border text-left'>金额</td>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                    <head>
-                        <title>订货单</title>
-                        {/*<style>*/}
-
-                        {/*    table {*/}
-                        {/*    width: 100%;*/}
-                        {/*    border-collapse: collapse;*/}
-                        {/*    border: 1px solid #ccc;*/}
-                        {/*}*/}
-
-                        {/*    td,*/}
-                        {/*    th {*/}
-                        {/*    border: 1px solid #dddddd;*/}
-                        {/*    height: 32px;*/}
-                        {/*    font-weight: normal;*/}
-                        {/*}*/}
-
-                        {/*    tr.center td {*/}
-                        {/*    text-align: center;*/}
-                        {/*    width: 16.666666%;*/}
-                        {/*}*/}
-
-                        {/*    .center {*/}
-                        {/*    text-align: center;*/}
-                        {/*}*/}
-                        {/*</style>*/}
-                    </head>
-                    <table className="border w-full">
-                        <tr>
-                            <th className='bg-blue-100 border text-left'>供应商编号</th>
-                            <th className='bg-blue-100 border text-left'></th>
-                            <th className='bg-blue-100 border text-left'>供应商名称</th>
-                            <th className='bg-blue-100 border text-left'></th>
-                            <th className='bg-blue-100 border text-left'>传真\电话</th>
-                            <th className='bg-blue-100 border text-left'></th>
-                        </tr>
-                        <tr className="center">
-                            <td className='bg-blue-100 border text-left'>物品名称</td>
-                            <td className='bg-blue-100 border text-left'>规格</td>
-                            <td className='bg-blue-100 border text-left'>数量</td>
-                            <td className='bg-blue-100 border text-left'>包装要求</td>
-                            <td className='bg-blue-100 border text-left'>质量标准</td>
-                            <td className='bg-blue-100 border text-left'>要求到货日期</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-
-                        <tr>
-                            <td colSpan={2}>采购员:</td>
-                            <td colSpan={2}>传真/电话:</td>
-                            <td colSpan={2} className="center">
-                                采购部(盖章)
-                            </td>
-                        </tr>
-                    </table>
-
+                            {(order?.items || []).length > 0 ? (
+                                <>
+                                    {order?.items.map((item, index) => (
+                                        <tr>
+                                            <td className='border text-left'>{index}</td>
+                                            <td className='border text-left'>{item.name}</td>
+                                            <td className='border text-left'>{item.size}</td>
+                                            <td className='border text-left'>{item.count}</td>
+                                            <td className='border text-left'>{item.count}</td>
+                                            <td className='border text-left'>{item.price / 100}</td>
+                                            <td className='border text-left'>{item.total_price / 100}</td>
+                                        </tr>
+                                    ))}
+                                </>
+                            ) : null}
+                            <tr>
+                                <td colSpan={2}>采购员:</td>
+                                <td colSpan={2}>传真/电话:</td>
+                                <td colSpan={2} className="center">
+                                    采购部(盖章)
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 {/* buttons */}
-                <div className='flex flex-row justify-end'>
-                    <Button onClick={onClick}>
+                <div className='flex flex-row justify-end mt-2'>
+                    <Button onClick={printOrder}>
                         打印
                     </Button>
                 </div>

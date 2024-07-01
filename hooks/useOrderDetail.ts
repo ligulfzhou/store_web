@@ -4,7 +4,6 @@ import {host} from "@/utils/const";
 import {DataResponse} from "@/types/common";
 import {OrderDetail} from "@/types/orders";
 import useParameters from "@/hooks/useParameters";
-import {da} from "date-fns/locale";
 
 export default function useOrderDetail(id: number) {
     const {imported} = useParameters()
