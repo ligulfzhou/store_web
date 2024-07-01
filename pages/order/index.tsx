@@ -6,7 +6,6 @@ import {OrderInList} from '@/types'
 import useParameters from "@/hooks/useParameters";
 import React, {useState} from "react";
 import {useSWRConfig} from "swr";
-import ReceiptModal from "@/components/ReceiptModal";
 import CreateOrderModal from "@/components/order/CreateOrderModal";
 import {defaultPageSize} from "@/utils/const";
 import useRouterUtils from "@/hooks/useRouterUtils";
@@ -14,6 +13,7 @@ import ImportOrderExcelModal from "@/components/order/ImportOrderExcelModal";
 import OrderDetailModal from "@/components/order/OrderDetailModal";
 import {formatUTCDateTime} from "@/utils/utils";
 import DeleteModal from "@/components/order/DeleteOrderModal";
+import OrderPrintModal from "@/components/order/OrderPrintModal";
 
 
 export default function Order() {
@@ -113,7 +113,7 @@ export default function Order() {
     ];
 
     const [isSellModalOpen, setIsSellModalOpen] = useState<boolean>(false)
-    const [isReceiptModalOpen, setIsReceiptModalOpen] = useState<boolean>(false)
+    const [isOrderPrintModalOpen, setIsOrderPrintModalOpen] = useState<boolean>(false)
     const [isImportOrderExcelOpen, setIsImportOrderExcelOpen] = useState<boolean>(false)
     const [isOrderDetailOpen, setIsOrderDetailOpen] = useState<boolean>(false)
     const [orderId, setOrderId] = useState<number>(0)
@@ -125,10 +125,10 @@ export default function Order() {
                 setIsImportOrderExcelOpen(false)
             }}/>
 
-            <ReceiptModal
-                open={isReceiptModalOpen}
+            <OrderPrintModal
+                open={isOrderPrintModalOpen}
                 closeFn={() => {
-                    setIsReceiptModalOpen(false)
+                    setIsOrderPrintModalOpen(false)
                 }}
             />
 

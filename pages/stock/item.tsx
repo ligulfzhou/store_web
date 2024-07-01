@@ -40,7 +40,7 @@ export default function Index() {
             dataIndex: "total_count",
             render: (_, record) => (
                 <div>
-                    {Math.abs(record.total_count / 10)}
+                    {Math.abs(record.total_count)}
                 </div>
             )
         },

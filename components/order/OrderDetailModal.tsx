@@ -72,7 +72,7 @@ const OrderDetailModal: FC<Props> = (
             dataIndex: "count",
             render: (_, record) => (
                 <div>
-                    {Math.abs(record.count / 10)}
+                    {Math.abs(record.count)}
                 </div>
             )
         },

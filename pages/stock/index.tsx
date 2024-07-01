@@ -100,7 +100,7 @@ export default function Index() {
                         setEditItem(record)
                         setIsInoutListModalOpen(true)
                     }}>
-                        {record.count/10} ({record.unit})
+                        {record.count} ({record.unit})
                     </a>
                 </div>
             )

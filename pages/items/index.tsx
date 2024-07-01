@@ -101,7 +101,7 @@ export default function Index() {
                         setEditItem(record)
                         setIsInoutListModalOpen(true)
                     }}>
-                        {record.count / 10} ({record.unit})
+                        {record.count} ({record.unit})
                     </a>
                 </div>
             )
@@ -259,12 +259,12 @@ export default function Index() {
                 obj={editItem}
             />
 
-            <DeleteModal open={isDeleteOpen} closeFn={(success)=> {
+            <DeleteModal open={isDeleteOpen} closeFn={(success) => {
                 setIsDeleteOpen(false)
                 if (success) {
                     refreshPage()
                 }
-            }} item={editItem} />
+            }} item={editItem}/>
 
             <EmbryoStorageModal open={isEmbryoStorageModalOpen} closeFn={() => {
                 setIsEmbryoStorageModalOpen(false)
