@@ -1,3 +1,5 @@
+import {Customer} from "@/types/customer";
+
 export interface OrderInList {
     id: number,
     account_id: number,
@@ -44,6 +46,7 @@ export interface OrderItem {
 export interface OrderDetail {
     order: Order
     items: OrderItem[]
+    customer: Customer
 }
 
 

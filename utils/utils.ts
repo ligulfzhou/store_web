@@ -23,6 +23,7 @@ export function formatDate(date: number | Date) {
 }
 
 export function formatUTCDateTime(str_date: string) {
+    if (!str_date) return ''
     let dt = new Date(Date.parse(str_date))
     return format(dt, "yyyy-MM-dd HH:mm:ss");
 }
