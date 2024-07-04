@@ -114,7 +114,31 @@ export default function PrintOrder() {
                     </div>
 
                     {/*签名区*/}
-                    <div>
+                    <div className='flex flex-row justify-around mt-4 gap-2'>
+                        <div className='flex flex-row w-1/3'>
+                            <div className='grow-0'>
+                                制单人:
+                            </div>
+                            <div className='border-b-2 grow p-2'>
+
+                            </div>
+                        </div>
+                        <div className='flex flex-row w-1/3'>
+                            <div className='grow-0'>
+                                日期:
+                            </div>
+                            <div className='border-b-2 grow p-2'>
+
+                            </div>
+                        </div>
+                        <div className='flex flex-row w-1/3'>
+                            <div className='grow-0'>
+                                客户签字:
+                            </div>
+                            <div className='border-b-2 grow p-2'>
+
+                            </div>
+                        </div>
                     </div>
                     {/*print button*/}
                     {/*<div className='flex flex-row justify-end mt-2'>*/}

@@ -109,13 +109,16 @@ export default function Order() {
                     </div>
 
                     <div>
-                        <a href='#' onClick={(event) => {
-                            event.preventDefault()
-                            setOrderId(record.id)
-                            setIsOrderPrintModalOpen(true)
-                        }}>
+                        <a target='_blank' href={`/print/${record.id}`}>
                             打印订单
                         </a>
+                        {/*<a href='#' onClick={(event) => {*/}
+                        {/*    event.preventDefault()*/}
+                        {/*    setOrderId(record.id)*/}
+                        {/*    setIsOrderPrintModalOpen(true)*/}
+                        {/*}}>*/}
+                        {/*    打印订单*/}
+                        {/*</a>*/}
                     </div>
                 </Space>
             ),
